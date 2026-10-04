@@ -8,6 +8,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(NmeaBluetoothPlugin.class);
+        registerPlugin(DistoBlePlugin.class);
         super.onCreate(savedInstanceState);
     }
 }
