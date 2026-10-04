@@ -28,3 +28,14 @@ for p in perms:
 text = text.replace("</manifest>", add + "</manifest>")
 manifest.write_text(text, encoding="utf-8")
 print("manifest patched")
+
+
+# bluetooth-le: connect() სრულდება მხოლოდ MTU-ს პასუხზე; Bosch PLR/GLM MTU-ზე არ პასუხობს და "Connection timeout" გამოდის.
+# ვასწორებთ: კავშირი დასრულებულად ითვლება სერვისების აღმოჩენისთანავე.
+ble = root / "node_modules" / "@capacitor-community" / "bluetooth-le" / "android" / "src" / "main" / "java" / "com" / "capacitorjs" / "community" / "plugins" / "bluetoothle" / "Device.kt"
+src = ble.read_text(encoding="utf-8")
+old = "requestMtu(REQUEST_MTU)"
+if src.count(old) != 1:
+    raise SystemExit("bluetooth-le Device.kt: unexpected content, patch failed")
+ble.write_text(src.replace(old, 'resolve("connect", "Connected.")'), encoding="utf-8")
+print("bluetooth-le patched (no MTU wait)")
