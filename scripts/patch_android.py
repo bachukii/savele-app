@@ -5,7 +5,7 @@ import shutil
 root = pathlib.Path(__file__).resolve().parent.parent
 java_dir = root / "android" / "app" / "src" / "main" / "java" / "ge" / "kadastr" / "savele"
 java_dir.mkdir(parents=True, exist_ok=True)
-for name in ("NmeaBluetoothPlugin.java", "DistoBlePlugin.java", "SystemLocationPlugin.java", "MainActivity.java"):
+for name in ("NmeaBluetoothPlugin.java", "DistoBlePlugin.java", "SystemLocationPlugin.java", "FileOutPlugin.java", "MainActivity.java"):
     shutil.copy(root / "native" / name, java_dir / name)
     print("copied", name)
 

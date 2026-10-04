@@ -9,6 +9,7 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(NmeaBluetoothPlugin.class);
         registerPlugin(SystemLocationPlugin.class);
+        registerPlugin(FileOutPlugin.class);
         registerPlugin(DistoBlePlugin.class);
         super.onCreate(savedInstanceState);
     }
