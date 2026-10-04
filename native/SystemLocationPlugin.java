@@ -54,7 +54,7 @@ public class SystemLocationPlugin extends Plugin implements LocationListener {
         data.put("accuracy", loc.hasAccuracy() ? loc.getAccuracy() : JSONObjectNull());
         data.put("altitude", loc.hasAltitude() ? loc.getAltitude() : JSONObjectNull());
         data.put("altitudeAccuracy", Build.VERSION.SDK_INT >= 26 && loc.hasVerticalAccuracy() ? loc.getVerticalAccuracyMeters() : JSONObjectNull());
-        data.put("timestamp", loc.getTime()); data.put("mock", loc.isFromMockProvider());
+        data.put("timestamp", loc.getTime()); data.put("mock", loc.isFromMockProvider()); data.put("provider", loc.getProvider());
         notifyListeners("position", data);
     }
     private Object JSONObjectNull() { return org.json.JSONObject.NULL; }
