@@ -43,7 +43,7 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
 
-            - name: Version from www/sw.js
+      - name: Version from www/sw.js
         run: echo "VER=$(grep -o 'eskizi-v[0-9]*' www/sw.js | head -1 | sed 's/eskizi-//')" >> "$GITHUB_ENV"
 
       - name: Rename APK with version
