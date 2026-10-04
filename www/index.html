@@ -2501,8 +2501,8 @@ function btData(p,u,src){ let m=p?p.parse(u):null, guessed=false;
   if (m!=null&&isFinite(m)&&m>0&&m<500){ if (guessed&&!confirm("მიღებულია "+fmt(m)+" მ (ფორმატი უცნობია). გამოვიყენო?")) return; onMeasure(m); } }
 async function btConnect(){
   if (BT.native||(BT.dev&&BT.dev.gatt&&BT.dev.gatt.connected)){ btPanel(); return; }
-  if (btIsNative()){ try { await btNative(); } catch(err){ BT.native=null; btState(false); flash("დაკავშირება ვერ მოხერხდა: "+((err&&err.message)||err)); } return; }
-  if (!navigator.bluetooth){ flash("ბლუთუზი ვერ მოიძებნა. თუ ეს Android-ის აპია, წაშალეთ და თავიდან დააყენეთ უახლესი APK (პროექტის მენიუში ⋮ უნდა ეწეროს v170); Chrome-ში ბლუთუზი ჩართეთ; iPad-ზე — Bluefy."); return; }
+  if (btIsNative()){ try { await btNative(); } catch(err){ BT.native=null; btState(false); flash("დაკავშირება ვერ მოხერხდა: "+((err&&err.message)||err)+" — გათიშეთ მანძილმზომი სხვა მოწყობილობიდან/აპიდან (კომპიუტერი, Bosch აპი), გამორთეთ და ჩართეთ და სცადეთ ხელახლა.",9000); } return; }
+  if (!navigator.bluetooth){ flash("ბლუთუზი ვერ მოიძებნა. თუ ეს Android-ის აპია, წაშალეთ და თავიდან დააყენეთ უახლესი APK (პროექტის მენიუში ⋮ უნდა ეწეროს v171); Chrome-ში ბლუთუზი ჩართეთ; iPad-ზე — Bluefy."); return; }
   try {
     const dev = BT.dev || await navigator.bluetooth.requestDevice({acceptAllDevices:true, optionalServices:BT_PROFILES.map(p=>p.svc).concat(["generic_access","device_information","battery_service","generic_attribute","0000fe59-0000-1000-8000-00805f9b34fb","0000fff0-0000-1000-8000-00805f9b34fb","0000ae00-0000-1000-8000-00805f9b34fb","0000fee7-0000-1000-8000-00805f9b34fb","0000180d-0000-1000-8000-00805f9b34fb","00001523-1212-efde-1523-785feabcd123","8ec90001-f315-4f60-9fb8-838830daea50","49535343-fe7d-4ae5-8fa9-9fafd205e455"])});
     BT.dev=dev; BT.manual=false; btState(false,"უკავშირდება…");
@@ -2530,7 +2530,7 @@ async function btLink(){ const dev=BT.dev, srv=await dev.gatt.connect(); BT.info
 // ── მშობლიური (APK): @capacitor-community/bluetooth-le, ხიდით ──
 async function btNative(){ const C=window.Capacitor, call=(m,o)=>C.nativePromise("BluetoothLe",m,o||{});
   btState(false,"ძებნა…"); await call("initialize",{androidNeverForLocation:true});
-  const d=await call("requestDevice",{}); btState(false,"უკავშირდება…"); await call("connect",{deviceId:d.deviceId,timeout:15});
+  const d=await call("requestDevice",{}); btState(false,"უკავშირდება…"); try { await call("connect",{deviceId:d.deviceId,timeout:25}); } catch(e1){ btState(false,"ხელახლა ვცდილობ…"); try { await call("disconnect",{deviceId:d.deviceId}); } catch(e){} await new Promise(r=>setTimeout(r,1500)); await call("connect",{deviceId:d.deviceId,timeout:25}); }
   BT.native={id:d.deviceId,name:d.name||""}; BT.call=call; BT.info=[]; BT.prof=null;
   const res=await call("getServices",{deviceId:d.deviceId}), services=res.services||[]; let hooked=0;
   services.forEach(sv=>BT.info.push("სერვისი "+sv.uuid+": "+(sv.characteristics||[]).map(c=>String(c.uuid).slice(0,8)+"["+PROPS.filter(k=>(c.properties||{})[k]).join(",")+"]").join("  ")));
@@ -2602,7 +2602,7 @@ function closeSheet(apply){ const cfg=sheetFor; sheetFor=null; $("sheet").hidden
 $("sheet").addEventListener("submit",e=>{ e.preventDefault(); closeSheet(true); });
 $("sheetX").addEventListener("click",()=>closeSheet(false));
 
-let flashT=null; function flash(t){ $("hint").textContent=t; $("hint").hidden=false; clearTimeout(flashT); flashT=setTimeout(hint,3500); }
+let flashT=null; function flash(t,ms){ $("hint").textContent=t; $("hint").hidden=false; clearTimeout(flashT); flashT=setTimeout(hint,ms||3500); }
 $("hintBtn").addEventListener("click",()=>{ SET.hintOpen=!SET.hintOpen; saveSet(); clearTimeout(flashT); hint(); });
 function hint(){ const o=openPoly(); const H={
   door: "კარი: მართკუთხედივით — პირველი კუთხე ხაზზე (მიეწებება), მეორე — მოპირდაპირე კუთხე. დახრილ კედელზე თავისით მიჰყვება. შემდეგ ზომა და დაშორება უახლოესი კუთხიდან (⇄ — მეორე კუთხეზე გადართვა). სისქე კედლის მეორე ხაზს მიეწებება.",
@@ -4506,7 +4506,7 @@ function drawerHtml(){ const pr=F.pr, L=F.map?F.map.getLayers():{o:true,c:true,f
    <div class="cd-h2">ნაკვეთები <button type="button" class="btn sm primary" data-d="newp">＋</button></div>${parcels}
    <div class="cd-h2">წერტილები <button type="button" class="btn sm" data-d="newpt">＋</button></div>${pts||'<p class="cd-empty">წერტილები არ არის</p>'}
    <div class="cd-h2"><button type="button" class="btn" data-d="settings">⚙ პარამეტრები</button></div></div>
-   <div class="cd-foot"><button type="button" data-d="home">🏠 მთავარზე დაბრუნება</button><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპი v170</div></div>`; }
+   <div class="cd-foot"><button type="button" data-d="home">🏠 მთავარზე დაბრუნება</button><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპი v171</div></div>`; }
 function renderDrawer(force){ const d=$c("cfDrawer"); if (!d||!F) return; if (!force&&!d.classList.contains("open")) return; const a=document.activeElement; if (!force&&a&&d.contains(a)&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)) return; d.innerHTML=drawerHtml(); d.onchange=onDrawerChange; }
 function onDrawer(e){
   const draw=e.target.closest("[data-layerdraw]"); if(draw){chooseFieldLayer(draw.dataset.layerdraw);return;}
@@ -4652,7 +4652,7 @@ function panel(kind,arg){ const el=$c("cfPanel"); if (!el||!F) return; F.panel=k
       `<div class="row" style="gap:8px;margin-top:10px"><button type="button" class="btn" data-g="toggle">${GPS.id==null?"📡 ჩართვა":"📡 გამორთვა"}</button><button type="button" class="btn" data-g="follow">🎯 მიყოლა</button></div>`; }
   else if (kind==="layers"){ const L=F.map.getLayers(); h=head("🗺 ფენები")+[["o","ორთოფოტო"],["c","საკადასტრო (WMS)"],["f","ნაკვეთები (WFS)"]].map(([k,t])=>`<label class="chk cf-l"><input type="checkbox" data-l="${k}"${L[k]?" checked":""}> ${t}</label>`).join("")+
       `<div class="row" style="gap:8px;margin-top:10px"><input class="input" id="cfQ" type="search" placeholder="საკადასტრო კოდი" style="flex:1"><button type="button" class="btn primary" data-g="find">🔍</button></div>`; }
-  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cf-btns"><button type="button" class="btn primary" data-g="plyr">🧩 ფენები (SHP ZIP)</button><button type="button" class="btn" data-g="pg2all">📄 ყველა II გვერდი (PDF)</button><button type="button" class="btn" data-g="xl2all">📊 ყველა Excel (ZIP)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპი v170</div>`; }
+  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cf-btns"><button type="button" class="btn primary" data-g="plyr">🧩 ფენები (SHP ZIP)</button><button type="button" class="btn" data-g="pg2all">📄 ყველა II გვერდი (PDF)</button><button type="button" class="btn" data-g="xl2all">📊 ყველა Excel (ZIP)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპი v171</div>`; }
   else if (kind==="list"){ h=head("☰ ნაკვეთები")+(F.pr.parcels.length?`<div class="cf-list">${F.pr.parcels.map(p=>{ const m=metrics(p); return `<button type="button" class="cad-card" data-pid="${p.id}"><b>${esc(p.fields.CADCODE||p.fields.ADRES||"ნაკვეთი")}</b><span>${esc(p.fields.INT_PER_ID||"—")}</span><span>${p.pts.length} წერტილი · ${m.area?m.area.toFixed(1)+" მ²":"—"}</span></button>`; }).join("")}</div>`:'<p class="cad-empty">ნაკვეთები ჯერ არ არის. დააჭირეთ „+ ნაკვეთი“.</p>')+ptsList(); }
   else if (kind==="wfs"){ F.hit=arg; h=head("📍 რეესტრის ნაკვეთი")+`<div class="cf-kv"><span>კოდი</span><b>${esc(arg.code||"—")}</b></div>`+(arg.area?`<div class="cf-kv"><span>ფართობი</span><b>${Math.round(arg.area)} მ²</b></div>`:"")+`<div class="cf-btns"><button type="button" class="btn primary" data-g="addwfsg">📋 ნაკვეთად ჩაკოპირება (გეომეტრიით)</button><button type="button" class="btn" data-g="addwfs">+ მხოლოდ კოდით</button></div>`; }
   else if (kind==="form"){ const p=cur; h=head("📝 ნაკვეთი")+formHtml(p); }
