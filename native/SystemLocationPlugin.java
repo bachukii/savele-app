@@ -106,7 +106,7 @@ public class SystemLocationPlugin extends Plugin implements LocationListener {
                     d.put("age", age / 1000);
                     d.put("mock", isMock(l));
                     String key = l.getTime() + "|" + l.getLatitude() + "|" + l.getLongitude();
-                    if (!key.equals(lastSent.get(p)) && (isMock(l) || age < 120000)) {
+                    if ((isMock(l) || !key.equals(lastSent.get(p))) && (isMock(l) || age < 120000)) {
                         lastSent.put(p, key);
                         emit(l);
                     }
@@ -140,6 +140,7 @@ public class SystemLocationPlugin extends Plugin implements LocationListener {
         data.put("timestamp", loc.getTime());
         data.put("mock", isMock(loc));
         data.put("provider", loc.getProvider());
+        data.put("age", Math.abs(System.currentTimeMillis() - loc.getTime()) / 1000);
         notifyListeners("position", data);
     }
 
