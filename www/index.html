@@ -4,9 +4,9 @@
 <script>window.__serviceBase=(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform())?"https://zippy-crostata-44fa0f.netlify.app":"";</script>
 <script>/*APKDIST*/
 (function(){ var cap=window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform(), base=window.__serviceBase||"";
-  var css=document.createElement("style"); css.textContent=".apk-top{display:inline-block;background:#16A34A;color:#fff!important;text-decoration:none;font:700 13px system-ui,sans-serif;padding:8px 14px;border-radius:20px;margin:0 0 10px}.apk-top.apk-tab{margin:0 0 0 auto;padding:6px 12px}#apkUpd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#0F172A;color:#fff;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:center;font:600 14px system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.4)}#apkUpd button{border:0;border-radius:10px;padding:9px 14px;font:700 14px system-ui,sans-serif;cursor:pointer}#apkUpd .go{background:#84cc16;color:#111}#apkUpd .x{background:#374151;color:#fff}";
+  var css=document.createElement("style"); css.textContent=".apk-top{display:inline-block;background:#059669;color:#fff!important;text-decoration:none;font:700 13px system-ui,sans-serif;padding:8px 14px;border-radius:20px;margin:0 0 10px}.apk-top.apk-tab{margin:0 0 0 auto;padding:6px 12px}#apkUpd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#0F172A;color:#fff;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:center;font:600 14px system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.4)}#apkUpd button{border:0;border-radius:10px;padding:9px 14px;font:700 14px system-ui,sans-serif;cursor:pointer}#apkUpd .go{background:#84cc16;color:#111}#apkUpd .x{background:#374151;color:#fff}";
   document.addEventListener("DOMContentLoaded",function(){ document.head.appendChild(css);
-    /*APKLINK*/ if (!cap){ var mk=function(c){ var a=document.createElement("a"); a.href="download.html"; a.className=c; a.textContent="📲 საველე აპის ჩამოტვირთვა"; return a; }; var aw=document.querySelector("#auth .au-welcome"); if (aw) aw.insertBefore(mk("apk-top"),aw.firstChild); var ht=document.querySelector(".home-tabs"); if (ht) ht.appendChild(mk("apk-top apk-tab")); } /*END-APKLINK*/
+    /*APKLINK*/ if (!cap){ var mk=function(c){ var a=document.createElement("a"); a.href="download.html"; a.className=c; a.textContent="📲 საველე აპის ჩამოტვირთვა"; return a; }; var au=document.getElementById("auth"); if (au&&!document.getElementById("auHead")){ var hd=document.createElement("div"); hd.id="auHead"; hd.className="au-head"; hd.innerHTML='<span class="au-logo"><span class="logo-mark" aria-hidden="true"></span><b>საველე აზომვა</b></span><a class="au-phone" href="tel:+995558424525">📞 +995 558 424 525</a>'; hd.appendChild(mk("apk-top")); au.insertBefore(hd,au.firstChild); } var ht=document.querySelector(".home-tabs"); if (ht){ var tl=mk("apk-top apk-tab"); tl.innerHTML='📲 <span class="t1">საველე აპის </span>ჩამოტვირთვა'; ht.appendChild(tl); } } /*END-APKLINK*/
     if (cap) setTimeout(async function(){ try { var cur=+(((await (await fetch("sw.js",{cache:"no-store"})).text()).match(/eskizi-v(\d+)/)||[])[1]||0); var r=await fetch(base+"/apk/version.json?t="+Date.now(),{cache:"no-store"}); if (!r.ok) return; var j=await r.json(); if (cur&&+j.ver>cur){ var b=document.createElement("div"); b.id="apkUpd"; b.innerHTML="<span style='flex:1'>🆕 ახალი ვერსია v"+j.ver+" (ახლა გაქვთ v"+cur+")</span><button class='go'>ჩამოტვირთვა</button><button class='x'>✕</button>"; b.querySelector(".go").onclick=function(){ window.open(base+"/download.html","_blank"); }; b.querySelector(".x").onclick=function(){ b.remove(); }; document.body.appendChild(b); } } catch(e){} },5000); });
 })();
 </script>
@@ -578,6 +578,88 @@ body.folded header #panelBtn, body.folded header #foldBtn{display:none!important
 .au-stats.cad .au-stat:nth-child(4) b{background:linear-gradient(90deg,#60A5FA,#818CF8);-webkit-background-clip:text;background-clip:text;color:#60A5FA}
 .au-stats.cad .au-stat:nth-child(5) b{background:linear-gradient(90deg,#A78BFA,#C084FC);-webkit-background-clip:text;background-clip:text;color:#A78BFA}
 @media (max-width:640px){ .au-stats{gap:8px;padding:12px;border-radius:20px}.au-stat{padding:14px 6px;gap:4px;border-radius:14px}.au-stat b{font-size:26px}.au-stat span{font-size:11px} }
+/* ══ შესვლის / საწყისი გვერდი — სუფთა, ღია დიზაინი: მუქი სლეითი + ზურმუხტი, თეთრი ბარათები ══ */
+#auth{background:#F8FAFC;animation:none}
+.au-head{position:sticky;top:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px max(18px,4vw);margin:0 0 6px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid #E2E8F0}
+.au-logo{display:flex;align-items:center;gap:10px;color:#0F172A;font-size:18px}.au-logo b{font-weight:800;letter-spacing:.01em}
+.au-head .apk-top{margin:0;background:#059669;color:#fff!important;padding:9px 16px;border-radius:10px;font-size:13.5px;box-shadow:none}
+.au-head .apk-top:hover{background:#047857}
+.au-line{display:none}
+.au-welcome h2{font-size:clamp(26px,3.6vw,44px);font-weight:700;letter-spacing:0;color:#0F172A}
+.au-stats,.au-stats.cad{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;max-width:1040px;width:100%;margin:22px auto 4px;padding:0;background:none;border-radius:0;box-shadow:none}
+.au-stat,.au-stats.cad .au-stat{background:#fff;border:1px solid #E2E8F0;border-radius:16px;box-shadow:0 6px 20px rgba(15,23,42,.06);padding:20px 14px;gap:6px}
+.au-stats.cad{grid-template-columns:1.15fr 1fr 1.25fr;max-width:880px}
+.au-stats.cad .au-stat:first-child{grid-row:span 2}
+.au-stats.cad .au-stat:first-child b{font-size:54px}
+.au-stat b,.au-stats.cad .au-stat b,.au-stats.cad .au-stat:first-child b,.au-stat:nth-child(2) b,.au-stat:nth-child(3) b,.au-stats.cad .au-stat:nth-child(4) b,.au-stats.cad .au-stat:nth-child(5) b{font:800 38px var(--f-num);letter-spacing:-.5px;background:none;-webkit-background-clip:border-box;background-clip:border-box;-webkit-text-fill-color:#0F172A;color:#0F172A}
+.au-stat:nth-child(3) b{-webkit-text-fill-color:#059669;color:#059669}
+.au-stats.cad .au-stat:nth-child(2) b,.au-stats.cad .au-stat:nth-child(4) b{-webkit-text-fill-color:#0F172A;color:#0F172A;font-size:34px}
+.au-stats.cad .au-stat:nth-child(3) b,.au-stats.cad .au-stat:nth-child(5) b{-webkit-text-fill-color:#059669;color:#059669;font-size:34px}
+.au-stat span,.au-stats.cad .au-stat span{color:#64748B;font-size:13.5px;font-weight:600;max-width:none}
+#auth #authForm,#auth #payCard{background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:22px;box-shadow:0 10px 30px rgba(15,23,42,.08)}
+.au-tabs{background:#F1F5F9;border-color:#E2E8F0;border-radius:12px}
+.au-tabs button[aria-pressed="true"]{color:#0F172A;box-shadow:0 2px 8px rgba(15,23,42,.1)}
+#auth #authGo,#auth #payGo{background:#059669;border:0;border-radius:12px;box-shadow:0 8px 18px rgba(5,150,105,.28)}
+#auth #authGo::after,#auth #payGo::after{display:none}
+#auth #authGo:hover,#auth #payGo:hover{background:#047857}
+#auth .field .input:focus{border-color:#059669;box-shadow:0 0 0 4px rgba(5,150,105,.16)}
+#auth .au-art{background:linear-gradient(145deg,#0F172A 0%,#1E293B 100%);box-shadow:0 18px 44px rgba(15,23,42,.28);border-radius:20px}
+#auth .au-blob{background:radial-gradient(circle,rgba(16,185,129,.30),transparent 70%)}
+#auth .au-grid{background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)}
+#auth .au-chip{color:#0F172A;font-size:14px;padding:9px 16px}
+#auth .au-feat li{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}
+#auth .au-feat i{background:rgba(16,185,129,.22)}
+/* ══ მთავარი გვერდი (შესვლის შემდეგ): უფრო მშვიდი ფერები, დიდი ტექსტი, სუფთა ნავიგაცია ══ */
+.home-tabs{gap:6px;padding-top:10px;padding-bottom:10px}
+.home-tabs .brand{margin-right:18px}
+.home-tabs .mode-btn{padding:8px 12px}
+.home-tabs .acct-dd{margin-left:6px}
+.acct-dd>#acctBtn{display:flex;align-items:center;gap:8px;padding:6px 12px}
+.acct-dd .av{width:26px;height:26px;border-radius:50%;background:#334155;color:#E2E8F0;display:flex;align-items:center;justify-content:center;flex:0 0 26px}
+.acct-dd .em{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.home-tabs .apk-top.apk-tab{margin-left:4px;margin-right:0;background:#059669;border-radius:10px;padding:7px 12px;font-size:13px;white-space:nowrap}
+.hm-hero{background:linear-gradient(135deg,#064E3B 0%,#047857 100%)}
+.hm-hero p{font-size:16.5px;line-height:1.6;color:#E2E8F0;max-width:66ch}
+.hm-steps{gap:14px}
+.hm-step{padding:18px 18px;gap:14px;border-radius:14px;border:1px solid #E2E8F0;box-shadow:0 4px 14px rgba(15,23,42,.04)}
+.hm-step i{flex:0 0 40px;height:40px;font-size:17px;background:#E0F2FE;color:#0369A1;animation:hmPulse2 8s ease-in-out infinite}
+@keyframes hmPulse2{0%,20%,100%{box-shadow:0 0 0 0 rgba(14,165,233,0);transform:none}8%{box-shadow:0 0 0 9px rgba(14,165,233,.2);transform:scale(1.1)}}
+.hm-step b{font-size:16px;margin-bottom:3px}
+.hm-step span{font-size:14.5px;line-height:1.55}
+.hm-step .tip-ic{flex:0 0 48px;width:48px;height:48px;border-radius:14px;background:#ECFDF5;display:flex;align-items:center;justify-content:center;font-size:25px;color:inherit}
+.hm-tip:nth-child(2) .tip-ic{background:#EFF6FF}.hm-tip:nth-child(3) .tip-ic{background:#F5F3FF}
+.hm-stat b{color:#0F172A}
+@media (max-width:1700px){ .apk-tab .t1{display:none} }
+/* ══ შიდა აზომვის მთავარი და პროექტების გვერდი: მინისებრი ფორმა, მკაფიო ფილტრები, ცენტრირებული ცარიელი მდგომარეობა ══ */
+.hm-hero .home-new{background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.28);box-shadow:none;color:#fff;gap:14px;padding:18px;border-radius:16px}
+#home .hm-hero .home-new .field>label,.hm-hero .home-new label{color:#E2E8F0;font-size:14px;font-weight:600}
+.hm-hero .home-new .input{background:rgba(255,255,255,.96);color:#0F172A;border:1px solid transparent}
+.hm-hero .home-new .btn.primary{background:#fff;color:#047857;border:0;font-weight:800;box-shadow:0 6px 16px rgba(0,0,0,.16)}
+.hm-hero .home-new .btn.primary:hover{background:#ECFDF5}
+.hm-art{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:14px;backdrop-filter:blur(4px)}
+.hm-stats{gap:14px}
+.hm-stat{padding:18px 20px;border:1px solid #E2E8F0;border-radius:16px;box-shadow:0 6px 18px rgba(15,23,42,.05)}
+.hm-stat b{font-size:34px;color:#047857}
+.hm-stat span{font-size:14.5px;line-height:1.45;color:#475569;font-weight:600}
+#home .field>label,#home .home-filt label{font-size:13.5px;font-weight:600;color:#475569}
+.home-filt{background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:16px;gap:12px 16px;box-shadow:0 4px 14px rgba(15,23,42,.04)}
+.home-filt .input{border:1px solid #CBD5E1;border-radius:10px}
+.home-filt .btn{border:1px solid #CBD5E1;background:#fff;color:#0F172A;font-weight:700;border-radius:10px}
+.home-filt .btn:hover{background:#F1F5F9}
+.home-empty.big{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:520px;margin:36px auto;padding:34px 24px;background:#fff;border:1px dashed #CBD5E1;border-radius:18px;color:#475569}
+.home-empty .he-ic{width:64px;height:64px;border-radius:50%;background:#ECFDF5;color:#047857;display:flex;align-items:center;justify-content:center}
+.home-empty.big b{font-size:18px;color:#0F172A}.home-empty.big span{font-size:14.5px;line-height:1.5}
+.home-empty.big .btn{margin-top:8px;background:#059669;border-color:#059669;color:#fff;font-weight:800;min-height:44px}
+/* ზედა ზოლი: „პროექტები / რუკა / სახელმძღვანელო“ — აქტიურს ქვედა ხაზი, წითელი ფონის გარეშე */
+.home-tabs .sub-tab{background:transparent!important;border:0!important;border-bottom:3px solid transparent!important;border-radius:0!important;color:#CBD5E1!important;padding:9px 10px;font-weight:700}
+.home-tabs .sub-tab:hover{color:#fff!important}
+.home-tabs .sub-tab[aria-pressed="true"]{color:#fff!important;border-bottom-color:#10B981!important;background:transparent!important}
+/* ══ ფონი: ბარათები თეთრია, გვერდის ფონი — რბილი მოცისფრო-ნაცრისფერი (ნაკლებად თვალისმომჭრელი) ══ */
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) #auth,:root:not([data-theme="dark"]) #home{background:#E6ECF3} }
+:root[data-theme="light"] #auth,:root[data-theme="light"] #home{background:#E6ECF3}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) .au-head{background:rgba(241,245,249,.94)} }
+.au-contact{margin:16px auto 0;max-width:420px;text-align:center;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;color:#475569;font-size:14px}.au-contact b{color:#0F172A;font-size:15px}.au-ct-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:4px}.au-ct-row a{padding:9px 14px;border-radius:10px;font-weight:700;text-decoration:none;color:#fff;background:#0F172A}.au-ct-row .au-ct-wa{background:#16A34A}
+.au-head .au-phone{margin-left:auto;margin-right:8px;color:#0F172A;font-weight:800;font-size:15px;text-decoration:none;white-space:nowrap;padding:8px 12px;border:1px solid #CBD5E1;border-radius:10px;background:#fff}.au-head .au-phone:hover{background:#F1F5F9}@media(max-width:560px){.au-head .au-phone{font-size:13px;padding:7px 8px}.au-logo b{display:none}}
 /* ფერადი ღილაკები ჯგუფების მიხედვით */
 .tb .grp[data-l="ხაზვა"] button:not([aria-pressed="true"]) svg{stroke:#2563EB}
 .tb .grp[data-l="ელემენტები"] button:not([aria-pressed="true"]) svg{stroke:#16A34A}
@@ -597,6 +679,28 @@ body.folded header #panelBtn, body.folded header #foldBtn{display:none!important
 .dock-tab[data-c="d_select"] svg,.dock-tab[data-c="d_desel"] svg{stroke:#EA580C}.dock-tab[data-c="edit"] svg{stroke:#7C3AED}
 .dock-tab[data-c="view"] svg{stroke:#0D9488}.dock-tab[data-c="snap"] svg{stroke:#DB2777}
 .dock-tab[aria-pressed="true"] svg{stroke:currentColor!important}
+/* ══ ფერებს ფუნქცია აქვს: ლურჯი — აქტიური / მთავარი, მწვანე — დასრულება, წითელი — წაშლა, ნაცრისფერი — დანარჩენი ══ */
+:root{--ic:#475569}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ic:#9AA7BC; } }
+:root[data-theme="dark"]{ --ic:#9AA7BC; }
+.tb .grp[data-l] button:not([aria-pressed="true"]) svg{stroke:var(--ic)}
+.tb .grp[data-l="რედაქტირება"] #t-erase:not([disabled]) svg,.tb #t-bldgClr svg{stroke:#DC2626}
+.tb #t-bldgClr{color:#B91C1C}
+.tb #t-impShp,.tb #t-impDxf,.tb .grp[data-l="SHP"] .gh{background:transparent;color:inherit;border:1px solid var(--line)}
+.tb #t-impShp svg,.tb #t-impDxf svg,.tb .grp[data-l="SHP"] .gh svg{stroke:var(--ic)}
+.tb #t-impShp:hover,.tb #t-impDxf:hover,.tb .grp[data-l="SHP"] .gh:hover{background:var(--soft)}
+.dock-tab[data-c] svg{stroke:var(--ic)}
+.dock-tab[data-c="d_erase"] svg{stroke:#DC2626}
+.dock-tab[aria-pressed="true"] svg{stroke:currentColor!important}
+#d-impShp,#d-impDxf{background:var(--soft);color:inherit}
+#finishFab{background:#16A34A;border-color:#16A34A;color:#fff}
+/* პროექტის სტატუსი: სახელი · სართული · ფართობი · შენახვა */
+.pstrip{display:flex;gap:12px;align-items:center;padding:2px 12px;min-height:22px;font-size:12.5px;font-weight:600;color:var(--muted);border-top:1px solid var(--line);white-space:nowrap;overflow:hidden}
+.pstrip[hidden]{display:none}.pstrip b{color:inherit;font-weight:800;max-width:40vw;overflow:hidden;text-overflow:ellipsis}.pstrip span+span::before{content:"|";margin-right:12px;opacity:.4}.pstrip .ok{color:#16A34A}.pstrip .bad{color:#DC2626}
+/* ექსპორტის ფორმატები — პატარა ბარათები */
+.ex-chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0}
+.ex-chips span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:44px;padding:6px 4px;border:1px solid var(--line);border-radius:10px;background:var(--soft);font-size:12px;font-weight:600;line-height:1.25}
+@media (max-width:420px){ .ex-chips{grid-template-columns:repeat(2,minmax(0,1fr))} }
 #d-impShp{background:#FFF1E8;color:#C2410C}#d-impDxf{background:#F3EBFF;color:#6D28D9}
 .imp-fab{position:absolute;left:62px;bottom:12px;z-index:3;display:flex;gap:6px}
 .imp-fab .btn{min-height:40px;padding:6px 12px;font-weight:700;color:#fff;border:0;box-shadow:var(--shadow);border-radius:12px}
@@ -881,7 +985,7 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
       <section class="card">
         <h2 class="cab-h">გამოწერა</h2>
         <div class="cab-sub" id="cabSub">—</div>
-        <div class="row"><button class="btn primary" id="cabPay" type="button">გადახდა / გაგრძელება — 20 ₾</button></div>
+        <div class="row"><button class="btn primary" id="cabPay" type="button">სატესტო გამოწერა / გაგრძელება</button></div>
         <h2 class="cab-h">გადახდების ისტორია</h2>
         <div class="cab-pays" id="cabPays"><span class="empty">—</span></div>
       </section>
@@ -906,6 +1010,7 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
       <h1 class="home-title"><span class="logo-mark" aria-hidden="true"></span>შიდა აზომვა</h1>
       <p class="home-sub" id="authSub"></p>
     </div>
+    <div class="au-contact"><b>გაქვთ კითხვა ან გჭირდებათ დახმარება?</b><span>დაგვირეკეთ ან მოგვწერეთ WhatsApp-ზე პირდაპირ:</span><div class="au-ct-row"><a class="au-ct-tel" href="tel:+995558424525">📞 +995 558 424 525</a><a class="au-ct-wa" href="https://wa.me/995558424525" target="_blank" rel="noopener">💬 WhatsApp</a></div></div>
     <form class="card" id="authForm" autocomplete="on">
       <div class="au-tabs" id="auTabs"><button type="button" id="auTabLogin" aria-pressed="true">შესვლა</button><button type="button" id="auTabReg" aria-pressed="false">რეგისტრაცია</button></div>
       <div class="field" id="fName"><label for="auName">სახელი და გვარი</label><input class="input" id="auName" type="text" autocomplete="name"></div>
@@ -920,14 +1025,15 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
       <div class="auth-links"><button type="button" class="linkbtn" id="authResend" hidden>კოდის თავიდან გაგზავნა</button><button type="button" class="linkbtn" id="authSwitch"></button><button type="button" class="linkbtn" id="authForgot">პაროლი დამავიწყდა</button></div>
     </form>
     <div class="card" id="payCard" hidden>
-      <div class="price">20 ₾ <span>/ თვე</span></div>
+      <div class="price">სატესტო <span>რეჟიმი · თანხა არ იჭრება</span></div>
       <p class="pay-status" id="payStatus"></p>
       <ul class="pay-list"><li>ნახაზები ღრუბელში — ნებისმიერი მოწყობილობიდან</li><li>QGIS-ში ჩამოტანა (SidaAzomvaTools)</li><li>DXF / გაზიარება, ორთოფოტო, მანძილმზომი</li></ul>
       <p class="test-note" id="payTestNote">სატესტო რეჟიმი — რეალური თანხა არ ჩამოიჭრება და ბარათის მონაცემები არ მოითხოვება.</p>
-      <button class="btn primary" id="payGo" type="button">გადახდა — 20 ₾</button>
+      <button class="btn primary" id="payGo" type="button">სატესტო გამოწერა</button>
       <div class="auth-links"><button class="linkbtn" id="payClose" type="button">დახურვა</button><button class="linkbtn" id="payLogout" type="button">გასვლა</button></div>
     </div>
     <div class="auth-msg" id="authMsg" role="status" aria-live="polite"></div>
+
     <div class="au-art" aria-hidden="true">
       <div class="au-grid"></div><div class="au-blob"></div>
       <svg class="hm-art" viewBox="0 0 420 300" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1030,6 +1136,7 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
   </div>
 
   <div class="tbwrap"><div class="tb" id="tb"></div></div>
+  <div class="pstrip" id="pStrip" hidden></div>
   </div>
 
   <div class="main">
@@ -2524,7 +2631,7 @@ function btData(p,u,src){ let m=p?p.parse(u):null, guessed=false;
 async function btConnect(){
   if (BT.native||(BT.dev&&BT.dev.gatt&&BT.dev.gatt.connected)){ btPanel(); return; }
   if (btIsNative()){ try { await btNative(); } catch(err){ BT.native=null; btState(false); flash("დაკავშირება ვერ მოხერხდა: "+((err&&err.message)||err)+" — გათიშეთ მანძილმზომი სხვა მოწყობილობიდან/აპიდან (კომპიუტერი, Bosch აპი), გამორთეთ და ჩართეთ და სცადეთ ხელახლა.",9000); } return; }
-  if (!navigator.bluetooth){ flash("ბლუთუზი ვერ მოიძებნა. თუ ეს Android-ის აპია, წაშალეთ და თავიდან დააყენეთ უახლესი APK (პროექტის მენიუში ⋮ უნდა ეწეროს v280); Chrome-ში ბლუთუზი ჩართეთ; iPad-ზე — Bluefy."); return; }
+  if (!navigator.bluetooth){ flash("ბლუთუზი ვერ მოიძებნა. თუ ეს Android-ის აპია, წაშალეთ და თავიდან დააყენეთ უახლესი APK (პროექტის მენიუში ⋮ უნდა ეწეროს v300); Chrome-ში ბლუთუზი ჩართეთ; iPad-ზე — Bluefy."); return; }
   try {
     const dev = BT.dev || await navigator.bluetooth.requestDevice({acceptAllDevices:true, optionalServices:BT_PROFILES.map(p=>p.svc).concat(["generic_access","device_information","battery_service","generic_attribute","0000fe59-0000-1000-8000-00805f9b34fb","0000fff0-0000-1000-8000-00805f9b34fb","0000ae00-0000-1000-8000-00805f9b34fb","0000fee7-0000-1000-8000-00805f9b34fb","0000180d-0000-1000-8000-00805f9b34fb","00001523-1212-efde-1523-785feabcd123","8ec90001-f315-4f60-9fb8-838830daea50","49535343-fe7d-4ae5-8fa9-9fafd205e455"])});
     BT.dev=dev; BT.manual=false; btState(false,"უკავშირდება…");
@@ -2908,7 +3015,7 @@ function setHomeTab(t){ const cadSub=(t==="map"||t==="guide")&&window.__mode==="
   const brand=document.createElement("span"); brand.className="brand"; brand.innerHTML='<span class="logo-mark" aria-hidden="true"></span>შიდა აზომვა'; nav.insertBefore(brand, nav.firstChild);
   const sp=document.createElement("span"); sp.className="spacer"; nav.appendChild(sp); nav.appendChild($("homeClose"));
   const dd=document.createElement("div"); dd.className="acct-dd"; const btn=document.createElement("button"); btn.type="button"; btn.id="acctBtn"; dd.appendChild(btn); dd.appendChild(acct); nav.appendChild(dd);
-  const sy=()=>{ btn.hidden=acct.hidden; let em=""; try { em=(AUTH && AUTH.user && AUTH.user.email)||""; } catch(e){} btn.textContent="👤 "+(em||"ანგარიში")+" ▾"; }; new MutationObserver(sy).observe(acct,{attributes:true,attributeFilter:["hidden"]}); sy();
+  const sy=()=>{ btn.hidden=acct.hidden; let em=""; try { em=(AUTH && AUTH.user && AUTH.user.email)||""; } catch(e){} btn.innerHTML='<span class="av" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span><span class="em">'+esc2(em||"ანგარიში")+'</span><span>▾</span>'; }; new MutationObserver(sy).observe(acct,{attributes:true,attributeFilter:["hidden"]}); sy();
   btn.addEventListener("click",e=>{ e.stopPropagation(); sy(); dd.classList.toggle("open"); });
   document.addEventListener("click",e=>{ if (!dd.contains(e.target)) dd.classList.remove("open"); }); acct.addEventListener("click",e=>{ if (e.target.closest("button")) dd.classList.remove("open"); });
   if (top) top.remove(); nav.parentElement.insertBefore(nav, nav.parentElement.firstChild); })();
@@ -2919,7 +3026,7 @@ function projDateIso(p){ const d=(p.floors||[]).flatMap(f=>((f.S&&f.S.objs)||[])
 function renderHome(){
   const box=$("homeList"); box.innerHTML="";
   $("homeClose").hidden = true;
-  if (!PIDX.list.length){ box.innerHTML='<div class="home-empty">ჯერ პროექტი არ გაქვთ — ჩაწერეთ დასახელება ზემოთ და დააჭირეთ „პროექტის შექმნა“.</div>'; return; }
+  if (!PIDX.list.length){ box.innerHTML='<div class="home-empty big"><div class="he-ic" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div><b>პროექტები არ არის ნაპოვნი</b><span>ჩაწერეთ დასახელება ან მისამართი და შექმენით პირველი პროექტი.</span><button class="btn primary" id="heNew" type="button">+ ახალი პროექტის შექმნა</button></div>'; { const hb=$("heNew"); if (hb) hb.onclick=()=>{ setHomeTab("main"); setTimeout(()=>{ const i=$("homeName"); if (i){ i.focus(); i.scrollIntoView({block:"center"}); } },250); }; } return; }
   const items=PIDX.list.map(it=>{ const p = it.id===P.id ? P : loadP(it.id); ensureCode(p); return {it,p}; }).filter(x=>x.p)
     .sort((a,b)=>(b.p.updated||0)-(a.p.updated||0));
   const has=(hay,q)=>{ q=String(q||"").trim(); if (!q) return true; hay=srchNorm(hay); return q.toLowerCase().split(/\s+/).every(w=>hay.includes(w) || hay.includes(nusxJs(w).toLowerCase())); };
@@ -2987,10 +3094,21 @@ $("genDl").addEventListener("click",async e=>{ if (LASTGEN && LASTGEN.pid===P.id
   if (!rd){ const t="ჯერ დააჭირეთ „დაგენერირებას“."; $("prepMsg").textContent=t; flash(t); return; }
   try { const u=await storedUrl(rd); location.href=u+"&download="+encodeURIComponent(rd.name); } catch(err){ flash("ფაილი ვერ ჩამოიტვირთა: "+errKa(err)); } });
 let PAYRET=false;
+function payModal(s){ return new Promise(res=>{ const el=document.createElement("div"); el.id="payModal"; el.style.cssText="position:fixed;inset:0;z-index:100001;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px";
+    const st=s&&s.paid_until?"გამოწერა დასრულდა "+fmtDay(s.paid_until)+"-ზე.":"გამოწერა ჯერ არ გაქვთ.";
+    el.innerHTML='<div style="background:#fff;color:#111;border-radius:18px;max-width:430px;width:100%;padding:20px;font-family:system-ui,sans-serif"><div style="font-weight:800;font-size:18px;margin-bottom:6px">🔒 გენერირებისთვის საჭიროა გამოწერა</div>'
+      +'<p style="margin:0 0 10px;color:#4b5563;font-size:14px;line-height:1.45">'+st+' გამოწერის გარეშე ნახაზების გენერირება (PDF / SHP / DXF) მიუწვდომელია. დახაზვა და შენახვა ისევ შეგიძლიათ.</p>'
+      +'<div style="font-weight:800;font-size:22px;margin:6px 0">სატესტო <span style="font-size:14px;font-weight:600;color:#6b7280">რეჟიმი · თანხა არ იჭრება</span></div>'
+      +(PAY_MODE==="test"?'<p style="margin:0 0 12px;font-size:12.5px;color:#6b7280">სატესტო რეჟიმი — რეალური თანხა არ ჩამოიჭრება და ბარათის მონაცემები არ მოითხოვება.</p>':"")
+      +'<div id="pmMsg" style="min-height:18px;font-size:13px;margin-bottom:8px"></div><div style="display:flex;gap:8px"><button type="button" id="pmGo" style="flex:1;border:0;border-radius:12px;background:#2563EB;color:#fff;font:800 15px system-ui,sans-serif;padding:13px;cursor:pointer">✅ სატესტო გამოწერა და გაგრძელება</button><button type="button" id="pmX" style="border:1px solid #d1d5db;background:#fff;color:#111;border-radius:12px;padding:13px 16px;font:700 14px system-ui,sans-serif;cursor:pointer">დახურვა</button></div></div>';
+    document.body.appendChild(el); const done=v=>{ el.remove(); res(v); }; el.querySelector("#pmX").onclick=()=>done(false); el.addEventListener("click",e=>{ if (e.target===el) done(false); });
+    el.querySelector("#pmGo").onclick=async()=>{ const b=el.querySelector("#pmGo"), m=el.querySelector("#pmMsg"); b.disabled=true; m.style.color="#374151"; m.textContent="გადახდა მიმდინარეობს…";
+      try { if (PAY_MODE!=="test") throw new Error("ონლაინ გადახდა ჯერ არ არის ჩართული."); await api("/rest/v1/rpc/test_pay",{method:"POST",body:{}}); try { await loadSub(); } catch(e){} setTimeout(()=>{ try { cloudInit(); } catch(e){} },400); done(true); }
+      catch(err){ m.style.color="#b91c1c"; m.textContent=errKa(err); b.disabled=false; } }; }); }
 async function requirePaid(){ if (!cloudOn() || !AUTH) return true;
   let s=null; try { s=await loadSub(); } catch(e){ s=subCache(); }
   if (subActive(s)) return true;
-  PAYRET=true; try { $("expClose").click(); } catch(e){} showAuth("pay", s); return false; }
+  try { $("expClose").click(); } catch(e){} return await payModal(s); }
 async function prepareProject(msgFn){ if (!(await requirePaid())) return false; const msg = typeof msgFn==="function" ? msgFn : (t=>{ $("prepMsg").textContent=t; flash(t); });
   msg("გენერირდება: PDF (I და II გვერდი), SHP, CAD…");
   try { writeP(); const p=P, r=await buildAll(); if (LASTGEN && LASTGEN.url) URL.revokeObjectURL(LASTGEN.url);
@@ -3106,7 +3224,7 @@ $("homeNew").addEventListener("submit",e=>{ e.preventDefault();
   flash("შეიქმნა პროექტი „"+P.name+"“ — სართული 1. დაიწყეთ ხაზვა."); });
 
 
-// ── ანგარიში, გამოწერა (20 ₾/თვე) და ღრუბელი (Supabase) ──
+// ── ანგარიში, გამოწერა (სატესტო რეჟიმი) და ღრუბელი (Supabase) ──
 // url/key ცარიელია → აპი მუშაობს როგორც აქამდე, ანგარიშის გარეშე. anon key საჯაროა — დაცვას ბაზის RLS აკეთებს.
 const CLOUD={url:"https://yvkumdcmoarckirxxarj.supabase.co", key:"sb_publishable_BhdfGBZJGJ21hGpkAHZ3iA_9830cb55"};
 const PAY_MODE="test";           // "test" — სატესტო (თანხა არ ჩამოიჭრება); შემდეგ — ბანკის გადახდის გვერდი
@@ -3161,9 +3279,10 @@ function countUp(el,to,dec){ const t0=performance.now(), D=1000, f=v=>dec?v.toFi
   const step=t=>{ const k=Math.min(1,(t-t0)/D), e=1-Math.pow(1-k,3); el.textContent=f(to*e); if (k<1) requestAnimationFrame(step); else el.textContent=f(to); }; requestAnimationFrame(step); }
 async function loadAuthStats(){ const box=$("auStats"); if (!box || !cloudOn()) return;
   try { if (!STATC || Date.now()-STATC.t>60000){ const r=await api("/rest/v1/rpc/public_stats",{method:"POST",auth:false,body:{}}); if (!r || r.users==null) throw new Error("no stats"); STATC={t:Date.now(),r}; }
-    const r=STATC.r; box.innerHTML=""; box.classList.remove("cad"); [["👥",+r.users,0,"რეგისტრირებული მომხმარებელი"],["📁",+r.projects,0,"პროექტი ჯამში"],["📐",+r.area,0,"მ² — შიდა აზომვების ჯამი"]].forEach(([ic,v,d,t])=>{
-      const c=document.createElement("div"); c.className="au-stat"; c.innerHTML='<i>'+ic+'</i><div><b></b><span>'+t+'</span></div>'; box.appendChild(c); countUp(c.querySelector("b"),v,d); });
-    try { const c=await api("/rest/v1/rpc/public_cad_stats",{method:"POST",auth:false,body:{}}); if (c&&c.projects!=null&&+c.projects>0){ box.classList.add("cad"); [["🗺",+c.projects,0,"პროექტი ჯამში — კადასტრი"],["📐",+c.area,0,"მ² — კადასტრის ჯამი"]].forEach(([ic,v,d,t])=>{ const cc=document.createElement("div"); cc.className="au-stat"; cc.innerHTML='<i>'+ic+'</i><div><b></b><span>'+t+'</span></div>'; box.appendChild(cc); countUp(cc.querySelector("b"),v,d); }); } } catch(e){}
+    const r=STATC.r; box.innerHTML=""; box.classList.remove("cad"); let cp=0, ca=null;
+    try { const c=await api("/rest/v1/rpc/public_cad_stats",{method:"POST",auth:false,body:{}}); if (c&&c.projects!=null&&+c.projects>0){ cp=+c.projects; ca=+c.area; } } catch(e){}
+    const items=[["👥",+r.users,0,"რეგისტრირებული მომხმარებელი"],["📁",+r.projects,0,"შიდა აზომვა — პროექტი"],["📐",+r.area,0,"მ² — შიდა აზომვების ჯამი"]]; if (ca!=null){ box.classList.add("cad"); items.push(["🗺",cp,0,"კადასტრი — პროექტი"],["📐",ca,0,"მ² — კადასტრის ჯამი"]); }
+    items.forEach(([ic,v,d,t])=>{ const c=document.createElement("div"); c.className="au-stat"; c.innerHTML='<i>'+ic+'</i><div><b></b><span>'+t+'</span></div>'; box.appendChild(c); countUp(c.querySelector("b"),v,d); });
     box.hidden=false; } catch(e){ box.hidden=true; } }
 function hideAuth(){ $("auth").hidden=true; authMsg(""); }
 function authMsg(t, ok){ const m=$("authMsg"); m.textContent=t||""; m.classList.toggle("ok",!!ok); }
@@ -3308,7 +3427,7 @@ async function openCab(){ if (!cloudOn() || !AUTH) return; closeMenu(); $("cab")
   try { const rows=await api("/rest/v1/payments?select=amount,currency,is_test,status,created_at&order=created_at.desc&limit=24"); const box=$("cabPays"); box.innerHTML="";
     if (!rows || !rows.length){ box.innerHTML='<span class="empty">გადახდა ჯერ არ ყოფილა.</span>'; }
     else rows.forEach(r=>{ const d=document.createElement("div"); d.className="cab-pay";
-      d.textContent=fmtDay(r.created_at)+" · "+fmt(+r.amount)+" ₾"+(r.is_test?" · სატესტო":"")+(r.status!=="paid"?" · "+r.status:""); box.appendChild(d); });
+      d.textContent=fmtDay(r.created_at)+(r.is_test?" · სატესტო გამოწერა":" · "+fmt(+r.amount)+" ₾")+(r.status!=="paid"?" · "+r.status:""); box.appendChild(d); });
   } catch(e){ $("cabPays").innerHTML='<span class="empty">ვერ ჩაიტვირთა — ინტერნეტი?</span>'; } }
 $("cabClose").addEventListener("click",()=>{ $("cab").hidden=true; });
 $("cabSave").addEventListener("click",async()=>{ const m=$("cabSaveMsg"); m.textContent="…";
@@ -3360,6 +3479,11 @@ function syncStripBtns(){ syncFoldBtn(); document.body.classList.toggle("tbc", !
 document.addEventListener("click",e=>{ if (!document.body.classList.contains("hmenu")) return; const h=document.querySelector(".app header");
   if (!h.contains(e.target) || e.target.closest("button:not(#projName)")) setTimeout(()=>document.body.classList.remove("hmenu"),0); });
 svg.addEventListener("pointerdown",()=>{ document.body.classList.remove("hmenu"); if (FOLD && !document.querySelector(".main").classList.contains("nopanel") && window.innerWidth<1600){ /* პანელი ღიაა — ხაზვას არ ვუშლით */ } }, true);
+function updPStrip(){ const el=$("pStrip"); if (!el) return; const hm=$("home"); if ((hm&&!hm.hidden)||typeof P==="undefined"||!P||P.dummy){ el.hidden=true; return; }
+  const fs=$("floorSel"), fl=fs&&fs.selectedOptions&&fs.selectedOptions[0]?fs.selectedOptions[0].textContent.trim():"", tot=(($("total")||{}).textContent||"").trim(), nm=(($("projName")||{}).textContent||P.name||"").trim(), sy=$("acctSync")?$("acctSync").dataset.st:"";
+  let sv; if (!cloudOn()||!AUTH) sv='<span class="ok">✓ შენახულია</span>'; else if (sy==="busy") sv='<span>☁ იტვირთება…</span>'; else if (sy==="err") sv='<span class="bad">⚠ ღრუბელში ვერ აიტვირთა</span>'; else sv='<span class="ok">✓ შენახულია ☁</span>';
+  el.innerHTML='<span><b>'+esc2(nm)+'</b></span>'+(fl?'<span>'+esc2(fl)+'</span>':"")+(tot?'<span>'+esc2(tot)+'</span>':"")+sv; el.hidden=false; }
+setInterval(updPStrip,1200);
 function syncFoldTool(){ const b=$("t-"+tool); $("foldTool").textContent = b ? b.textContent.trim() : ""; }
 // სამუშაო პანელი: ვიწრო ერთხაზიანი ზოლი ზედა ზოლის ქვეშ; ☰ სამუშაო პანელი — ჩვენება/დამალვა (ინახება)
 let TBON=true; try { TBON=localStorage.getItem("sida-tbon")!=="0"; } catch(e){}
@@ -4387,7 +4511,7 @@ const CPF={person:"",code:"",addr:"",from:"",to:""};
 const hashStr=t=>{ let h=5381; for (let i=0;i<t.length;i++) h=((h<<5)+h+t.charCodeAt(i))|0; return h; };
 const cadHash=pr=>hashStr(JSON.stringify(pr.parcels.map(p=>[p.id,p.layer,p.fields,p.pts.map(q=>[q.x,q.y])])));
 function projectsList(){ const h=$c("homeCad"); curProj=null; cur=null; destroyMap(); gpsStop(); SYNC.view="list";
-  h.innerHTML=`<div class="cad-head"><h2>🗺 კადასტრის პროექტები</h2><span class="spacer"></span><button class="btn" id="cadAllJ" type="button"${projects.length?"":" disabled"}>⬇ ყველა GeoJSON</button></div>
+  h.innerHTML=`<div class="cad-head"><h2>🗺 კადასტრის პროექტები</h2><span class="spacer"></span></div>
     <p class="cad-note" id="cadSyncMsg" style="margin:0 0 8px">${esc(SYNC.msg||(syncOn()?"☁ სინქრონიზაცია ჩართულია — პროექტები ანგარიშზე ინახება":"☁ ანგარიშზე შესვლის შემდეგ პროექტები სინქრონიზდება სხვა მოწყობილობებთანაც"))}</p>
     <div class="home-filt">
       <div class="field"><label>დაინტერესებული პირი</label><input class="input" data-cf="person" type="search" autocomplete="off" value="${esc(CPF.person)}"></div>
@@ -4417,7 +4541,6 @@ function projectsList(){ const h=$c("homeCad"); curProj=null; cur=null; destroyM
   h.querySelectorAll("[data-cf]").forEach(i=>i.oninput=()=>{ CPF[i.dataset.cf]=i.value; draw(); });
   syncNow();
   $c("cfClearF").onclick=()=>{ Object.keys(CPF).forEach(k=>CPF[k]=""); projectsList(); };
-  $c("cadAllJ").onclick=()=>download("kadastr_all.geojson",toGeoJSON(cadProjects().flatMap(p=>p.parcels),cadProjects().flatMap(p=>p.points||[])),"application/geo+json");
   draw(); }
 
 // ── პროექტი: ნაკვეთების სია ──
@@ -4675,7 +4798,7 @@ function closeField(){ const el=$c("cadField"); if (el) el.hidden=true; document
 function openProject(pr){ curProj=pr; cur=null; UNDO.pid=null; undoSnap(); destroyMap(); const el=ensureField(); el.hidden=false; document.body.classList.add("cf-open");
   F={pr,edit:false,selMode:false,sel:new Set(),ltMode:false,ltSel:new Set(),auto:true,activeLayer:"gps",mode:(window.matchMedia&&matchMedia("(pointer:coarse)").matches)?"cross":"click",dig:null,follow:false,panel:null,hover:null,meas:null};
   $c("cfPanel").hidden=true; $c("cfLoc").setAttribute("aria-pressed","false"); $c("cfTools").hidden=true; $c("cfToolBtn").setAttribute("aria-pressed","false"); $c("cfSearch").hidden=true; $c("cfAddMenu").hidden=true; $c("cfMeasure").setAttribute("aria-pressed","false");
-  mountMap($c("cfMap"),{bare:true,tall:true,scale:true,project:()=>F&&F.pr,dragMode:(E,N,mpp)=>!!(F&&(pmDragStart(E,N,mpp)||(F.ltMode&&!F.dig&&!F.meas)||(F.selMode&&!F.dig&&!F.meas&&!F.vedit)||vDragStart(E,N,mpp))),onDragEnd:()=>vDragEnd(),onDrag:(E,N,mpp,first)=>{ if (F.pmove){ if (!first){ F.skipQ=F.pmove; const sn=snapAt(E,N,mpp); F.skipQ=null; pmoveTo(sn.x,sn.y); } } else if (F.vedit) vDrag(E,N,mpp,first); else if (F.selMode) selDrag(E,N,mpp,first); else edgeDrag(E,N,mpp,first); },edgeInfo:(q,i)=>{ const v=q.pts[i], t=F&&F.pr&&F.pr.lineType?(v.ft||F.pr.lineType):null; return {fixed:t===null?null:t===LT_FIX, sel:!!(F&&F.ltSel&&F.ltSel.has(q.id+"|"+i))}; },isSel:(k,id)=>!!(F&&F.sel&&F.sel.has(k+id)),getParcels:()=>pr.parcels,getPoints:()=>pr.points||[],activeId:()=>F&&F.dig?F.dig.id:(cur?cur.id:null),onTap:onTap,onHover:onHover,extra:(x,X,Y,m)=>{ rubber(x,X,Y,m); topoDraw(x,X,Y,m); }});
+  mountMap($c("cfMap"),{bare:true,tall:true,scale:true,project:()=>F&&F.pr,dragMode:(E,N,mpp)=>!!(F&&(pmDragStart(E,N,mpp)||(F.ltMode&&!F.dig&&!F.meas)||(F.selMode&&!F.dig&&!F.meas&&!F.vedit)||vDragStart(E,N,mpp))),onDragEnd:()=>vDragEnd(),onDrag:(E,N,mpp,first)=>{ if (F.pmove){ if (!first){ F.skipQ=F.pmove; const sn=snapAt(E,N,mpp); F.skipQ=null; pmoveTo(sn.x,sn.y); } } else if (F.vedit) vDrag(E,N,mpp,first); else if (F.selMode) selDrag(E,N,mpp,first); else edgeDrag(E,N,mpp,first); },edgeInfo:(q,i)=>{ const v=q.pts[i], t=F&&F.pr&&F.pr.lineType?(v.ft||F.pr.lineType):null; return {fixed:t===null?null:t===LT_FIX, sel:!!(F&&F.ltSel&&F.ltSel.has(q.id+"|"+i))}; },isSel:(k,id)=>!!(F&&F.sel&&F.sel.has(k+id)),getParcels:()=>pr.parcels,getPoints:()=>isTopo(pr)?[]:(pr.points||[]),activeId:()=>F&&F.dig?F.dig.id:(cur?cur.id:null),onTap:onTap,onHover:onHover,extra:(x,X,Y,m)=>{ rubber(x,X,Y,m); topoDraw(x,X,Y,m); }});
   F.map=curMap;
   topoInit(); { let tb=$c("cfTopoBtn"); if (!tb){ tb=document.createElement("button"); tb.type="button"; tb.id="cfTopoBtn"; tb.className="qfab green"; tb.title="ტოპოგრაფია"; tb.textContent="⛰"; document.querySelector("#cadField .cf-tl").appendChild(tb); tb.onclick=()=>panel("topo"); } tb.hidden=!isTopo(pr); if (isTopo(pr)) setTimeout(()=>{ if (F&&F.pr===pr&&!F.panel) panel("topo"); },400); }
   { const mp=$c("cfMap"); if (!mp._ptAuto){ mp._ptAuto=true; const pm=e=>{ if (!F||!F.auto) return; const t=e.pointerType, want=t==="touch"?"cross":(t==="mouse"||t==="pen")?"click":null; if (want) F.ptrMode=want; if (F.mode==="gps") return;
@@ -4713,8 +4836,10 @@ function syncMode(){ const b=$c("cfModeBtn"); if (b&&F) b.textContent=MODE_ICON[
 function drawerToggle(open){ const d=$c("cfDrawer"); if (!d) return; if (open) renderDrawer(true); d.classList.toggle("open",open); $c("cfBackdrop").hidden=!open; }
 
 // ── მარცხენა პანელი (QField-ის ლეგენდასავით): ფენები თვალის ღილაკებით + ნაკვეთები/წერტილები/სნეპი ──
-function drawerHtml(){ const pr=F.pr, L=F.map?F.map.getLayers():{o:true,c:true,f:true,own:true,pts:true};
-  const cnt=draw=>{ if (draw==="gps") return (pr.points||[]).filter(q=>q.gps).length; if (draw==="point") return (pr.points||[]).filter(q=>!q.gps).length; return pr.parcels.filter(q=>layerOf(q)===draw).length; };
+function drawerHtml(){ if (isTopo(F.pr)) return topoDrawerHtml(); const pr=F.pr, L=F.map?F.map.getLayers():{o:true,c:true,f:true,own:true,pts:true};
+const prepared=pr.parcels.filter(q=>layerOf(q)==="parcel"&&q.numbered&&q.pts&&q.pts.length>=3), hn=q=>(q.holes||[]).reduce((t,h)=>t+h.length,0);   // „ფენების მომზადების“ შემდეგ ნაკვეთის კუთხეები → topo_point, გვერდები → topo_line
+  const cnt=draw=>{ if (draw==="gps") return (pr.points||[]).filter(q=>q.gps).length; if (draw==="point") return (pr.points||[]).filter(q=>!q.gps).length+prepared.reduce((t,q)=>t+corners(q).length+hn(q),0);
+    const own=pr.parcels.filter(q=>layerOf(q)===draw&&q.pts&&q.pts.length>0).length; return draw==="line"?own+prepared.reduce((t,q)=>t+q.pts.length+hn(q),0):own; };   // ჯერ წერტილების გარეშე (ახლა იხაზება) ობიექტს არ ვითვლით
   const row=(k,sym,t,draw)=>{ const act=draw&&F.layerChosen&&F.activeLayer===draw; return `<div class="cd-lg${L[k]===false?" off":""}${act?" act":""}"><button type="button" class="eye" data-lt="${k}" aria-label="${t}: ხილვადობა">${L[k]===false?"🚫":"👁"}</button><button type="button" class="nm" ${draw?`data-layerdraw="${draw}"`:`data-lt="${k}"`} style="flex:1;text-align:left"><span class="sym">${sym}</span> ${t}${draw?` <span class="cnt">[${cnt(draw)}]</span>`:""}</button>${draw?`<button type="button" class="actb${act?" on":""}" data-layerdraw="${draw}" title="აქტიური ფენა დასახაზად">${act?"✓":""}</button>`:""}</div>`; };
   const legGroup=(g,ic,t,inner)=>{ const open=!(F.leg&&F.leg[g]); return `<div class="cd-grp"><div class="cd-gh" data-leg="${g}"><span class="chev">${open?"⌄":"›"}</span><span class="sym">${ic}</span><b>${t}</b></div>${open?inner:""}</div>`; };
 
@@ -4727,9 +4852,10 @@ function drawerHtml(){ const pr=F.pr, L=F.map?F.map.getLayers():{o:true,c:true,f
    ${legGroup("mine","📁","ჩემი ფენები",Object.entries(FIELD_LAYERS).map(([k,v])=>row(v.key,v.symbol,v.name,k)).join(""))}
    ${legGroup("base","🗺","საფუძველი რუკები",row("f","▭","რეესტრის ნაკვეთები (WFS)")+row("c","▦","საკადასტრო (WMS)")+row("o","🖼","ორთოფოტო"))}
    </div>
-   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v280</div></div>`; }
+   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v300</div></div>`; }
 function renderDrawer(force){ const d=$c("cfDrawer"); if (!d||!F) return; if (!force&&!d.classList.contains("open")) return; const a=document.activeElement; if (!force&&a&&d.contains(a)&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)) return; d.innerHTML=drawerHtml(); d.onchange=onDrawerChange; }
 function onDrawer(e){
+  if (topoDrawerClick(e)) return;
   const draw=e.target.closest("[data-layerdraw]"); if(draw){chooseFieldLayer(draw.dataset.layerdraw);return;}
   if(e.target.closest("[data-all-layers]")){ const keys=["own","pts","gpspt","line","building","obligation","f","c","o"],L=F.map.getLayers(),v=keys.some(k=>L[k]===false);keys.forEach(k=>F.map.setLayer(k,v));renderDrawer(true);return;}
   if (e.target.closest("[data-leg-all]")){ F.leg=F.leg||{}; const all=F.leg.mine&&F.leg.base; F.leg={mine:!all,base:!all}; renderDrawer(true); return; }
@@ -5098,7 +5224,7 @@ function panel(kind,arg){ const el=$c("cfPanel"); if (!el||!F) return; F.panel=k
       `<div class="row" style="gap:8px;margin-top:10px"><button type="button" class="btn" data-g="toggle">${GPS.id==null?"📡 ჩართვა":"📡 გამორთვა"}</button><button type="button" class="btn" data-g="follow">🎯 მიყოლა</button></div>`; }
   else if (kind==="layers"){ const L=F.map.getLayers(); h=head("🗺 ფენები")+[["o","ორთოფოტო"],["c","საკადასტრო (WMS)"],["f","ნაკვეთები (WFS)"]].map(([k,t])=>`<label class="chk cf-l"><input type="checkbox" data-l="${k}"${L[k]?" checked":""}> ${t}</label>`).join("")+
       `<div class="row" style="gap:8px;margin-top:10px"><input class="input" id="cfQ" type="search" placeholder="საკადასტრო კოდი" style="flex:1"><button type="button" class="btn primary" data-g="find">🔍</button></div>`; }
-  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v280</div>`; }
+  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v300</div>`; }
   else if (kind==="list"){ h=head("☰ ნაკვეთები")+(F.pr.parcels.length?`<div class="cf-list">${F.pr.parcels.map(p=>{ const m=metrics(p); return `<button type="button" class="cad-card" data-pid="${p.id}"><b>${esc(p.fields.CADCODE||p.fields.ADRES||"ნაკვეთი")}</b><span>${esc(p.fields.INT_PER_ID||"—")}</span><span>${p.pts.length} წერტილი · ${m.area?m.area.toFixed(1)+" მ²":"—"}</span></button>`; }).join("")}</div>`:'<p class="cad-empty">ნაკვეთები ჯერ არ არის. დააჭირეთ „+ ნაკვეთი“.</p>')+ptsList(); }
   else if (kind==="wfs"){ F.hit=arg; h=head("📍 რეესტრის ნაკვეთი")+`<div class="cf-kv"><span>კოდი</span><b>${esc(arg.code||"—")}</b></div>`+(arg.area?`<div class="cf-kv"><span>ფართობი</span><b>${Math.round(arg.area)} მ²</b></div>`:"")+`<div class="cf-btns"><button type="button" class="btn primary" data-g="addwfsg">📋 ნაკვეთად ჩაკოპირება (გეომეტრიით)</button><button type="button" class="btn" data-g="addwfs">+ მხოლოდ კოდით</button></div>`; }
   else if (kind==="ident"){ h=head("Features")+identHtml(); }
@@ -5179,7 +5305,7 @@ function bindPanel(el,kind){
     const dx=el.querySelector("#cfDx"), dy=el.querySelector("#cfDy"); const sv=()=>{ CORR.preset=false; CORR.dx=parseFloat(dx.value)||0; CORR.dy=parseFloat(dy.value)||0; try{ localStorage.setItem("cad_dx",String(CORR.dx)); localStorage.setItem("cad_dy",String(CORR.dy)); }catch(e){} toast("კორექცია: ΔX "+CORR.dx+" · ΔY "+CORR.dy,2000); }; if (dx) dx.onchange=sv; if (dy) dy.onchange=sv; }
   if (kind==="neigh") neighBind(el);
   el.querySelectorAll("[data-pf]").forEach(i=>i.oninput=()=>{ F.pt[i.dataset.pf]=i.value; save(); F.map.redraw(); });
-  el.querySelectorAll("[data-f]").forEach(i=>i.oninput=()=>{ if (i.value==="__new") return; cur.fields[i.dataset.f]=i.value; if (i.dataset.f==="MEASUR_ID") try{ localStorage.setItem(LSM,i.value); const v=i.value.trim(); if (v){ const a=measurerList().filter(x=>x!==v); a.unshift(v); localStorage.setItem("cad_measurers",JSON.stringify(a.slice(0,10))); } }catch(e){} save(); });
+  el.querySelectorAll("[data-f]").forEach(i=>i.oninput=()=>{ if (i.value==="__new") return; cur.fields[i.dataset.f]=i.value; if (i.dataset.f==="LEGAL_DOC"){ const mm=String(i.value).match(/\d{2}\.\d{2}\.\d{2}\.\d{3}\.\d{3}(?:\.\d+)*/); cur.fields.CADCODE=mm?mm[0]:""; } if (i.dataset.f==="MEASUR_ID") try{ localStorage.setItem(LSM,i.value); const v=i.value.trim(); if (v){ const a=measurerList().filter(x=>x!==v); a.unshift(v); localStorage.setItem("cad_measurers",JSON.stringify(a.slice(0,10))); } }catch(e){} save(); });
   if (kind==="form"){ if (!F.formEdit) el.querySelectorAll(".cad-fields input,.cad-fields textarea,.cad-fields select,[data-g=today],[data-g=fsave],[data-g=renum]").forEach(i=>{ i.disabled=true; }); const pi=el.querySelector("#cfPhotoIn"); if (pi) pi.onchange=async()=>{ const fl=pi.files[0]; pi.value=""; if (!fl) return; try { const u=await shrinkPhoto(fl); (cur.photos=cur.photos||[]).push(u); save(); panel("form"); } catch(e){ toast("ფოტოს დამატება ვერ მოხერხდა",2500); } }; }
   { const ms=el.querySelector('select[data-f="MEASUR_ID"]'); if (ms) ms.onchange=()=>{ if (ms.value==="__new"){ const n=(prompt("ამზომველის სახელი და გვარი:")||"").trim(); if (!n){ ms.value=cur.fields.MEASUR_ID||""; return; } const a=measurerList().filter(x=>x!==n); a.unshift(n); try{ localStorage.setItem("cad_measurers",JSON.stringify(a.slice(0,10))); localStorage.setItem(LSM,n); }catch(e){} cur.fields.MEASUR_ID=n; save(); panel("form"); } }; }
   const cc=el.querySelector("#cfClosed"); if (cc) cc.onchange=()=>{ cur.closed=cc.checked; save(); F.map.redraw(); panel("form"); }; if (kind==="pos"||kind==="settings") rxFill(); }
@@ -5192,13 +5318,13 @@ function formMenuHtml(p){ const L=layerOf(p), mv=POLY_LAYERS.includes(L)&&p.clos
 function shrinkPhoto(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onerror=rej; r.onload=()=>{ const im=new Image(); im.onerror=rej; im.onload=()=>{ const k=Math.min(1,900/Math.max(im.width,im.height)), c=document.createElement("canvas"); c.width=Math.round(im.width*k); c.height=Math.round(im.height*k); c.getContext("2d").drawImage(im,0,0,c.width,c.height); res(c.toDataURL("image/jpeg",0.62)); }; im.src=r.result; }; r.readAsDataURL(file); }); }
 function dupFeature(p){ const q=JSON.parse(JSON.stringify(p)); q.id=nid(); delete q.fid; delete q.ident; delete q.pfid; delete q.filtr; q.fresh=false; F.pr.parcels.splice(F.pr.parcels.indexOf(p),0,q); save(); selectParcel(q,false); toast("⧉ დუბლირებულია (იგივე ადგილას)",2500); return q; }
 function moveFeature(p,k){ const old=layerOf(p); if (old===k) return; p.layer=k; if (k==="parcel") p.fields=Object.assign(newFields(F.pr),p.fields||{}); else { const f=p.fields||{}; p.fields={NOTE:f.NOTE||""}; } p.numbered=false; p.pts.forEach((q,i)=>{ delete q.mid; q.id=ptName(i); }); delete p.pfid; delete p.ident; save(); F.map.redraw(); renderBottom(); toast("🔀 გადატანილია: "+FIELD_LAYERS[k].name,2500); }
-function openForm(p,edit){ cur=p; F.formEdit=edit!==false; F.ftab="gen"; F.fmenu=false; panel("form"); F.map.redraw(); }
+function openForm(p,edit){ cur=p; if (p.fields&&!p.fields.LEGAL_DOC&&p.fields.CADCODE) p.fields.LEGAL_DOC=p.fields.CADCODE; F.formEdit=edit!==false; F.ftab="gen"; F.fmenu=false; panel("form"); F.map.redraw(); }
 function pointsTable(p){ return p.pts.length?`<div class="cad-pts"><table><tr><th>#</th><th>X</th><th>Y</th><th>±H</th><th>±V</th><th></th></tr>${p.pts.map((q,i)=>`<tr><td>${q.id}</td><td>${q.x.toFixed(2)}</td><td>${q.y.toFixed(2)}</td><td class="acc ${q.src==="cross"||q.src==="click"?"":grade(q.acc)}">${q.src==="cross"||q.src==="click"?(q.snap?"🧲":"⌖"):fa(q.acc)}</td><td>${q.vacc!=null?fa(q.vacc):"—"}</td><td><button type="button" class="btn sm" data-g="ptdel" data-i="${i}">✕</button></td></tr>`).join("")}</table></div>`:""; }
 function simpleFormHtml(p){ const L=layerOf(p), f=p.fields, m=metrics(p), F0=FIELD_LAYERS[L], tf=(k,lab,ph)=>`<div class="field"><label>${lab}</label><input class="input" data-f="${k}" value="${esc(f[k])}" placeholder="${ph||""}" autocomplete="off"></div>`;
   linkFeatures(F.pr); const par=F.pr.parcels.find(q=>layerOf(q)==="parcel"&&q.fid!=null&&q.fid===p.pfid);
   let body=""; if (L==="building"){ const cv=f.CONDITION||""; const ty0=f.TYPE||""; body=`<div class="field"><label>TYPE — დანიშნულება</label><select class="input" data-f="TYPE"><option value=""${ty0?"":" selected"}>—</option>${[["sacxovrebeli","საცხოვრებელი"],["ara-sacxovrebeli","არასაცხოვრებელი"]].map(o=>`<option value="${o[0]}"${ty0===o[0]?" selected":""}>${o[1]}</option>`).join("")}</select></div>`+`<div class="field"><label>CONDITION — მდგომარეობა</label><select class="input" data-f="CONDITION"><option value=""${cv?"":" selected"}>—</option>${[["aSenebuli","აშენებული"],["mSenebare","მშენებარე"],["dangreuli","დანგრეული"]].map(o=>`<option value="${o[0]}"${cv===o[0]?" selected":""}>${o[1]}</option>`).join("")}</select></div>`+tf("FLOR_ID","FLOR_ID — სართულიანობა"); body=tf("BUILDING_ID","BUILDING_ID — შენობის №")+body; const ro=(k,v)=>`<div class="cf-kv"><span>${k}</span><b>${esc(v==null||v===""?"—":String(v))}</b></div>`;
     body+=ro("identifi",p.ident!=null?p.ident:(par?par.ident:""))+ro("Shape_Length",m.per.toFixed(2))+ro("Shape_Area",m.area.toFixed(2))+ro("PARCEL_FID",p.pfid); }
-  else if (L==="obligation"){ const tv=f.type||""; body=`<div class="field"><label>ვალდებულების სახე</label><select class="input" data-f="type"><option value=""${tv?"":" selected"}>—</option><option value="servituti"${tv==="servituti"?" selected":""}>სერვიტუტი</option><option value="sxva"${tv==="sxva"?" selected":""}>სხვა</option></select></div>`; }
+  else if (L==="obligation"){ const tv=f.type||""; body=`<div class="field"><label>ვალდებულების სახე</label><select class="input" data-f="type"><option value=""${tv?"":" selected"}>—</option><option value="servituti"${tv==="servituti"?" selected":""}>სერვიტუტი</option><option value="sxva"${tv==="sxva"?" selected":""}>სხვა</option></select></div>`+ro("identifi",p.ident!=null?p.ident:(par?par.ident:""))+ro("Shape_Lenght",m.per.toFixed(2))+ro("Shape_Area",m.area.toFixed(2))+ro("PARCEL_FID",p.pfid); }
   else if (L==="line"){ const cur0=f.type||F.pr.lineType||LT_NON; body=`<div class="field"><label>ხაზის ტიპი</label><select class="input" data-f="type"><option value="${LT_NON}"${cur0===LT_NON?" selected":""}>არაფიქსირებული</option><option value="${LT_FIX}"${cur0===LT_FIX?" selected":""}>ფიქსირებული</option><option value="damxmare"${cur0==="damxmare"?" selected":""}>დამხმარე</option></select></div>`; }
   body+=`<div class="field"><label>NOTE (შენიშვნა)</label><textarea class="input" data-f="NOTE" rows="2">${esc(f.NOTE)}</textarea></div>`;
   return `<div class="cad-sum"><b>${p.pts.length}</b> წერტილი · ${L==="line"?"სიგრძე":"პერიმეტრი"} <b>${m.per.toFixed(2)}</b> მ${L==="line"?"":` · ფართობი <b>${m.area.toFixed(2)}</b> მ²`}</div>
@@ -5209,7 +5335,7 @@ function simpleFormHtml(p){ const L=layerOf(p), f=p.fields, m=metrics(p), F0=FIE
 function formHtml(p){ if (layerOf(p)!=="parcel") return simpleFormHtml(p); const f=p.fields, m=metrics(p), t=(k,lab,ex)=>`<div class="field"><label>${lab}</label>${ex||`<input class="input" data-f="${k}" value="${esc(f[k])}" autocomplete="off">`}</div>`;
   return `<div class="cad-sum">პერიმეტრი <b>${m.per.toFixed(2)}</b> მ · ფართობი <b>${m.area.toFixed(2)}</b> მ²</div>
   <div class="cf-btns"><button type="button" class="btn" data-g="prep1">🧩 ფენების მომზადება</button><button type="button" class="btn" data-g="neigh">🧭 მოსაზღვრეები</button><button type="button" class="btn" data-g="prep4">🖨 ნახაზების გატანა</button></div>
-  <div class="cad-fields">${t("CADCODE","საკადასტრო კოდი")}
+  <div class="cad-fields">
    ${t("FUNCTION","FUNCTION (ფუნქცია)",`<select class="input" data-f="FUNCTION">${selOpts(FUNCS.map(v=>[v,FUNC_KA[v]||v]),f.FUNCTION)}</select>`)}
    ${t("INT_PER_ID","INT_PER_ID (დაინტ. პირი)")}${t("LEGAL_DOC","LEGAL_DOC (სამართლ. დოკ.)")}${t("MEASUR_ID","MEASUR_ID (აზომვის შემსრულებელი)",`<select class="input" data-f="MEASUR_ID">${(()=>{ const ml=measurerList(), cu=f.MEASUR_ID||""; const o=[["",ml.length?"— აირჩიეთ —":"— დაამატეთ ამზომველი კაბინეტში —"],["N/A","N/A"],...ml.map(m=>[m,m])]; if (cu&&!o.some(x=>x[0]===cu)) o.push([cu,cu]); return o.map(x=>`<option value="${esc(x[0])}"${x[0]===cu?" selected":""}>${esc(x[1])}</option>`).join(""); })()}</select>`)}
    ${t("ADRES","ADRES (მისამართი)",`<textarea class="input" data-f="ADRES" rows="2">${esc(f.ADRES)}</textarea>`)}
@@ -5241,9 +5367,9 @@ function info(){ const h=$c("homeInfo"), np=projects.length, ni=(window.PIDX&&PI
     <div class="hm-step"><i>3</i><div><b>აზომეთ ადგილზე</b><span>ხაზვა ან GPS წერტილები. ოფლაინ რეჟიმიც მუშაობს.</span></div></div>
     <div class="hm-step"><i>4</i><div><b>გადმოწერეთ</b><span>შიდა აზომვა: PDF/SHP/CAD. კადასტრი: Shapefile ZIP/CSV.</span></div></div></div>
     <h2 class="hm-h">რჩევები</h2>
-    <div class="hm-steps"><div class="hm-step"><div><b>🛰 GPS-ის სიზუსტე</b><span>≤0.10 მ მწვანე (RTK), ≤1 მ ყვითელი, >1 მ წითელი. სანტიმეტრული სიზუსტისთვის გარე მიმღებია საჭირო.</span></div></div>
-    <div class="hm-step"><div><b>📚 სახელმძღვანელო</b><span>მოკლე ვიდეოები — ზედა მენიუს „სახელმძღვანელოში“.</span></div></div>
-    <div class="hm-step"><div><b>💬 შენიშვნები</b><span>სატესტო ვერსიაა — რაც გაკლიათ ან გიშლით ხელს, გვითხარით.</span></div></div></div></div>`;
+    <div class="hm-steps"><div class="hm-step hm-tip"><span class="tip-ic">🛰</span><div><b>GPS-ის სიზუსტე</b><span>≤0.10 მ მწვანე (RTK), ≤1 მ ყვითელი, >1 მ წითელი. სანტიმეტრული სიზუსტისთვის გარე მიმღებია საჭირო.</span></div></div>
+    <div class="hm-step hm-tip"><span class="tip-ic">📚</span><div><b>სახელმძღვანელო</b><span>მოკლე ვიდეოები — ზედა მენიუს „სახელმძღვანელოში“.</span></div></div>
+    <div class="hm-step hm-tip"><span class="tip-ic">💬</span><div><b>შენიშვნები</b><span>სატესტო ვერსიაა — რაც გაკლიათ ან გიშლით ხელს, გვითხარით.</span></div></div></div></div>`;
   h.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>setHomeTab(b.dataset.go)); }
 
 // ══ KadastrTools-ის ფუნქციები აპში: დანომვრა, ფენები (topo_point / topo_line), მოსაზღვრეები, II გვერდი (PDF + Excel), რეესტრის ნაკვეთის კოპირება ══
@@ -5352,13 +5478,13 @@ async function exportLayers(pr){ const K=window.__K, r=await layerFiles(pr); dow
 
 // 3) მოსაზღვრეები (mosazgvrebi.py)
 function neighRows(p){ const ids=corners(p).map(q=>q.id), n=ids.length; if (n<2) return [];
-  if (p.neigh&&p.neigh.length&&p.neigh.every(r=>r.s.every(id=>ids.includes(id)))) return p.neigh;
+  if (p.neigh&&p.neigh.length&&p.neigh.every(r=>r.s.every(id=>ids.includes(id)))){ p.neigh.forEach(r=>{ const f=mosFix(r.mos); if (f!==r.mos) r.mos=f; }); return p.neigh; }
   const old=new Map((p.neigh||[]).map(r=>[r.s.join(">"),r.mos])); p.neigh=ids.map((id,i)=>{ const s=[id,ids[(i+1)%n]]; return {s,mos:old.get(s.join(">"))||""}; }); return p.neigh; }
 function distSeg(px,py,ax,ay,bx,by){ const dx=bx-ax, dy=by-ay, L2=dx*dx+dy*dy; let t=L2?((px-ax)*dx+(py-ay)*dy)/L2:0; t=Math.max(0,Math.min(1,t)); return Math.hypot(px-(ax+t*dx),py-(ay+t*dy)); }
 function distToRing(pt,ring){ if (inRing(pt,ring)) return 0; let d=Infinity; for (let i=0;i<ring.length;i++){ const a=ring[i], b=ring[(i+1)%ring.length]; d=Math.min(d,distSeg(pt[0],pt[1],a[0],a[1],b[0],b[1])); } return d; }
 function showNeighResult(list){ let el=document.getElementById("neighRes"); if (el) el.remove(); el=document.createElement("div"); el.id="neighRes";
   el.style.cssText="position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px";
-  let total=0, unk=0; const body=list.map(q=>{ const rows=neighRows(q); total+=rows.length; return `<div style="margin:12px 0 4px;font-weight:700">#${esc(q.ident||"")} ${esc((q.fields||{}).CADCODE||"")}</div>`+rows.map(r=>{ const u=/sxva geografiuli/.test(r.mos||"")||!r.mos; if (u) unk++;
+  let total=0, unk=0; const body=list.map(q=>{ const rows=neighRows(q); total+=rows.length; return `<div style="margin:12px 0 4px;font-weight:700">#${esc(q.ident||"")} ${esc((q.fields||{}).CADCODE||"")}</div>`+rows.map(r=>{ const u=/sxva geografiuli|სხვა გეოგრაფიული/.test(r.mos||"")||!r.mos; if (u) unk++;
       return `<div style="display:flex;gap:12px;padding:5px 0;border-bottom:1px solid #eee"><span style="min-width:118px;font-family:monospace">${esc(r.s.join(" ------- "))}</span><span style="${u?"color:#6b7280":"font-weight:600"}">${esc(r.mos||"—")}</span></div>`; }).join(""); }).join("");
   el.innerHTML=`<div style="background:#fff;color:#111;border-radius:14px;max-width:580px;width:100%;max-height:82vh;display:flex;flex-direction:column"><div style="padding:14px 16px;border-bottom:1px solid #e5e7eb;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px"><span>🧭 მოსაზღვრეები — რა შეივსო</span><button type="button" id="neighResX" class="btn">✕</button></div><div style="padding:8px 16px 0;color:#4b5563;font-size:13px">${total} საზღვარი · ${total-unk} ნაკვეთი/ობიექტი ნაპოვნია · ${unk} „სხვა გეოგრაფიული ობიექტი“ ან ცარიელი (შეგიძლიათ ხელით შეცვალოთ ნაკვეთის ფორმაში → 🧭)</div><div style="padding:4px 16px 14px;overflow:auto">${body||"—"}</div></div>`;
   document.body.appendChild(el); el.onclick=e=>{ if (e.target===el||e.target.id==="neighResX") el.remove(); }; }
@@ -5380,7 +5506,7 @@ async function neighInfo(code){ const codes=String(code||"").match(/\d{2}\.\d{2}
   toast("",1); const old=document.getElementById("neighInfoBox"); if (old) old.remove(); const el=document.createElement("div"); el.id="neighInfoBox"; el.style.cssText="position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px";
   el.innerHTML=`<div style="background:#fff;color:#111;border-radius:14px;max-width:560px;width:100%;max-height:82vh;display:flex;flex-direction:column"><div style="padding:14px 16px;border-bottom:1px solid #e5e7eb;font-weight:700;display:flex;justify-content:space-between;align-items:center"><span>ℹ რეესტრის ინფორმაცია</span><button type="button" id="neighInfoX" class="btn">✕</button></div><div style="padding:4px 16px 14px;overflow:auto">${body}</div></div>`;
   document.body.appendChild(el); el.onclick=e=>{ if (e.target===el||e.target.id==="neighInfoX") el.remove(); const f=e.target.closest("[data-ifind]"); if (f){ el.remove(); F.map.find(f.dataset.ifind); } }; }
-async function neighAuto(p,quiet){ if (p.pts.length<3){ toast("მინ. 3 წერტილი",2500); return; }
+async function neighAuto(p,quiet,keep){ if (p.pts.length<3){ toast("მინ. 3 წერტილი",2500); return; }
   const xs=p.pts.map(q=>q.x), ys=p.pts.map(q=>q.y), pad=15, bb=[Math.min(...xs)-pad,Math.min(...ys)-pad,Math.max(...xs)+pad,Math.max(...ys)+pad].map(Math.round);
   toast("ვეძებ მეზობლებს რეესტრში…",25000); let regs;
   try { regs=await wfsQ("BBOX(SHAPE,"+bb.join(",")+",'EPSG:32638')",500); } catch(e){ toast("რეესტრი მიუწვდომელია: "+e.message,5000); return false; }
@@ -5391,16 +5517,18 @@ async function neighAuto(p,quiet){ if (p.pts.length<3){ toast("მინ. 3 წ�
         const found=[]; regs.forEach(g=>{ if (!g.code||g.code===own||found.includes(g.code)) return; if (g.rings.some(rg=>distToRing([qx,qy],rg)<=tol)) found.push(g.code); });
         if (found.length) found.forEach(c=>{ score[c]=(score[c]||0)+1; }); else stateHits++; }); }); } }
     return {score,stateHits}; };
-  rows.forEach(r=>{ let sc=scanRow(r,0.3,[1]); if (!Object.keys(sc.score).length) sc=scanRow(r,1.0,[0.5,1,2]);     // თუ მკაცრი ძებნით ვერაფერი ნახა — უფრო ფართოდ (საველე საზღვარი რეესტრს რამდენიმე დეციმეტრით შეიძლება არ ემთხვეოდეს)
+  rows.forEach(r=>{ if (keep&&String(r.mos||"").trim()) return;   // ხელით ჩაწერილი/არჩეული აღწერა ისევ ისე რჩება
+    let sc=scanRow(r,0.3,[1]); if (!Object.keys(sc.score).length) sc=scanRow(r,1.0,[0.5,1,2]);     // თუ მკაცრი ძებნით ვერაფერი ნახა — უფრო ფართოდ (საველე საზღვარი რეესტრს რამდენიმე დეციმეტრით შეიძლება არ ემთხვეოდეს)
     const score=sc.score, stateHits=sc.stateHits, ranked=Object.entries(score).sort((u,v)=>v[1]-u[1]); let val;
-    if (!ranked.length) val="sxva geografiuli obieqti"; else { const n1=ranked[0][1]; if (stateHits>n1) val="sxva geografiuli obieqti"; else if (ranked.length>=2&&ranked[1][1]>=n1*0.5) val=ranked[0][0]+" / "+ranked[1][0]; else val=ranked[0][0]; }
+    if (!ranked.length) val="სხვა გეოგრაფიული ობიექტი"; else { const n1=ranked[0][1]; if (stateHits>n1) val="სხვა გეოგრაფიული ობიექტი"; else if (ranked.length>=2&&ranked[1][1]>=n1*0.5) val=ranked[0][0]+" / "+ranked[1][0]; else val=ranked[0][0]; }
     r.mos=val; });
   save(); if (!quiet){ toast("მოსაზღვრეები შევსებულია ("+rows.length+" საზღვარი)",3500); } if (F&&F.panel==="neigh") panel("neigh"); return true; }
 // ── მოსაზღვრეების რედაქტორი (mosazgvrebi.py-ს დიალოგი, გატანის ფუნქციების გარეშე) + ხაზის ტიპი (ფიქსირებული / არაფიქსირებული) ──
 const NEIGHUI={undo:[],sel:new Set(),focusSnap:null};
 const GLATK={a:"ა",b:"ბ",g:"გ",d:"დ",e:"ე",v:"ვ",z:"ზ",T:"თ",i:"ი",k:"კ",l:"ლ",m:"მ",n:"ნ",o:"ო",p:"პ",J:"ჟ",r:"რ",s:"ს",t:"ტ",u:"უ",f:"ფ",q:"ქ",R:"ღ",y:"ყ",S:"შ",C:"ჩ",c:"ც",Z:"ძ",w:"წ",W:"ჭ",x:"ხ",j:"ჯ",h:"ჰ"}, NOPTS_KA={gza:"გზა",daudgenelia:"დაუდგენელი",mdinare:"მდინარე",xevi:"ხევი","sxva geografiuli obieqti":"სხვა გეოგრაფიული ობიექტი","sxva geografiuli areali":"სხვა გეოგრაფიული არეალი"};
 const mosKa=v=>{ v=String(v==null?"":v); if (NOPTS_KA[v]) return NOPTS_KA[v]; if (/^[A-Za-z\s\-]+$/.test(v)) return [...v].map(c=>GLATK[c]||c).join(""); return v; };
-const NOPTS=["gza","daudgenelia","mdinare","xevi","sxva geografiuli obieqti"], NCOL={gza:"#1d4ed8",daudgenelia:"#b45309",mdinare:"#0f766e",xevi:"#7c3aed"};
+const NOPTS=["გზა","დაუდგენელი","მდინარე","ხევი","სხვა გეოგრაფიული ობიექტი"], NCOL={"გზა":"#1d4ed8","დაუდგენელი":"#b45309","მდინარე":"#0f766e","ხევი":"#7c3aed"};
+const mosFix=v=>String(v==null?"":v).replace(/\b(gza|daudgenelia|mdinare|xevi|sxva geografiuli obieqti|sxva geografiuli areali)\b/g,m=>NOPTS_KA[m]||m);
 const LT_FIX="fiqsirebuli", LT_NON="ara fiqsirebuli", LT_KA={"fiqsirebuli":"ფიქსირებული","ara fiqsirebuli":"არაფიქსირებული"};
 const lineTypeOf=(pr,q)=>(q&&q.ft)||pr.lineType||LT_NON;
 function rowPath(p,r){ let path=[]; for (let k=0;k+1<r.s.length;k++){ const pa=ringPath(p,r.s[k],r.s[k+1]); path=path.concat(k?pa.slice(1):pa); } return path; }
@@ -5428,7 +5556,7 @@ function neighBind(el){
     i.onchange=()=>{ if (NEIGHUI.focusSnap!=null){ NEIGHUI.undo.push({pid:cur.id,rows:NEIGHUI.focusSnap}); if (NEIGHUI.undo.length>60) NEIGHUI.undo.shift(); NEIGHUI.focusSnap=null; } if (i.dataset.nb!=null){ const r=rows()[+i.dataset.nb]; const s=i.value.split(/\s*-{2,}\s*/).map(v=>v.trim()).filter(Boolean); if (s.length>=2){ r.s=s; cur.neigh=rows(); save(); panel("neigh"); nStatus("✏️ საზღვარი შეიცვალა (↩ Undo)"); } else nStatus("⚠️ ჩაწერეთ მინ. ორი წერტილი, მაგ. A ------- B"); } else nStatus("✏️ შეცვლილია (↩ Undo)"); };
     if (i.dataset.ni!=null) i.oninput=()=>{ const r=rows()[+i.dataset.ni]; r.mos=i.value; const c=NCOL[i.value]; i.style.background=c||""; i.style.color=c?"#fff":""; save(); }; });
   // ჩამოსაშლელი: ირჩევს ტიპს და ჩაწერს აღწერის ველში
-  el.querySelectorAll("[data-nopt]").forEach(sl=>{ sl.onchange=()=>{ if (!sl.value) return; const i=+sl.dataset.nopt; nSnap(cur); const r=rows()[i]; r.mos=sl.value; cur.neigh=rows(); save(); panel("neigh"); nStatus("✅ "+r.s.join(" ------- ")+" → "+sl.value+" (↩ Undo)"); }; });
+  el.querySelectorAll("[data-nopt]").forEach(sl=>{ sl.onchange=()=>{ if (!sl.value) return; const i=+sl.dataset.nopt; nSnap(cur); const r=rows()[i]; const old=String(r.mos||"").trim(); r.mos=old?(old.split(/\s*,\s*/).includes(sl.value)?old:old+", "+sl.value):sl.value; cur.neigh=rows(); save(); panel("neigh"); nStatus("✅ "+r.s.join(" ------- ")+" → "+r.mos+" (↩ Undo)"); }; });   // წინა ჩანაწერს არ გადააწერს — ემატება
   // მონიშვნა: დაჭერა და ჩამოსმა (მაუსით ან თითით სახელურზე) — რამდენიმე რიგი ერთად
   const toggle=(i,on)=>{ if (on) NEIGHUI.sel.add(i); else NEIGHUI.sel.delete(i); const row=el.querySelector('[data-nrow="'+i+'"]'); if (row) row.classList.toggle("sel",on); const c=el.querySelector('[data-nsel="'+i+'"]'); if (c) c.checked=on; };
   let drag=null; const rowAt=(x,y)=>{ const e=document.elementFromPoint(x,y); return e&&e.closest?e.closest("[data-nrow]"):null; };
@@ -5480,7 +5608,8 @@ async function page2Canvases(pr,p){ const K=window.__K, PW=K.PW, PH=K.PH, mm=K.m
   R(main,pt(34.6),[Vl(f.ADRES||"",0,2,{s:mm(2.7)}),Vl(m.area?String(Math.round(m.area)):"",2,3),Vl(FUNC_KA[f.FUNCTION]||f.FUNCTION||"",3,4),Vl("",4,5)]);
   blank(main);
   R(main,pt(24),[Hd("შენობა-ნაგებობის რიგითი ნომერი",0,1),Hd("დანიშნულება",1,2),Hd("მდგომარეობა",2,3),Hd("სართულიანობა",3,4),Hd("განაშენიანების ფართობი (კვ.მ)",4,5)]);
-  { const bl=link("building"); bl.forEach((q,i)=>{ const q0=q.fields||{}; R(main,pt(14.5),[Vl(String(i+1).padStart(2,"0"),0,1),Vl(BTYPE_KA[q0.TYPE]||q0.TYPE||"",1,2),Vl(COND_KA[q0.CONDITION]||q0.CONDITION||"",2,3),Vl(q0.FLOR_ID||"",3,4),Vl(String(Math.round(metrics(q).area)),4,5)]); }); for (let i=bl.length;i<2;i++) blank(main); }
+  { const bl=link("building").map((q,i)=>({q,i,id:String((q.fields||{}).BUILDING_ID||"").trim()})).sort((a,b)=>{ const x=parseInt(a.id,10), y=parseInt(b.id,10); return ((isNaN(x)?1e9:x)-(isNaN(y)?1e9:y))||(a.i-b.i); }).map((o,k)=>({q:o.q,bn:o.id||String(k+1).padStart(2,"0")}));
+    bl.forEach((o,i)=>{ const q=o.q, q0=q.fields||{}; R(main,pt(14.5),[Vl(o.bn,0,1),Vl(BTYPE_KA[q0.TYPE]||q0.TYPE||"",1,2),Vl(COND_KA[q0.CONDITION]||q0.CONDITION||"",2,3),Vl(q0.FLOR_ID||"",3,4),Vl(String(Math.round(metrics(q).area)),4,5)]); }); for (let i=bl.length;i<2;i++) blank(main); }
   { const ol=link("obligation"), o1=ol[0], q1=o1&&o1.fields||{};
     R(main,pt(14.5),[Vl("",0,1),Hd("უფლებრივი შეზღუდვის/ დატვირთვის საზღვრების აღწერა",1,2,{rs:2}),Hd("ვალდებულების სახე",2,3),Hd("ფართობი (კვ.მ).",3,4),Vl("",4,5)],{keepNext:true});
     R(main,pt(14.5),[Vl("",0,1),Vl(OBL_KA[q1.type||q1.TYPE]||q1.type||q1.TYPE||"",2,3),Vl(o1?String(Math.round(metrics(o1).area)):"",3,4),Vl("",4,5)],{skip1:true});
@@ -5608,7 +5737,7 @@ async function drawingCanvas(pr,p){ const K=window.__K, PW=K.PW, PH=K.PH, mm=K.m
   // ლოგოს უჯრა (როგორც სიდა აზომვის ცხრილში) + მისამართი
   { const img=await loadImg(co.logo); if (img){ const bwm=mm(48-12-3), bhm=mm(R1-T0-3), k=Math.min(bwm/img.width,bhm/img.height); x.drawImage(img,mm(12)+(mm(36)-img.width*k)/2,mm(T0)+(mm(R1-T0)-img.height*k)/2,img.width*k,img.height*k); } }
   T("მისამართი",48.6,T0,22,R1-T0,{s:mm(2.9)}); T(f.ADRES,71.6,T0,126.4,R1-T0,{s:mm(2.9)});
-  T("დანიშნულება",12.6,R1,23.8,R2-R1,{s:mm(2.9)}); T(f.FUNCTION,37.2,R1,59.6,R2-R1,{s:mm(2.9)});
+  T("დანიშნულება",12.6,R1,23.8,R2-R1,{s:mm(2.9)}); T(FUNC_KA[f.FUNCTION]||f.FUNCTION,37.2,R1,59.6,R2-R1,{s:mm(2.9)});
   T("საკადასტრო აღწერაზე უფლებამოსილი პირი",97.6,R1,42.2,R2-R1,{s:mm(2.6)}); T(letters(f.MEASUR_ID),140.4,R1,30,R2-R1,{s:mm(2.9)});
   { const ms=(co.measurers||[]).filter(q=>q&&q.name), mid=String(f.MEASUR_ID||""); let cur=ms.find(q=>mid.startsWith(q.name)||mid.includes(q.name)); if (!cur&&!mid.trim()) cur=ms[0]; const sg=cur&&await loadImg(cur.sig);
     if (sg){ const bw0=mm(26.5), bh0=mm(R2-R1-0.8), k=Math.min(bw0/sg.width,bh0/sg.height); x.drawImage(sg,mm(171)+(bw0-sg.width*k)/2,mm(R1+0.4)+(bh0-sg.height*k)/2,sg.width*k,sg.height*k); } }
@@ -5619,7 +5748,7 @@ async function drawingCanvas(pr,p){ const K=window.__K, PW=K.PW, PH=K.PH, mm=K.m
   { const items=[["წერტილი","ნაკვეთის კუთხე",(X0,Y0)=>{ const r=mm(1.1), cx1=X0+mm(3.5), cy1=Y0+mm(1.7); x.beginPath(); x.moveTo(cx1-r,cy1-r); x.lineTo(cx1+r,cy1+r); x.moveTo(cx1+r,cy1-r); x.lineTo(cx1-r,cy1+r); x.lineWidth=mm(0.3); x.strokeStyle="#000"; x.stroke(); }],
       ...(hasNon?[["ხაზი","არა ფიქსირებული",(X0,Y0)=>{ x.beginPath(); x.moveTo(X0,Y0+mm(1.7)); x.lineTo(X0+mm(7),Y0+mm(1.7)); x.lineWidth=mm(0.55); x.strokeStyle="#FFE600"; x.stroke(); x.setLineDash([mm(2.2),mm(1.1)]); x.strokeStyle="#D01010"; x.stroke(); x.setLineDash([]); }]]:[]),
       ...(hasFix?[["ხაზი","ფიქსირებული",(X0,Y0)=>{ x.beginPath(); x.moveTo(X0,Y0+mm(1.7)); x.lineTo(X0+mm(7),Y0+mm(1.7)); x.lineWidth=mm(0.6); x.strokeStyle="#D01010"; x.stroke(); }]]:[]),
-      ["ნაკვეთი",String(f.FUNCTION||"ნაკვეთი"),(X0,Y0)=>{ x.lineWidth=mm(0.5); x.strokeStyle="#FFE600"; x.strokeRect(X0,Y0,mm(7),mm(3.4)); x.setLineDash([mm(2.2),mm(1.1)]); x.strokeStyle="#D01010"; x.strokeRect(X0,Y0,mm(7),mm(3.4)); x.setLineDash([]); }]];
+      ["ნაკვეთი",String(FUNC_KA[f.FUNCTION]||f.FUNCTION||"ნაკვეთი"),(X0,Y0)=>{ x.lineWidth=mm(0.5); x.strokeStyle="#FFE600"; x.strokeRect(X0,Y0,mm(7),mm(3.4)); x.setLineDash([mm(2.2),mm(1.1)]); x.strokeStyle="#D01010"; x.strokeRect(X0,Y0,mm(7),mm(3.4)); x.setLineDash([]); }]];
     Object.keys(has.kinds||{}).filter(k=>k.startsWith("building:")).forEach(k=>{ const cn=k.slice(9), lab=/dangreuli|დანგრეული/.test(cn)?"დანგრეული":/msenebare|მშენებარე/.test(cn)?"მშენებარე":"აშენებული";
       items.push(["შენობა",lab,(X0,Y0)=>{ const stb=featStyle({layer:"building",fields:{CONDITION:cn}},pr); if (stb.fill){ x.fillStyle=hatchPat("#111","#fff"); x.fillRect(X0,Y0,mm(7),mm(3.4)); } x.setLineDash((stb.dash||[]).map(v=>mm(v*0.18))); x.lineWidth=mm(0.35); x.strokeStyle="#111"; x.strokeRect(X0,Y0,mm(7),mm(3.4)); x.setLineDash([]); }]); });
     Object.keys(has.kinds||{}).filter(k=>k.startsWith("obligation:")).forEach(k=>{ const tp=k.slice(11), sv=/servituti|სერვიტუტი/.test(stLow(tp));
@@ -5656,13 +5785,13 @@ async function prepPage2(pr){ ensureIdents(pr); const list=parcelList(pr); if (!
   list.forEach(p=>{ if (!p.numbered) renumber(p); neighRows(p); }); const miss=[];
   list.forEach(p=>{ const f=p.fields||{}, m=[["ADRES","მისამართი"],["FUNCTION","დანიშნულება"],["MEASUR_ID","ამზომველი"],["INT_PER_ID","დაინტერესებული პირი"],["DATE","თარიღი"]].filter(k=>!String(f[k[0]]||"").trim()).map(k=>k[1]); if (m.length) miss.push("#"+p.ident+": "+m.join(", ")); });
   save(); toast("📄 II გვერდი მზადაა: "+list.length+" ნაკვეთი"+(miss.length?" · ცარიელია — "+miss.join(" | "):""),miss.length?9000:4000); }
-async function prepNeigh(pr){ const list=parcelList(pr); if (!list.length){ toast("ნაკვეთები (≥3 წერტილით) არ არის",3000); return; } const done=[]; for (const p of list){ if (await neighAuto(p,true)) done.push(p); }
+async function prepNeigh(pr){ const list=parcelList(pr); if (!list.length){ toast("ნაკვეთები (≥3 წერტილით) არ არის",3000); return; } const done=[]; for (const p of list){ if (await neighAuto(p,true,true)) done.push(p); }
   if (!done.length) return; toast("🧭 მოსაზღვრეები შევსებულია: "+done.length+" ნაკვეთი — ◀ ▶ ღილაკებით გადაიარეთ და შეცვალეთ საჭიროებისამებრ",5000); drawerToggle(false); nGo(done[0]); }
 async function buildCad(pr){ const K=window.__K; if (!K){ alert("ფუნქცია ამ ვერსიაში მიუწვდომელია."); return null; } try { await document.fonts.ready; } catch(e){}
   if (!(await applyLineType(pr,false))) return null;
   const list=parcelList(pr); if (!list.length){ toast("ნაკვეთები (≥3 წერტილით) არ არის",3000); return null; }
   say("1/4 · ფენები…",60000); ensureIdents(pr); linkFeatures(pr); list.forEach(p=>{ if (!p.numbered) renumber(p); }); save(); if (F&&F.map) F.map.redraw();
-  say("2/4 · მოსაზღვრეები…",90000); for (const p of list) await neighAuto(p,true);
+  say("2/4 · მოსაზღვრეები…",90000); for (const p of list) await neighAuto(p,true,true);
   say("3/4 · ნახაზები, II გვერდი და SHP…",120000); const files=[], pdfs=[]; let lastN=0, base0=""; const nm=p=>[ensurePcode(pr),"#"+(p.ident||""),p.fields.CADCODE||""].filter(Boolean).join("_").replace(/[\\/:*?"<>|\s]+/g,"_");
   for (const p of list){ const dir=nm(p)+"/"; files.push({name:dir+"naxazi.pdf",data:new Uint8Array(await K.makePdf2([await K.toJpeg(await drawingCanvas(pr,p))]).arrayBuffer())}); pdfs.push({name:dir+"naxazi.pdf",label:"#"+(p.ident||"")+" · I გვერდი (ნახაზი)"});
     const pg=[]; for (const cv of await page2Canvases(pr,p)) pg.push(await K.toJpeg(cv)); files.push({name:dir+"II_gverdi.pdf",data:new Uint8Array(await K.makePdf2(pg).arrayBuffer())}); pdfs.push({name:dir+"II_gverdi.pdf",label:"#"+(p.ident||"")+" · II გვერდი"});
@@ -5780,7 +5909,7 @@ function simplifyRing(pts){ let q=pts.filter((v,i)=>!i||Math.hypot(v.x-pts[i-1].
       const ang=Math.acos(Math.max(-1,Math.min(1,(ux*vx+uy*vy)/(l1*l2))))*180/Math.PI; if (ang>172){ q.splice(i,1); changed=true; break; } } } return q; }
 function parcelFromWfs(pr,hit){ const rs=hit.rings.map(r=>({r,a:Math.abs(polyArea(r.map(q=>({x:q[0],y:q[1]}))))})).sort((u,v)=>v.a-u.a); if (!rs.length) return null;
   const pts=simplifyRing(rs[0].r.map(q=>({x:q[0],y:q[1]}))); if (pts.length<3) return null;
-  const p={id:nid(),fields:Object.assign(newFields(pr),{CADCODE:hit.code||""}),pts:pts.map(q=>{ const ll=fromUTM38(q.x,q.y); return {id:"",lat:ll[0],lon:ll[1],x:q.x,y:q.y,acc:null,t:Date.now(),src:"wfs"}; }),closed:true,src:"wfs",regArea:hit.area||null};
+  const p={id:nid(),fields:Object.assign(newFields(pr),{CADCODE:hit.code||"",LEGAL_DOC:hit.code||""}),pts:pts.map(q=>{ const ll=fromUTM38(q.x,q.y); return {id:"",lat:ll[0],lon:ll[1],x:q.x,y:q.y,acc:null,t:Date.now(),src:"wfs"}; }),closed:true,src:"wfs",regArea:hit.area||null};
   p.pts.forEach((q,i)=>{ q.id=ptName(i); }); p.numbered=false; return p; }
 
 
@@ -5789,7 +5918,10 @@ function parcelFromWfs(pr,hit){ const rs=hit.rings.map(r=>({r,a:Math.abs(polyAre
 // ══════════════════════════════════════════════════════════════════
 const isTopo=pr=>!!pr&&pr.kind==="topo";
 const cadProjects=()=>projects.filter(p=>!isTopo(p));
-const TCODES=["ტერენი","ხე","ბოძი","შენობის კუთხე","ბორდიური","გზის ღერძი","გზის კიდე","ღობე","ჭა / ლუქი","წყალი","კედელი","სხვა"];
+const TLIB=[
+{k:"ხე",t:"pt",sym:"tree",col:"#15803d"},{k:"წიწვოვანი ხე",t:"pt",sym:"conifer",col:"#14532d"},{k:"ჭა / ლუქი",t:"pt",sym:"well",col:"#0369a1"},{k:"ბოძი",t:"pt",sym:"pole",col:"#6b21a8"},{k:"შენობის კუთხე",t:"pt",sym:"corner",col:"#b91c1c"},{k:"ტერენი",t:"pt",sym:"spot",col:"#475569"},{k:"ბუჩქი",t:"pt",sym:"bush",col:"#16a34a"},{k:"ანძა",t:"pt",sym:"mast",col:"#1e3a8a"},{k:"კანალიზაციის ლუქი",t:"pt",sym:"manhole",col:"#4b5563"},{k:"ქვა / კლდე",t:"pt",sym:"stone",col:"#78716c"},{k:"საზღვრის ნიშანი",t:"pt",sym:"bm",col:"#dc2626"},{k:"სხვა წერტილი",t:"pt",sym:"spot",col:"#0f766e"},
+{k:"გზა",t:"ln",col:"#374151",w:3},{k:"გზის ღერძი",t:"ln",col:"#ca8a04",w:1.8,dash:[8,5]},{k:"ღობე",t:"ln",col:"#7c2d12",w:2,fence:1},{k:"ბორდიური",t:"ln",col:"#111827",w:2.4},{k:"კედელი",t:"ln",col:"#b91c1c",w:3},{k:"გრუნტის გზა",t:"ln",col:"#a16207",w:2.2,dash:[10,4]},{k:"ბადე-ღობე",t:"ln",col:"#9a3412",w:1.6,dash:[2,3],fence:1},{k:"ელექტროგადაცემის ხაზი",t:"ln",col:"#dc2626",w:1.6,dash:[14,4,2,4]},{k:"წყალსადენი",t:"ln",col:"#0369a1",w:1.8,dash:[10,3]},{k:"გაზსადენი",t:"ln",col:"#ca8a04",w:1.8,dash:[10,3,2,3]},{k:"კანალიზაცია",t:"ln",col:"#7c3aed",w:1.8,dash:[10,3]},{k:"ფერდი / ციცაბო",t:"ln",col:"#5b3a1a",w:1.6,fence:1},{k:"ტყის საზღვარი",t:"ln",col:"#166534",w:1.6,dash:[3,4]},{k:"წყალი / არხი",t:"ln",col:"#0284c7",w:2.4}];
+const TCODES=TLIB.map(c=>c.k);
 const zOf=q=>{ const v=q.z!=null&&q.z!==""?+q.z:(q.alt!=null?+q.alt:NaN); return isFinite(v)?v:null; };
 const tZ=pr=>(pr.points||[]).filter(q=>zOf(q)!=null&&isFinite(q.x)&&isFinite(q.y));
 const fz=(v,d)=>v==null?"—":(+v).toFixed(d==null?2:d);
@@ -5844,7 +5976,60 @@ function tChart(c,samples,o){ o=o||{}; const x=c.getContext("2d"), W=c.width, H=
   x.strokeStyle="#111"; x.lineWidth=1.5; x.strokeRect(m.l,m.t,W-m.l-m.r,H-m.t-m.b); x.fillStyle="#111"; x.textAlign="center"; x.font=fs+"px sans-serif";
   x.fillText(o.xLabel||"მანძილი, მ",(m.l+W-m.r)/2,H-fs*.4); x.save(); x.translate(fs*.9,(m.t+H-m.b)/2); x.rotate(-Math.PI/2); x.fillText("აბს. სიმაღლე Z, მ"+(o.vex?"  (ვერტ. მასშტ. ×"+o.vex+")":""),0,0); x.restore(); }
 // ── რუკაზე ხატვა ──
-function topoDraw(x,X,Y,m){ if (!F||!isTopo(F.pr)) return; const pr=F.pr, t=TS(pr);
+
+// ── ტოპო ობიექტების ბიბლიოთეკა: წერტილოვანი (ხე, ჭა, ბოძი…) და ხაზოვანი (გზა, ღობე…) + პირობითი აღნიშვნები ──
+const tLookup=code=>TLIB.find(c=>c.k===code)||null;
+const tHide=pr=>{ const t=TS(pr); t.hide=t.hide||{}; return t.hide; };
+function tSym(x,u,v,sym,col,r){ x.save(); x.lineWidth=Math.max(1.4,r/5); x.strokeStyle=col; x.fillStyle=col; x.lineJoin="round"; x.lineCap="round";
+  if (sym==="tree"){ x.beginPath(); x.arc(u,v,r,0,7); x.fillStyle="rgba(34,197,94,.22)"; x.fill(); x.stroke(); x.beginPath(); x.arc(u,v,r*0.18,0,7); x.fillStyle=col; x.fill(); }
+  else if (sym==="conifer"){ x.beginPath(); x.moveTo(u,v-r*1.15); x.lineTo(u+r*0.95,v+r*0.75); x.lineTo(u-r*0.95,v+r*0.75); x.closePath(); x.fillStyle="rgba(20,83,45,.28)"; x.fill(); x.stroke(); x.beginPath(); x.moveTo(u,v-r*0.2); x.lineTo(u,v+r*1.1); x.stroke(); }
+  else if (sym==="well"){ x.beginPath(); x.arc(u,v,r,0,7); x.fillStyle="rgba(2,132,199,.15)"; x.fill(); x.stroke(); x.beginPath(); x.arc(u,v,r*0.45,0,7); x.fillStyle=col; x.fill(); }
+  else if (sym==="pole"){ x.beginPath(); x.arc(u,v,r*0.85,0,7); x.stroke(); x.beginPath(); x.moveTo(u-r,v); x.lineTo(u+r,v); x.moveTo(u,v-r); x.lineTo(u,v+r); x.stroke(); }
+  else if (sym==="bush"){ [[-.5,.2],[.45,.25],[0,-.45]].forEach(o=>{ x.beginPath(); x.arc(u+o[0]*r,v+o[1]*r,r*0.5,0,7); x.fillStyle="rgba(22,163,74,.28)"; x.fill(); x.stroke(); }); }
+  else if (sym==="mast"){ x.beginPath(); x.moveTo(u,v-r*1.1); x.lineTo(u+r*.8,v+r*.8); x.lineTo(u-r*.8,v+r*.8); x.closePath(); x.stroke(); x.beginPath(); x.arc(u,v+r*.15,r*.22,0,7); x.fill(); }
+  else if (sym==="manhole"){ x.beginPath(); x.rect(u-r*.8,v-r*.8,r*1.6,r*1.6); x.fillStyle="#fff"; x.fill(); x.stroke(); x.beginPath(); x.moveTo(u-r*.8,v-r*.8); x.lineTo(u+r*.8,v+r*.8); x.moveTo(u+r*.8,v-r*.8); x.lineTo(u-r*.8,v+r*.8); x.stroke(); }
+  else if (sym==="stone"){ x.beginPath(); x.moveTo(u-r*.9,v+r*.6); x.lineTo(u-r*.5,v-r*.6); x.lineTo(u+r*.4,v-r*.8); x.lineTo(u+r*.9,v+r*.5); x.closePath(); x.fillStyle="rgba(120,113,108,.35)"; x.fill(); x.stroke(); }
+  else if (sym==="bm"){ x.beginPath(); x.moveTo(u,v-r); x.lineTo(u+r*.9,v); x.lineTo(u,v+r); x.lineTo(u-r*.9,v); x.closePath(); x.fillStyle="#fff"; x.fill(); x.stroke(); x.beginPath(); x.arc(u,v,r*.2,0,7); x.fill(); }
+  else if (sym==="corner"){ x.beginPath(); x.rect(u-r*0.75,v-r*0.75,r*1.5,r*1.5); x.fillStyle="#fff"; x.fill(); x.stroke(); x.beginPath(); x.arc(u,v,r*0.22,0,7); x.fillStyle=col; x.fill(); }
+  else { x.beginPath(); x.moveTo(u-r*0.8,v); x.lineTo(u+r*0.8,v); x.moveTo(u,v-r*0.8); x.lineTo(u,v+r*0.8); x.stroke(); x.beginPath(); x.arc(u,v,r*0.2,0,7); x.fill(); }
+  x.restore(); }
+function tLineStyle(x,c,k){ x.strokeStyle=c.col; x.lineWidth=(c.w||2)*(k||1); x.setLineDash((c.dash||[]).map(d=>d*(k||1))); x.lineJoin="round"; x.lineCap="round"; }
+function tFenceTicks(x,pts,col,k){ x.save(); x.strokeStyle=col; x.lineWidth=1.4*(k||1); for (let i=0;i+1<pts.length;i++){ const a=pts[i], b=pts[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]); if (L<8) continue; const ux=(b[0]-a[0])/L, uy=(b[1]-a[1])/L, step=14*(k||1); for (let d=step/2; d<L; d+=step){ const px=a[0]+ux*d, py=a[1]+uy*d; x.beginPath(); x.moveTo(px-uy*4*(k||1),py+ux*4*(k||1)); x.lineTo(px+uy*4*(k||1),py-ux*4*(k||1)); x.stroke(); } } x.restore(); }
+// ხაზოვანი ობიექტები: ერთი კოდის ზედიზედ აღებული წერტილები ერთ ხაზად ერთიანდება
+function tRuns(pr){ const hide=tHide(pr), pts=(pr.points||[]).filter(q=>isFinite(q.x)&&isFinite(q.y)).slice().sort((a,b)=>(a.t||0)-(b.t||0)), runs=[]; let cur=null;
+  pts.forEach(q=>{ const c=tLookup(q.code); if (!c||c.t!=="ln"){ cur=null; return; } if (q.brk) cur=null; if (!cur||cur.c!==c){ cur={c,pts:[]}; runs.push(cur); } cur.pts.push(q); });
+  return runs.filter(r=>r.pts.length>=2&&!hide[r.c.k]); }
+function topoDrawPts(x,X,Y,m){ const pr=F.pr, t=TS(pr), hide=tHide(pr), rr=Math.max(6,Math.min(13,3.2/Math.max(m.mpp,0.05)+5));
+  tRuns(pr).forEach(r=>{ const P=r.pts.map(q=>[X(q.x),Y(q.y)]); x.save(); tLineStyle(x,r.c); x.beginPath(); P.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1])); x.stroke(); x.restore(); if (r.c.fence) tFenceTicks(x,P,r.c.col); });
+  (pr.points||[]).forEach(q=>{ if (!isFinite(q.x)) return; const c=tLookup(q.code), key=c?c.k:(q.code||""); if (hide[key]) return; const u=X(q.x), v=Y(q.y); if (u<-30||v<-30||u>m.w+30||v>m.h+30) return;
+    if (c&&c.t==="pt") tSym(x,u,v,c.sym,c.col,rr); else if (c) tSym(x,u,v,"spot",c.col,rr*0.7); else if (q.gps){ x.beginPath(); x.arc(u,v,7,0,7); x.fillStyle="#0EA5A4"; x.fill(); x.lineWidth=2; x.strokeStyle="#fff"; x.stroke(); } else tSym(x,u,v,"spot","#475569",rr*0.8);
+    if (F.sel&&F.sel.has("p"+q.id)){ x.beginPath(); x.arc(u,v,rr+7,0,7); x.lineWidth=3; x.strokeStyle="#0EA5A4"; x.stroke(); }
+    if (m.mpp<0.6){ x.font="700 11px sans-serif"; x.textAlign="left"; x.textBaseline="bottom"; x.lineWidth=3; x.strokeStyle="#fff"; x.strokeText(q.name||"",u+rr+3,v-4); x.fillStyle="#111"; x.fillText(q.name||"",u+rr+3,v-4); } }); }
+// ── ხატულები მარცხენა პანელისთვის (SVG) ──
+function tIcon(c){ const col=c.col; if (c.t==="ln"){ const d=(c.dash||[]).length?' stroke-dasharray="'+c.dash.join(" ")+'"':""; return '<svg width="26" height="18" viewBox="0 0 26 18"><path d="M2 14L10 5L17 12L24 4" fill="none" stroke="'+col+'" stroke-width="'+(c.w||2)+'" stroke-linecap="round" stroke-linejoin="round"'+d+'/>'+(c.fence?'<path d="M8 11l2 -3M14 11l2 -3M20 8l2 -3" stroke="'+col+'" stroke-width="1.4"/>':"")+'</svg>'; }
+  const s={tree:'<circle cx="13" cy="9" r="7" fill="rgba(34,197,94,.22)" stroke="'+col+'" stroke-width="1.6"/><circle cx="13" cy="9" r="1.4" fill="'+col+'"/>',conifer:'<path d="M13 1.5L20 15H6z" fill="rgba(20,83,45,.28)" stroke="'+col+'" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 7v9" stroke="'+col+'" stroke-width="1.5"/>',bush:'<circle cx="9" cy="11" r="4.5" fill="rgba(22,163,74,.28)" stroke="'+col+'" stroke-width="1.5"/><circle cx="17" cy="11" r="4.5" fill="rgba(22,163,74,.28)" stroke="'+col+'" stroke-width="1.5"/><circle cx="13" cy="5.5" r="4.5" fill="rgba(22,163,74,.28)" stroke="'+col+'" stroke-width="1.5"/>',mast:'<path d="M13 1.5L21 16H5z" fill="none" stroke="'+col+'" stroke-width="1.6" stroke-linejoin="round"/><circle cx="13" cy="10.5" r="1.8" fill="'+col+'"/>',manhole:'<rect x="6" y="2" width="14" height="14" fill="#fff" stroke="'+col+'" stroke-width="1.6"/><path d="M6 2l14 14M20 2L6 16" stroke="'+col+'" stroke-width="1.4"/>',stone:'<path d="M4 15l4-10 8-2 6 11z" fill="rgba(120,113,108,.35)" stroke="'+col+'" stroke-width="1.6" stroke-linejoin="round"/>',bm:'<path d="M13 1.5l8 7.5-8 7.5-8-7.5z" fill="#fff" stroke="'+col+'" stroke-width="1.6" stroke-linejoin="round"/><circle cx="13" cy="9" r="1.7" fill="'+col+'"/>',well:'<circle cx="13" cy="9" r="7" fill="rgba(2,132,199,.15)" stroke="'+col+'" stroke-width="1.6"/><circle cx="13" cy="9" r="3" fill="'+col+'"/>',pole:'<circle cx="13" cy="9" r="5.5" fill="none" stroke="'+col+'" stroke-width="1.6"/><path d="M5 9h16M13 1v16" stroke="'+col+'" stroke-width="1.5"/>',corner:'<rect x="8" y="4" width="10" height="10" fill="#fff" stroke="'+col+'" stroke-width="1.6"/><circle cx="13" cy="9" r="1.5" fill="'+col+'"/>',spot:'<path d="M7 9h12M13 3v12" stroke="'+col+'" stroke-width="1.6" stroke-linecap="round"/><circle cx="13" cy="9" r="1.7" fill="'+col+'"/>'}[c.sym||"spot"];
+  return '<svg width="26" height="18" viewBox="0 0 26 18">'+s+'</svg>'; }
+const TCOLX=[{k:"ჰორიზონტალი (მთავარი, ყოველი მე-5)",t:"ln",col:"#8a4b12",w:2.6},{k:"ჰორიზონტალი (ჩვეულებრივი)",t:"ln",col:"#b9793b",w:1.3},{k:"პროფილის ღერძი",t:"ln",col:"#7c3aed",w:2.2,dash:[5,3]},{k:"ჭრილის ხაზი",t:"ln",col:"#f59e0b",w:2}];
+function topoDrawerHtml(){ const pr=F.pr, t=TS(pr), hide=tHide(pr), L=F.map?F.map.getLayers():{o:true}, pts=pr.points||[];
+  const cnt=c=>pts.filter(q=>(q.code||"")===c.k).length, nocode=pts.filter(q=>!q.code||!tLookup(q.code)).length;
+  const row=c=>`<div class="cd-lg${hide[c.k]?" off":""}${F.tcode===c.k?" act":""}"><button type="button" class="eye" data-tlt="${esc(c.k)}" aria-label="${esc(c.k)}: ხილვადობა">${hide[c.k]?"🚫":"👁"}</button><button type="button" class="nm" data-tcode="${esc(c.k)}" style="flex:1;text-align:left">${esc(c.k)} <span class="cnt">[${cnt(c)}]</span></button><button type="button" class="actb${F.tcode===c.k?" on":""}" data-tcode="${esc(c.k)}" title="აქტიური კოდი (ახალი წერტილები ამ კოდს მიიღებს)" style="width:58px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:0;${F.tcode===c.k?"background:#CCFBF1;border:2px solid #0EA5A4":"background:#fff;border:1.5px solid #CBD5E1"}"><span style="display:inline-flex;transform:scale(1.55)">${tIcon(c)}</span></button></div>`;
+  const grp=(g,ic,tt,inner)=>{ const open=!(F.leg&&F.leg[g]); return `<div class="cd-grp"><div class="cd-gh" data-leg="${g}"><span class="chev">${open?"⌄":"›"}</span><span class="sym">${ic}</span><b>${tt}</b></div>${open?inner:""}</div>`; };
+  const legend=TLIB.concat(TCOLX).map(c=>`<div class="cd-lg" style="cursor:default"><span class="sym" style="display:inline-flex;width:34px;justify-content:center">${tIcon(c)}</span><span style="flex:1">${esc(c.k)}</span></div>`).join("");
+  return `<div class="cd-top"><button type="button" data-d="close" title="დახურვა">←</button><button type="button" data-d="settings" title="პარამეტრები">⚙</button><button type="button" data-d="topo" title="ტოპოგრაფია: წერტილები, ჰორიზონტალები, პროფილი, ექსპორტი" style="background:#0EA5A4;color:#fff;border-radius:10px">⛰</button><button type="button" data-d="pos" title="GPS">📡</button><button type="button" data-d="menu" title="პროექტი">⋮</button></div>
+   <div class="cd-body"><input class="cd-name" id="cdName" value="${esc(pr.name)}" autocomplete="off"><div style="font-size:12px;opacity:.7;padding:2px 14px 6px"><span class="pcode">${esc(ensurePcode(pr)||"")}</span> პროექტის კოდი · ⛰ ტოპოგრაფია</div>
+   <div class="cd-h2" style="margin-top:6px"><span style="font-size:19px">ლეგენდა</span><button type="button" class="btn sm" data-leg-all>${(F.leg&&F.leg.pts&&F.leg.lns)?"⌄ ყველას გაშლა":"⌃ ყველას აკეცვა"}</button></div>
+   ${grp("pts","📡","GPS წერტილები (კოდებით)",TLIB.filter(c=>c.t==="pt").map(row).join("")+`<div class="cd-lg" style="cursor:default;opacity:.75"><span class="sym" style="display:inline-flex;width:34px;justify-content:center">•</span><span style="flex:1">კოდის გარეშე <span class="cnt">[${nocode}]</span></span></div>`)}
+   ${grp("lns","〰","ხაზოვანი ობიექტები (გზა, ღობე…)",TLIB.filter(c=>c.t==="ln").map(row).join(""))}
+   ${grp("base","🗺","საფუძველი რუკა",`<div class="cd-lg${L.o===false?" off":""}"><button type="button" class="eye" data-lt="o">${L.o===false?"🚫":"👁"}</button><button type="button" class="nm" data-lt="o" style="flex:1;text-align:left"><span class="sym">🖼</span> ორთოფოტო</button></div>`)}
+   ${grp("legend","📖","პირობითი აღნიშვნები",legend)}
+   </div>
+   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპი ტოპოგრაფია</div></div>`; }
+function topoDrawerClick(e){ if (!F||!isTopo(F.pr)) return false; const tl=e.target.closest("[data-tlt]"); if (tl){ const k=tl.dataset.tlt, h=tHide(F.pr); h[k]=!h[k]; save(); renderDrawer(true); F.map.redraw(); return true; }
+  const tc=e.target.closest("[data-tcode]"); if (tc){ F.tcode=F.tcode===tc.dataset.tcode?"":tc.dataset.tcode; renderDrawer(true); toast(F.tcode?"✓ აქტიური კოდი: "+F.tcode:"კოდი გამორთულია",1500); return true; }
+  const dt=e.target.closest('[data-d="topo"]'); if (dt){ panel("topo"); return true; }
+  const la=e.target.closest("[data-leg-all]"); if (la){ F.leg=F.leg||{}; const all=F.leg.pts&&F.leg.lns; F.leg={pts:!all,lns:!all,base:!all,legend:!all}; renderDrawer(true); return true; }
+  return false; }
+function topoDraw(x,X,Y,m){ if (!F||!isTopo(F.pr)) return; const pr=F.pr, t=TS(pr); topoDrawPts(x,X,Y,m);
   if (m.mpp<0.25) (pr.points||[]).forEach(q=>{ const z=zOf(q); if (z==null) return; x.save(); x.font="600 11px sans-serif"; x.textAlign="left"; x.textBaseline="top"; x.lineWidth=3; x.strokeStyle="#fff"; x.strokeText(z.toFixed(2),X(q.x)+9,Y(q.y)+4); x.fillStyle="#0b4fa8"; x.fillText(z.toFixed(2),X(q.x)+9,Y(q.y)+4); if (q.code&&m.mpp<0.15){ x.fillStyle="#6b3a00"; x.font="600 10px sans-serif"; x.strokeText(q.code,X(q.x)+9,Y(q.y)+16); x.fillText(q.code,X(q.x)+9,Y(q.y)+16); } x.restore(); });
   if (t.showTin&&F.tcache&&F.tcache.tin){ const D=F.tcache.tin; x.save(); x.strokeStyle="rgba(80,90,110,.45)"; x.lineWidth=.8; x.beginPath(); D.tris.forEach(tr=>{ const A=D.pts[tr[0]],B=D.pts[tr[1]],C=D.pts[tr[2]]; x.moveTo(X(A[0]),Y(A[1])); x.lineTo(X(B[0]),Y(B[1])); x.lineTo(X(C[0]),Y(C[1])); x.closePath(); }); x.stroke(); x.restore(); }
   if (t.cont&&t.showCont!==false){ x.save(); x.lineJoin="round"; t.cont.lines.forEach(l=>{ if (l.pts.length<2) return; x.beginPath(); l.pts.forEach((p,i)=>i?x.lineTo(X(p[0]),Y(p[1])):x.moveTo(X(p[0]),Y(p[1]))); x.lineWidth=l.idx?2:1; x.strokeStyle=l.idx?"#8a4b12":"#b9793b"; x.stroke(); });
@@ -5908,21 +6093,48 @@ function topoParseCsv(txt){ const out=[]; txt.replace(/^﻿/,"").split(/\r?\n/).
 function topoExpFiles(){ const pr=F.pr, t=TS(pr), pts=(pr.points||[]).filter(q=>isFinite(q.x)), K=window.__K; return {pr,t,pts,K}; }
 function topoCsv(){ const {pts}=topoExpFiles(); return "﻿name,X,Y,Z,code\n"+pts.map(q=>[q.name||"",(+q.x).toFixed(3),(+q.y).toFixed(3),zOf(q)==null?"":zOf(q).toFixed(3),(q.code||"").replace(/,/g," ")].join(",")).join("\n")+"\n"; }
 function topoDxf(){ const {pr,t,pts,K}=topoExpFiles(), o=[], g=(c,v)=>{ o.push(String(c)); o.push(String(v)); }, nu=s=>K?K.nusxJs(String(s||"")):String(s||""); g(0,"SECTION"); g(2,"ENTITIES");
-  pts.forEach(q=>{ const z=zOf(q)||0; g(0,"POINT"); g(8,"TOPO_POINTS"); g(10,q.x.toFixed(3)); g(20,q.y.toFixed(3)); g(30,z.toFixed(3)); if (zOf(q)!=null){ g(0,"TEXT"); g(8,"TOPO_Z"); g(10,(q.x+0.3).toFixed(3)); g(20,(q.y+0.3).toFixed(3)); g(30,0); g(40,0.5); g(1,z.toFixed(2)); } if (q.code){ g(0,"TEXT"); g(8,"TOPO_CODE"); g(10,(q.x+0.3).toFixed(3)); g(20,(q.y-0.7).toFixed(3)); g(30,0); g(40,0.4); g(1,nu(q.code)); } });
+  pts.forEach(q=>{ const z=zOf(q)||0; g(0,"POINT"); g(8,q.code?"TOPO_"+nu(q.code).replace(/[^A-Za-z0-9_]/g,"_").toUpperCase():"TOPO_POINTS"); g(10,q.x.toFixed(3)); g(20,q.y.toFixed(3)); g(30,z.toFixed(3)); if (zOf(q)!=null){ g(0,"TEXT"); g(8,"TOPO_Z"); g(10,(q.x+0.3).toFixed(3)); g(20,(q.y+0.3).toFixed(3)); g(30,0); g(40,0.5); g(1,z.toFixed(2)); } if (q.code){ g(0,"TEXT"); g(8,"TOPO_CODE"); g(10,(q.x+0.3).toFixed(3)); g(20,(q.y-0.7).toFixed(3)); g(30,0); g(40,0.4); g(1,nu(q.code)); } });
   const poly=(layer,arr,z)=>{ g(0,"POLYLINE"); g(8,layer); g(66,1); g(10,0); g(20,0); g(30,z); g(70,0); arr.forEach(p=>{ g(0,"VERTEX"); g(8,layer); g(10,p[0].toFixed(3)); g(20,p[1].toFixed(3)); g(30,z); }); g(0,"SEQEND"); g(8,layer); };
-  if (t.cont) t.cont.lines.forEach(l=>poly(l.idx?"CONTOURS_INDEX":"CONTOURS",l.pts,l.z)); (t.profiles||[]).forEach(p=>poly("PROFILE_AXIS",p.pts,0)); g(0,"ENDSEC"); g(0,"EOF"); return o.join("\n")+"\n"; }
+  if (t.cont) t.cont.lines.forEach(l=>poly(l.idx?"CONTOURS_INDEX":"CONTOURS",l.pts,l.z)); (t.profiles||[]).forEach(p=>poly("PROFILE_AXIS",p.pts,0)); tRuns(pr).forEach(r=>poly("LINE_"+nu(r.c.k).replace(/[^A-Za-z0-9_]/g,"_").toUpperCase(),r.pts.map(q=>[q.x,q.y]),0)); g(0,"ENDSEC"); g(0,"EOF"); return o.join("\n")+"\n"; }
 async function topoShp(){ const {pr,t,pts,K}=topoExpFiles(); if (!K) return null; const files=[], N=(name,len,dec)=>({name,type:"N",len,dec}), C=(name,len)=>({name,type:"C",len}), nu=s=>K.nusxJs(String(s||""));
   const tp=pts.filter(q=>zOf(q)!=null); if (tp.length){ const sp=shpPointFiles(tp.map(q=>({xy:[q.x,q.y]}))); const rows=tp.map((q,i)=>({fid:i+1,POINT_ID:nu(q.name),X:+q.x.toFixed(3),Y:+q.y.toFixed(3),Z:+zOf(q).toFixed(3),CODE:nu(q.code)}));
     files.push({name:"topo_point.shp",data:sp.shp},{name:"topo_point.shx",data:sp.shx},{name:"topo_point.dbf",data:K.dbfFile([N("fid",10,0),C("POINT_ID",20),N("X",16,3),N("Y",16,3),N("Z",12,3),C("CODE",40)],rows)},{name:"topo_point.prj",data:K.PRJ},{name:"topo_point.cpg",data:"UTF-8"}); }
   if (t.cont&&t.cont.lines.length){ const recs=t.cont.lines.filter(l=>l.pts.length>=2).map(l=>({parts:[l.pts]})), sx=K.shpFiles(3,recs), rows=t.cont.lines.filter(l=>l.pts.length>=2).map((l,i)=>({fid:i+1,ELEV:l.z,INDEX:l.idx?1:0}));
     files.push({name:"topo_contour.shp",data:sx.shp},{name:"topo_contour.shx",data:sx.shx},{name:"topo_contour.dbf",data:K.dbfFile([N("fid",10,0),N("ELEV",10,2),N("INDEX",3,0)],rows)},{name:"topo_contour.prj",data:K.PRJ},{name:"topo_contour.cpg",data:"UTF-8"}); }
+  { const R=tRuns(pr); if (R.length){ const sx=K.shpFiles(3,R.map(r=>({parts:[r.pts.map(q=>[q.x,q.y])]}))), rows=R.map((r,i)=>({fid:i+1,CODE:nu(r.c.k),LENGTH:+tLen(r.pts.map(q=>[q.x,q.y])).toFixed(2)}));
+    files.push({name:"topo_line.shp",data:sx.shp},{name:"topo_line.shx",data:sx.shx},{name:"topo_line.dbf",data:K.dbfFile([N("fid",10,0),C("CODE",40),N("LENGTH",12,2)],rows)},{name:"topo_line.prj",data:K.PRJ},{name:"topo_line.cpg",data:"UTF-8"}); } }
   if (!files.length) return null; return await K.zipFiles(files); }
+
+function tPlanCanvas(pr,t,W,H,T){ const c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d"); x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const pts=(pr.points||[]).filter(q=>isFinite(q.x)&&isFinite(q.y)); if (!pts.length) return c;
+  const LW=560, ax=70, ay=200, aw=W-LW-ax-60, ah=H-ay-120; let x0=1e18,x1=-1e18,y0=1e18,y1=-1e18; pts.forEach(q=>{ x0=Math.min(x0,q.x); x1=Math.max(x1,q.x); y0=Math.min(y0,q.y); y1=Math.max(y1,q.y); });
+  const dx=Math.max(x1-x0,5), dy=Math.max(y1-y0,5), sc=Math.min(aw/dx,ah/dy)*0.92, ox=ax+(aw-dx*sc)/2, oy=ay+(ah+dy*sc)/2, X=e=>ox+(e-x0)*sc, Y=n=>oy-(n-y0)*sc;
+  x.strokeStyle="#111"; x.lineWidth=3; x.strokeRect(40,40,W-80,H-80); x.strokeRect(ax-10,ay-10,aw+20,ah+20);
+  x.fillStyle="#111"; x.textBaseline="top"; x.textAlign="left"; x.font="700 46px sans-serif"; x.fillText("ტოპოგრაფიული გეგმა",80,60); x.font="28px sans-serif"; x.fillStyle="#555"; x.fillText((pr.name||"")+" · "+new Date().toLocaleDateString("ka-GE"),80,125);
+  const hide={}; x.save(); x.beginPath(); x.rect(ax-8,ay-8,aw+16,ah+16); x.clip();
+  if (t.cont&&t.showCont!==false) t.cont.lines.forEach(l=>{ if (l.pts.length<2) return; x.beginPath(); l.pts.forEach((p,i)=>i?x.lineTo(X(p[0]),Y(p[1])):x.moveTo(X(p[0]),Y(p[1]))); x.lineWidth=l.idx?2.6:1.2; x.strokeStyle=l.idx?"#8a4b12":"#b9793b"; x.stroke(); });
+  if (t.cont&&t.labels!==false) t.cont.lines.forEach(l=>{ if (!l.idx||l.pts.length<4) return; const p=l.pts[l.pts.length>>1]; x.font="700 20px sans-serif"; x.textAlign="center"; x.textBaseline="middle"; x.lineWidth=5; x.strokeStyle="#fff"; x.strokeText(l.z.toFixed(l.z%1?1:0),X(p[0]),Y(p[1])); x.fillStyle="#6b3a00"; x.fillText(l.z.toFixed(l.z%1?1:0),X(p[0]),Y(p[1])); });
+  const runs=tRuns(pr); runs.forEach(r=>{ const P=r.pts.map(q=>[X(q.x),Y(q.y)]); x.save(); tLineStyle(x,r.c,1.4); x.beginPath(); P.forEach((q,i)=>i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1])); x.stroke(); x.restore(); if (r.c.fence) tFenceTicks(x,P,r.c.col,1.4); });
+  (t.profiles||[]).forEach(p=>{ x.save(); x.setLineDash([16,8]); x.lineWidth=3.4; x.strokeStyle="#7c3aed"; x.beginPath(); p.pts.forEach((q,i)=>i?x.lineTo(X(q[0]),Y(q[1])):x.moveTo(X(q[0]),Y(q[1]))); x.stroke(); x.restore(); });
+  pts.forEach(q=>{ const c0=tLookup(q.code), u=X(q.x), v=Y(q.y); if (c0&&c0.t==="pt") tSym(x,u,v,c0.sym,c0.col,15); else if (!c0) tSym(x,u,v,"spot","#475569",10); const z=zOf(q); x.font="600 19px sans-serif"; x.textAlign="left"; x.textBaseline="bottom"; x.lineWidth=4; x.strokeStyle="#fff"; if (pts.length<=250){ x.strokeText(q.name||"",u+18,v-4); x.fillStyle="#111"; x.fillText(q.name||"",u+18,v-4); if (z!=null){ x.textBaseline="top"; x.strokeText(z.toFixed(2),u+18,v+2); x.fillStyle="#0b4fa8"; x.fillText(z.toFixed(2),u+18,v+2); } } });
+  x.restore();
+  // მასშტაბი და ჩრდილოეთი
+  const nice=[1,2,5,10,20,50,100,200,500,1000], bar=nice.filter(n=>n*sc<=260).pop()||1; x.fillStyle="#111"; x.fillRect(ax,ay+ah+28,bar*sc,8); x.font="700 22px sans-serif"; x.textAlign="left"; x.textBaseline="top"; x.fillText(bar+" მ",ax+bar*sc+12,ay+ah+22); x.fillText("M 1:"+Math.round(7875/sc/50)*50,ax+bar*sc+120,ay+ah+22);
+  x.beginPath(); x.moveTo(ax+aw-40,ay+14); x.lineTo(ax+aw-22,ay+64); x.lineTo(ax+aw-40,ay+52); x.lineTo(ax+aw-58,ay+64); x.closePath(); x.fillStyle="#111"; x.fill(); x.font="700 22px sans-serif"; x.textAlign="center"; x.fillText("N",ax+aw-40,ay+68);
+  // ლეგენდა: მხოლოდ რაც არსებობს
+  const lx=W-LW-20, ly=ay-10, lw=LW-30; x.strokeStyle="#111"; x.lineWidth=3; x.strokeRect(lx,ly,lw,ah+20); x.fillStyle="#111"; x.font="700 30px sans-serif"; x.textAlign="center"; x.textBaseline="top"; x.fillText("პირობითი აღნიშვნები",lx+lw/2,ly+14); x.beginPath(); x.moveTo(lx,ly+60); x.lineTo(lx+lw,ly+60); x.stroke();
+  const used=new Set(pts.map(q=>q.code).filter(Boolean)), items=[]; TLIB.forEach(c=>{ if (used.has(c.k)) items.push(c); });
+  const ln=(k,col,w,dash)=>({k,t:"ln",col,w,dash}); if (t.cont&&t.cont.lines.length){ items.push(ln("ჰორიზონტალი (მთავარი)","#8a4b12",2.6)); items.push(ln("ჰორიზონტალი (ჩვეულებრივი)","#b9793b",1.3)); } if ((t.profiles||[]).length) items.push(ln("პროფილის ღერძი","#7c3aed",3,[10,5]));
+  let yy=ly+80; items.forEach(c=>{ if (yy>ly+ah-20) return; if (c.t==="pt") tSym(x,lx+55,yy+18,c.sym,c.col,15); else { x.save(); tLineStyle(x,c,1.4); x.beginPath(); x.moveTo(lx+18,yy+18); x.lineTo(lx+92,yy+18); x.stroke(); x.restore(); if (c.fence) tFenceTicks(x,[[lx+18,yy+18],[lx+92,yy+18]],c.col,1.2); }
+    x.fillStyle="#111"; x.font="26px sans-serif"; x.textAlign="left"; x.textBaseline="middle"; x.fillText(c.k,lx+112,yy+18); yy+=48; });
+  return c; }
 async function topoPdf(){ const {pr,t,K}=topoExpFiles(); if (!K) return false; try { await document.fonts.ready; } catch(e){}
-  const T=tTin(pr); if (!T.tris.length){ toast("PDF-ისთვის საჭიროა ≥3 წერტილი Z-ით",3000); return false; } const W=2339, H=1654, pages=[], mkc=()=>{ const c=document.createElement("canvas"); c.width=W; c.height=H; return c; };
+  const T=tTin(pr); if (!(pr.points||[]).length){ toast("PDF-ისთვის საჭიროა წერტილები",3000); return false; } const W=2339, H=1654, pages=[], mkc=()=>{ const c=document.createElement("canvas"); c.width=W; c.height=H; return c; };
   const head=(c,title)=>{ const x=c.getContext("2d"); x.fillStyle="#111"; x.textBaseline="top"; x.font="700 44px sans-serif"; x.textAlign="left"; x.fillText(title,80,50); x.font="28px sans-serif"; x.fillStyle="#555"; x.fillText((pr.name||"")+" · "+new Date().toLocaleDateString("ka-GE"),80,110); x.strokeStyle="#111"; x.lineWidth=3; x.strokeRect(40,40,W-80,H-80); };
-  for (const p of t.profiles){ const c=mkc(), cv=document.createElement("canvas"); cv.width=W-200; cv.height=H-330; head(c,"პროფილი "+p.name); tChart(cv,tProfile(T,p.pts,t.step),{title:"L = "+tLen(p.pts).toFixed(2)+" მ",pk:true,vex:t.vex,xLabel:"პიკეტაჟი"}); c.getContext("2d").drawImage(cv,100,180); pages.push(await K.toJpeg(c));
+  pages.push(await K.toJpeg(tPlanCanvas(pr,t,W,H,T)));
+  if (T.tris.length) for (const p of t.profiles){ const c=mkc(), cv=document.createElement("canvas"); cv.width=W-200; cv.height=H-330; head(c,"პროფილი "+p.name); tChart(cv,tProfile(T,p.pts,t.step),{title:"L = "+tLen(p.pts).toFixed(2)+" მ",pk:true,vex:t.vex,xLabel:"პიკეტაჟი"}); c.getContext("2d").drawImage(cv,100,180); pages.push(await K.toJpeg(c));
     const S=tSections(T,p.pts,t.stInt,t.hw,t.step); for (let i=0;i<S.length;i+=6){ const c2=mkc(); head(c2,"ჭრილები — "+p.name+" ("+(Math.floor(i/6)+1)+")"); S.slice(i,i+6).forEach((s,j)=>{ const cc=document.createElement("canvas"); cc.width=1050; cc.height=420; tChart(cc,s.smp,{title:tPk(s.st),vex:t.vex,xLabel:"მანძილი ღერძიდან, მ"}); c2.getContext("2d").drawImage(cc,100+(j%2)*1130,180+Math.floor(j/2)*480); }); pages.push(await K.toJpeg(c2)); } }
-  if (!pages.length){ toast("PDF-ისთვის ჯერ დახაზეთ პროფილის ხაზი",3000); return false; } downloadBlob("topo_"+(pr.pcode||"proj")+"_profile.pdf",K.makePdf2(pages)); return true; }
+  downloadBlob("topo_"+(pr.pcode||"proj")+"_plan.pdf",K.makePdf2(pages)); return true; }
 async function topoAct(k,btn){ if (!F||!isTopo(F.pr)) return; const pr=F.pr, t=TS(pr), id=btn&&btn.dataset.id, q=id&&(pr.points||[]).find(z=>z.id===id);
   if (k==="tab"){ F.tTab=btn.dataset.v; panel("topo"); return; }
   if (k==="gps"){ closePanel(); takePoint(true); return; }
@@ -5958,7 +6170,7 @@ const topoOrList=()=>{ if (window.__ckind==="topo") topoHome(); else projectsLis
 const goHome=()=>{ const t=F&&isTopo(F.pr); closeField(); if (t) topoHome(); else projectsList(); };
 window.topoDraw=topoDraw;
 
-window.__cadTest=()=>({neighInfo,neighAuto,parseCadCode,askLineType,ensurePcode,lineTypeOf,prepLayers,showNeighResult,neighRows,page2Canvases,selectCorners,renumber,linkFeatures,layerFiles,drawingCanvas,prepAll,parcelList,parcelFromWfs,renumber,neighRows,buildLayers,page2Canvases,projects:()=>projects,map:()=>curMap});
+window.__cadTest=()=>({tPlanCanvas,TS,openProject,topoAddPoint,topoDrawerHtml,getF:()=>F,neighInfo,neighAuto,parseCadCode,askLineType,ensurePcode,lineTypeOf,prepLayers,showNeighResult,neighRows,page2Canvases,selectCorners,renumber,linkFeatures,layerFiles,drawingCanvas,prepAll,parcelList,parcelFromWfs,renumber,neighRows,buildLayers,page2Canvases,projects:()=>projects,map:()=>curMap});
 window.renderCad=t=>window.__ckind==="topo"?topoHome():(t==="cproj"?projectsList():landing()); window.cadLeave=()=>{ closeField(); destroyMap(); gpsStop(); }; window.renderInfo=info;
 window.cadMapTab=()=>{ cur=null; mountMap($c("homeCadMap"),{tall:true,getParcels:()=>cadProjects().flatMap(p=>p.parcels)}); };
 $c("tabCad").addEventListener("click",()=>setHomeTab("cad")); $c("tabTopo").addEventListener("click",()=>setHomeTab("topo"));
