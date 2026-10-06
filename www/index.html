@@ -6,7 +6,7 @@
 (function(){ var cap=window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform(), base=window.__serviceBase||"";
   var css=document.createElement("style"); css.textContent=".apk-top{display:inline-block;background:#059669;color:#fff!important;text-decoration:none;font:700 13px system-ui,sans-serif;padding:8px 14px;border-radius:20px;margin:0 0 10px}.apk-top.apk-tab{margin:0 0 0 auto;padding:6px 12px}#apkUpd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#0F172A;color:#fff;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:center;font:600 14px system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.4)}#apkUpd button{border:0;border-radius:10px;padding:9px 14px;font:700 14px system-ui,sans-serif;cursor:pointer}#apkUpd .go{background:#84cc16;color:#111}#apkUpd .x{background:#374151;color:#fff}";
   document.addEventListener("DOMContentLoaded",function(){ document.head.appendChild(css);
-    /*APKLINK*/ if (!cap){ var mk=function(c){ var a=document.createElement("a"); a.href="download.html"; a.className=c; a.textContent="📲 საველე აპის ჩამოტვირთვა"; return a; }; var au=document.getElementById("auth"); if (au&&!document.getElementById("auHead")){ var hd=document.createElement("div"); hd.id="auHead"; hd.className="au-head"; hd.innerHTML='<span class="au-logo"><span class="logo-mark" aria-hidden="true"></span><b>საველე აზომვა</b></span><a class="au-phone" href="tel:+995558424525">📞 +995 558 424 525</a>'; hd.appendChild(mk("apk-top")); au.insertBefore(hd,au.firstChild); } var ht=document.querySelector(".home-tabs"); if (ht){ var tl=mk("apk-top apk-tab"); tl.innerHTML='📲 <span class="t1">საველე აპის </span>ჩამოტვირთვა'; ht.appendChild(tl); } } /*END-APKLINK*/
+    /*APKLINK*/ if (!cap){ var mk=function(c){ var a=document.createElement("a"); a.href="download.html"; a.className=c; a.textContent="📲 საველე აპის ჩამოტვირთვა"; return a; }; var au=document.getElementById("auth"); if (au&&!document.getElementById("auHead")){ var hd=document.createElement("div"); hd.id="auHead"; hd.className="au-head"; hd.innerHTML='<span class="au-logo"><span class="logo-mark" aria-hidden="true"></span><b>GeoSpace</b></span><a class="au-phone" href="tel:+995558424525">📞 +995 558 424 525</a><a class="au-phone au-wa" href="https://wa.me/995558424525" target="_blank" rel="noopener">💬 WhatsApp</a>'; hd.appendChild(mk("apk-top")); au.insertBefore(hd,au.firstChild); } var ht=document.querySelector(".home-tabs"); if (ht){ var tl=mk("apk-top apk-tab"); tl.innerHTML='📲 <span class="t1">საველე აპის </span>ჩამოტვირთვა'; ht.appendChild(tl); } } /*END-APKLINK*/
     if (cap) setTimeout(async function(){ try { var cur=+(((await (await fetch("sw.js",{cache:"no-store"})).text()).match(/eskizi-v(\d+)/)||[])[1]||0); var r=await fetch(base+"/apk/version.json?t="+Date.now(),{cache:"no-store"}); if (!r.ok) return; var j=await r.json(); if (cur&&+j.ver>cur){ var b=document.createElement("div"); b.id="apkUpd"; b.innerHTML="<span style='flex:1'>🆕 ახალი ვერსია v"+j.ver+" (ახლა გაქვთ v"+cur+")</span><button class='go'>ჩამოტვირთვა</button><button class='x'>✕</button>"; b.querySelector(".go").onclick=function(){ window.open(base+"/download.html","_blank"); }; b.querySelector(".x").onclick=function(){ b.remove(); }; document.body.appendChild(b); } } catch(e){} },5000); });
 })();
 </script>
@@ -24,7 +24,7 @@
 </style>
 </head>
 <body>
-<title>შიდა აზომვის ესკიზი</title>
+<title>GeoSpace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
@@ -660,6 +660,20 @@ body.folded header #panelBtn, body.folded header #foldBtn{display:none!important
 @media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) .au-head{background:rgba(241,245,249,.94)} }
 .au-contact{margin:16px auto 0;max-width:420px;text-align:center;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;color:#475569;font-size:14px}.au-contact b{color:#0F172A;font-size:15px}.au-ct-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:4px}.au-ct-row a{padding:9px 14px;border-radius:10px;font-weight:700;text-decoration:none;color:#fff;background:#0F172A}.au-ct-row .au-ct-wa{background:#16A34A}
 .au-head .au-phone{margin-left:auto;margin-right:8px;color:#0F172A;font-weight:800;font-size:15px;text-decoration:none;white-space:nowrap;padding:8px 12px;border:1px solid #CBD5E1;border-radius:10px;background:#fff}.au-head .au-phone:hover{background:#F1F5F9}@media(max-width:560px){.au-head .au-phone{font-size:13px;padding:7px 8px}.au-logo b{display:none}}
+/* შესვლის გვერდი — მთლიან ეკრანზე გაშლა */
+#auth .auth-in{max-width:none;width:100%;box-sizing:border-box;padding-left:max(24px,4vw);padding-right:max(24px,4vw);grid-template-columns:minmax(360px,520px) minmax(0,1fr);column-gap:max(32px,3vw)}
+#auth .au-stats,#auth .au-stats.cad{max-width:none}
+#auth .auth-in>#authForm,#auth .auth-in>#payCard{max-width:520px;width:100%}
+@media (max-width:860px){#auth .auth-in{grid-template-columns:minmax(0,1fr);padding-left:16px;padding-right:16px}}
+.au-slides{position:relative;width:100%}.au-sl{display:none}.au-sl.on{display:block;animation:auSl .6s ease both}
+@keyframes auSl{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+.au-cap{position:absolute;left:8px;bottom:6px;z-index:2;background:rgba(255,255,255,.14);color:#fff;font-weight:800;font-size:14px;padding:6px 12px;border-radius:999px;backdrop-filter:blur(6px)}
+.au-sb{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:26px;line-height:1;cursor:pointer}.au-sb:hover{background:rgba(255,255,255,.32)}.au-sb.prev{left:-6px}.au-sb.next{right:-6px}
+.au-dots{display:flex;gap:8px;justify-content:center;margin-top:10px}.au-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer}.au-dots i.on{background:#F5C542;width:24px;border-radius:6px}
+.au-head .au-wa{background:#16A34A;color:#fff!important;border-color:#16A34A}.au-head .au-wa:hover{background:#15803D}
+.gs-sub{font-size:13.5px;color:#64748B;font-weight:600;letter-spacing:.02em;margin:2px 0 6px}
+@media (prefers-reduced-motion:reduce){.au-sl.on{animation:none}}
+.au-head .au-phone{white-space:nowrap;flex:0 0 auto}.au-head .au-phone+.au-wa{margin-left:0}.au-head{flex-wrap:nowrap}
 /* ფერადი ღილაკები ჯგუფების მიხედვით */
 .tb .grp[data-l="ხაზვა"] button:not([aria-pressed="true"]) svg{stroke:#2563EB}
 .tb .grp[data-l="ელემენტები"] button:not([aria-pressed="true"]) svg{stroke:#16A34A}
@@ -1007,10 +1021,10 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
   <div class="home-in auth-in">
     <div class="au-welcome" aria-label="კეთილი იყოს თქვენი მობრძანება"><h2 id="auWelcome">კეთილი იყოს თქვენი მობრძანება</h2><i class="au-line"></i><div class="au-stats" id="auStats" hidden></div></div>
     <div>
-      <h1 class="home-title"><span class="logo-mark" aria-hidden="true"></span>შიდა აზომვა</h1>
+      <h1 class="home-title"><span class="logo-mark" aria-hidden="true"></span>GeoSpace</h1>
+      <div class="gs-sub">შიდა აზომვა | კადასტრი | ტოპოგრაფია</div>
       <p class="home-sub" id="authSub"></p>
     </div>
-    <div class="au-contact"><b>გაქვთ კითხვა ან გჭირდებათ დახმარება?</b><span>დაგვირეკეთ ან მოგვწერეთ WhatsApp-ზე პირდაპირ:</span><div class="au-ct-row"><a class="au-ct-tel" href="tel:+995558424525">📞 +995 558 424 525</a><a class="au-ct-wa" href="https://wa.me/995558424525" target="_blank" rel="noopener">💬 WhatsApp</a></div></div>
     <form class="card" id="authForm" autocomplete="on">
       <div class="au-tabs" id="auTabs"><button type="button" id="auTabLogin" aria-pressed="true">შესვლა</button><button type="button" id="auTabReg" aria-pressed="false">რეგისტრაცია</button></div>
       <div class="field" id="fName"><label for="auName">სახელი და გვარი</label><input class="input" id="auName" type="text" autocomplete="name"></div>
@@ -1034,9 +1048,9 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
     </div>
     <div class="auth-msg" id="authMsg" role="status" aria-live="polite"></div>
 
-    <div class="au-art" aria-hidden="true">
+    <div class="au-art">
       <div class="au-grid"></div><div class="au-blob"></div>
-      <svg class="hm-art" viewBox="0 0 420 300" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <div class="au-slides"><div class="au-sl on"><span class="au-cap">📐 შიდა აზომვა</span><svg class="hm-art" viewBox="0 0 420 300" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <rect class="w" pathLength="1" x="40" y="40" width="300" height="210" rx="2" stroke="#9FE1CB" stroke-width="10"/>
       <path class="w w2" pathLength="1" d="M190 40V150H340M190 190V250" stroke="#9FE1CB" stroke-width="8"/>
       <circle class="pen" r="6" fill="#F5C542" stroke="none"><animateMotion dur="9s" repeatCount="indefinite" keyTimes="0;0.3;1" keyPoints="0;1;1" calcMode="linear" path="M40 40H340V250H40Z"/></circle>
@@ -1048,9 +1062,25 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
       <text x="115" y="150" text-anchor="middle" fill="#fff" stroke="none" font-size="19" font-weight="700" font-family="monospace">18,40 მ²</text>
       <text x="265" y="100" text-anchor="middle" fill="#fff" stroke="none" font-size="17" font-weight="700" font-family="monospace">12,15 მ²</text>
       <text x="265" y="208" text-anchor="middle" fill="#fff" stroke="none" font-size="17" font-weight="700" font-family="monospace">10,82 მ²</text></g>
-    </svg>
+    </svg></div><div class="au-sl"><span class="au-cap">🗺 კადასტრი</span><svg class="hm-art" viewBox="0 0 420 300" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 250L60 40L170 20" stroke="#4B6B5F" stroke-width="2" stroke-dasharray="5 5"/><path d="M400 60L370 270L250 285" stroke="#4B6B5F" stroke-width="2" stroke-dasharray="5 5"/>
+      <path d="M95 70L300 50L335 200L150 250Z" fill="rgba(125,211,160,.20)" stroke="#9FE1CB" stroke-width="6"/>
+      <g fill="#F5C542" stroke="#0E3B2E" stroke-width="2"><circle cx="95" cy="70" r="8"/><circle cx="300" cy="50" r="8"/><circle cx="335" cy="200" r="8"/><circle cx="150" cy="250" r="8"/></g>
+      <g fill="#fff" stroke="none" font-size="15" font-weight="700" font-family="monospace" text-anchor="middle"><text x="72" y="62">1</text><text x="318" y="42">2</text><text x="358" y="206">3</text><text x="130" y="274">4</text></g>
+      <text x="215" y="150" text-anchor="middle" fill="#fff" stroke="none" font-size="22" font-weight="700" font-family="monospace">1 243 მ²</text>
+      <g fill="#F5C542" stroke="none" font-size="13" font-weight="700" font-family="monospace" text-anchor="middle"><text x="198" y="52" transform="rotate(-5 198 52)">42,6</text><text x="332" y="128" transform="rotate(84 332 128)">38,9</text><text x="240" y="238" transform="rotate(-14 240 238)">31,2</text><text x="112" y="160" transform="rotate(-80 112 160)">48,0</text></g>
+    </svg></div><div class="au-sl"><span class="au-cap">⛰ ტოპოგრაფია</span><svg class="hm-art" viewBox="0 0 420 300" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke="#C98B4B" stroke-width="2.4"><path d="M30 235C100 205 150 215 210 180S330 130 395 150"/><path d="M30 190C95 160 150 170 205 135S320 85 395 105"/><path d="M30 145C90 115 150 125 200 90S310 45 395 60" stroke-width="3.6"/></g>
+      <g stroke="#8a4b12" stroke-width="1.4" opacity=".9"><path d="M30 262C110 235 160 245 220 212S335 165 395 185"/><path d="M30 112C85 85 145 95 195 60S300 22 395 30"/></g>
+      <g fill="#fff" stroke="none" font-size="12" font-weight="700" font-family="monospace"><text x="40" y="141">102</text><text x="40" y="186">101</text><text x="40" y="231">100</text></g>
+      <path d="M40 270C130 258 250 250 390 262" stroke="#CBD5E1" stroke-width="5"/><path d="M40 270C130 258 250 250 390 262" stroke="#374151" stroke-width="1.6" stroke-dasharray="8 6"/>
+      <path d="M240 40L300 60L350 40" stroke="#E7D3A6" stroke-width="2" stroke-dasharray="3 4"/>
+      <g stroke="#15803d" stroke-width="2.4"><circle cx="120" cy="160" r="11" fill="rgba(34,197,94,.3)"/><circle cx="165" cy="105" r="11" fill="rgba(34,197,94,.3)"/></g>
+      <g stroke="#9FE1CB" stroke-width="2.4" fill="rgba(20,83,45,.5)"><path d="M265 140l12 22h-24z"/><path d="M300 110l12 22h-24z"/></g>
+      <circle cx="205" cy="215" r="10" fill="rgba(2,132,199,.25)" stroke="#7DD3FC" stroke-width="2.4"/><circle cx="205" cy="215" r="4" fill="#7DD3FC" stroke="none"/>
+    </svg></div><button type="button" class="au-sb prev" aria-label="წინა">‹</button><button type="button" class="au-sb next" aria-label="შემდეგი">›</button><div class="au-dots"><i class="on"></i><i></i><i></i></div></div>
       <span class="au-chip c1">📄 PDF</span><span class="au-chip c2">🧩 SHP</span><span class="au-chip c3">📐 CAD</span>
-      <ul class="au-feat"><li><i>✏️</i><span><b>დახაზეთ ადგილზე</b></span></li><li><i>📄</i><span><b>მზა დოკუმენტები №315 დადგენილებით</b></span></li></ul>
+      
     </div>
   </div>
 </div>
@@ -3012,7 +3042,7 @@ function setHomeTab(t){ const cadSub=(t==="map"||t==="guide")&&window.__mode==="
   if (t==="proj") renderHome(); if (t==="map"&&mode!=="cad") requestAnimationFrame(renderMapTab); if (t==="map"&&mode==="cad"&&window.cadMapTab) cadMapTab(); if (t==="guide") renderGuide();
   if ((t==="cad"||t==="cproj"||t==="topo") && window.renderCad) renderCad(t); else if (!(t==="map"&&mode==="cad") && window.cadLeave) cadLeave(); }
 (function homeNav(){ const nav=document.querySelector("#home .home-tabs"), top=document.querySelector("#home .home-top"), acct=$("acct");
-  const brand=document.createElement("span"); brand.className="brand"; brand.innerHTML='<span class="logo-mark" aria-hidden="true"></span>შიდა აზომვა'; nav.insertBefore(brand, nav.firstChild);
+  const brand=document.createElement("span"); brand.className="brand"; brand.innerHTML='<span class="logo-mark" aria-hidden="true"></span>GeoSpace'; nav.insertBefore(brand, nav.firstChild);
   const sp=document.createElement("span"); sp.className="spacer"; nav.appendChild(sp); nav.appendChild($("homeClose"));
   const dd=document.createElement("div"); dd.className="acct-dd"; const btn=document.createElement("button"); btn.type="button"; btn.id="acctBtn"; dd.appendChild(btn); dd.appendChild(acct); nav.appendChild(dd);
   const sy=()=>{ btn.hidden=acct.hidden; let em=""; try { em=(AUTH && AUTH.user && AUTH.user.email)||""; } catch(e){} btn.innerHTML='<span class="av" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span><span class="em">'+esc2(em||"ანგარიში")+'</span><span>▾</span>'; }; new MutationObserver(sy).observe(acct,{attributes:true,attributeFilter:["hidden"]}); sy();
@@ -3302,6 +3332,9 @@ function setAuthMode(mode, s){ authMode=mode; const pay=mode==="pay";
   if (mode==="verify"){ $("authSub").textContent="ჩაწერეთ კოდი, რომელიც ელფოსტაზე გამოგიგზავნეთ ("+($("auEmail").value.trim()||"")+")."; $("authSwitch").textContent="← უკან, შესვლა"; }
   { const lr=mode==="login"||mode==="register"; $("auTabs").hidden=!lr; { const av=$("auVid"); if (av) av.hidden=mode!=="register"; } $("authSwitch").hidden=lr; $("auTabLogin").setAttribute("aria-pressed",String(mode==="login")); $("auTabReg").setAttribute("aria-pressed",String(mode==="register")); }
   authMsg(""); }
+(function auSlider(){ const root=document.querySelector(".au-slides"); if (!root) return; const sl=[...root.querySelectorAll(".au-sl")], dots=[...root.querySelectorAll(".au-dots i")]; let k=0, tm=null;
+  const go=n=>{ k=(n+sl.length)%sl.length; sl.forEach((e,i)=>e.classList.toggle("on",i===k)); dots.forEach((e,i)=>e.classList.toggle("on",i===k)); }, auto=()=>{ clearInterval(tm); tm=setInterval(()=>{ if (!document.hidden) go(k+1); },5000); };
+  root.querySelector(".prev").onclick=()=>{ go(k-1); auto(); }; root.querySelector(".next").onclick=()=>{ go(k+1); auto(); }; dots.forEach((d,i)=>d.onclick=()=>{ go(i); auto(); }); auto(); })();
 (function welcomeSplit(){ const h=$("auWelcome"); if (!h) return; const txt=h.textContent.trim(); h.textContent=""; let i=0;
   txt.split(/\s+/).forEach((w,wi,arr)=>{ const sp=document.createElement("span"); sp.className="w"; [...w].forEach(c=>{ const k=document.createElement("span"); k.className="ch"; k.style.setProperty("--i",i++); k.textContent=c; sp.appendChild(k); }); h.appendChild(sp); if (wi<arr.length-1){ h.appendChild(document.createTextNode(" ")); i++; } }); })();
 { const v=mkVid("hht7036dVmA","როგორ დავრეგისტრირდეთ"); v.id="auVid"; v.hidden=true; $("auTabs").after(v); }
@@ -4852,7 +4885,7 @@ const prepared=pr.parcels.filter(q=>layerOf(q)==="parcel"&&q.numbered&&q.pts&&q.
    ${legGroup("mine","📁","ჩემი ფენები",Object.entries(FIELD_LAYERS).map(([k,v])=>row(v.key,v.symbol,v.name,k)).join(""))}
    ${legGroup("base","🗺","საფუძველი რუკები",row("f","▭","რეესტრის ნაკვეთები (WFS)")+row("c","▦","საკადასტრო (WMS)")+row("o","🖼","ორთოფოტო"))}
    </div>
-   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v300</div></div>`; }
+   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v309</div></div>`; }
 function renderDrawer(force){ const d=$c("cfDrawer"); if (!d||!F) return; if (!force&&!d.classList.contains("open")) return; const a=document.activeElement; if (!force&&a&&d.contains(a)&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)) return; d.innerHTML=drawerHtml(); d.onchange=onDrawerChange; }
 function onDrawer(e){
   if (topoDrawerClick(e)) return;
@@ -5224,7 +5257,7 @@ function panel(kind,arg){ const el=$c("cfPanel"); if (!el||!F) return; F.panel=k
       `<div class="row" style="gap:8px;margin-top:10px"><button type="button" class="btn" data-g="toggle">${GPS.id==null?"📡 ჩართვა":"📡 გამორთვა"}</button><button type="button" class="btn" data-g="follow">🎯 მიყოლა</button></div>`; }
   else if (kind==="layers"){ const L=F.map.getLayers(); h=head("🗺 ფენები")+[["o","ორთოფოტო"],["c","საკადასტრო (WMS)"],["f","ნაკვეთები (WFS)"]].map(([k,t])=>`<label class="chk cf-l"><input type="checkbox" data-l="${k}"${L[k]?" checked":""}> ${t}</label>`).join("")+
       `<div class="row" style="gap:8px;margin-top:10px"><input class="input" id="cfQ" type="search" placeholder="საკადასტრო კოდი" style="flex:1"><button type="button" class="btn primary" data-g="find">🔍</button></div>`; }
-  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v300</div>`; }
+  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v309</div>`; }
   else if (kind==="list"){ h=head("☰ ნაკვეთები")+(F.pr.parcels.length?`<div class="cf-list">${F.pr.parcels.map(p=>{ const m=metrics(p); return `<button type="button" class="cad-card" data-pid="${p.id}"><b>${esc(p.fields.CADCODE||p.fields.ADRES||"ნაკვეთი")}</b><span>${esc(p.fields.INT_PER_ID||"—")}</span><span>${p.pts.length} წერტილი · ${m.area?m.area.toFixed(1)+" მ²":"—"}</span></button>`; }).join("")}</div>`:'<p class="cad-empty">ნაკვეთები ჯერ არ არის. დააჭირეთ „+ ნაკვეთი“.</p>')+ptsList(); }
   else if (kind==="wfs"){ F.hit=arg; h=head("📍 რეესტრის ნაკვეთი")+`<div class="cf-kv"><span>კოდი</span><b>${esc(arg.code||"—")}</b></div>`+(arg.area?`<div class="cf-kv"><span>ფართობი</span><b>${Math.round(arg.area)} მ²</b></div>`:"")+`<div class="cf-btns"><button type="button" class="btn primary" data-g="addwfsg">📋 ნაკვეთად ჩაკოპირება (გეომეტრიით)</button><button type="button" class="btn" data-g="addwfs">+ მხოლოდ კოდით</button></div>`; }
   else if (kind==="ident"){ h=head("Features")+identHtml(); }
