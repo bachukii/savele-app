@@ -1,11 +1,12 @@
 // შიდა აზომვის ესკიზი — ოფლაინ ქეში. ახალი ვერსიისას VERSION შეცვალეთ.
-const VERSION = "eskizi-v272";
+const VERSION = "eskizi-v277";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
   if (e.request.method !== "GET") return;
   const url = new URL(e.request.url);
+  if (url.pathname.indexOf("/apk/") === 0 || url.pathname.endsWith(".apk")) return;   // APK — ქეშის გარეშე
   if (url.hostname.endsWith("napr.gov.ge")) return;   // ორთოფოტო / საკადასტრო — ქეშის გარეშე, პირდაპირ ინტერნეტიდან
   if (/(youtube|ytimg|ggpht|googlevideo|youtu\.be)/.test(url.hostname)) return;   // ვიდეო — ქეშის გარეშე
   if (url.hostname.endsWith("openstreetmap.org")) return;   // რუკის ფილები — ქეშის გარეშე

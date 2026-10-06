@@ -1,3 +1,3 @@
-# საველე აპკ v272
+# საველე აპკ v277
 
-Android აპი (Capacitor). GPS: სისტემური ლოკაცია (Cube Mock Location). ფაილები: Downloads/Savele. Independent field checks are still required.
+Android აპი (Capacitor). ხელმოწერა: signing/savele.p12 (სტაბილური — ახალი ვერსია ძველზე ზემოდან ინსტალდება). Actions-ის შედეგი: out/savele.apk + version.json — ატვირთეთ საიტის apk/ საქაღალდეში.

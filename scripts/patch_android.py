@@ -39,3 +39,25 @@ if src.count(old) != 1:
     raise SystemExit("bluetooth-le Device.kt: unexpected content, patch failed")
 ble.write_text(src.replace(old, 'resolve("connect", "Connected.")'), encoding="utf-8")
 print("bluetooth-le patched (no MTU wait)")
+
+
+# სტაბილური ხელმოწერა: ყველა ახალი APK ერთი და იმავე გასაღებით ინსტალდება „ზემოდან“ (მონაცემები არ იკარგება)
+gradle = root / "android" / "app" / "build.gradle"
+g = gradle.read_text(encoding="utf-8")
+if "savele.p12" not in g:
+    g += """
+
+android {
+    signingConfigs {
+        debug {
+            storeFile file('../../signing/savele.p12')
+            storePassword 'savele123'
+            keyAlias 'savele'
+            keyPassword 'savele123'
+            storeType 'pkcs12'
+        }
+    }
+}
+"""
+    gradle.write_text(g, encoding="utf-8")
+print("signing patched (stable key)")
