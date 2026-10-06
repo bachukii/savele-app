@@ -1494,7 +1494,7 @@ function label(g,a,b,txt,side,color,italic){ const [x1,y1]=toScr(a[0],a[1]),[x2,
   let ang=deg(Math.atan2(y2-y1,x2-x1)); const nx=-(y2-y1)/L,ny=(x2-x1)/L,off=14*side,mx=(x1+x2)/2+nx*off,my=(y1+y2)/2+ny*off; if (ang>90||ang<-90) ang+=180;
   el("text",{x:mx,y:my,"text-anchor":"middle","dominant-baseline":"middle",transform:`rotate(${ang} ${mx} ${my})`,"font-family":css("--f-num"),"font-size":13,"font-weight":600,fill:color,"paint-order":"stroke",stroke:css("--paper"),"stroke-width":4,"font-style":italic?"italic":"normal"},g,txt); }
 function tag(x,y,t,color){ el("text",{x,y,"text-anchor":"middle","dominant-baseline":"middle","font-family":css("--f-num"),"font-size":13,"font-weight":700,fill:color,"paint-order":"stroke",stroke:css("--paper"),"stroke-width":4},svg,t); }
-let drag=null, ghost=null, moveG=null, hover=null, gripDrag=null, lastGripTap=null, rotG=null, ROTPEND=null, offG=null, elG=null, rotPivot=null, offD=0.20, fromMode=false, fromBase=null;
+let drag=null, ghost=null, moveG=null, hover=null, gripDrag=null, lastGripTap=null, rotG=null, ROTPEND=null, ROTHOV=null, offG=null, elG=null, rotPivot=null, offD=0.20, fromMode=false, fromBase=null;
 function draw(){
   svg.innerHTML=""; const {w,h}=size(); const step=view.s>=18?1:5; const [x0,y1]=toWld(0,0),[x1,y0]=toWld(w,h);
   drawMap(); drawParcels(); drawBldg();
@@ -1651,7 +1651,7 @@ function computeTo(from,prevDir,px,py,room){
   const s=snap(px,py,{from,prevDir});
   return {to:s.pt,snap:s.kind!=="free",rel:prevDir!=null?norm(dirOf(from,s.pt)-prevDir):null}; }
 function drawSnap(){
-  if (!lastSnap || !(drag||ghost||moveG||hover||gripDrag)) return;
+  if (!lastSnap || !(drag||ghost||moveG||hover||gripDrag||rotG)) return;
   const tr="#16A34A", mk="#F59E0B";
   lastSnap.guides.forEach(g=>{ const a=toScr(g.a[0],g.a[1]), b=toScr(g.b[0],g.b[1]); const L=Math.hypot(b[0]-a[0],b[1]-a[1])||1, ux=(b[0]-a[0])/L, uy=(b[1]-a[1])/L;
     el("line",{x1:a[0]-ux*2000,y1:a[1]-uy*2000,x2:b[0]+ux*2000,y2:b[1]+uy*2000,stroke:tr,"stroke-width":1.2,"stroke-dasharray":"6 5",opacity:.9}); el("path",{d:`M${a[0]-4} ${a[1]-4}L${a[0]+4} ${a[1]+4}M${a[0]+4} ${a[1]-4}L${a[0]-4} ${a[1]+4}`,stroke:tr,"stroke-width":2}); });
@@ -1806,7 +1806,7 @@ function drawRotOff(){
   if (fromMode && fromBase){ const [x,y]=toScr(fromBase[0],fromBase[1]); el("circle",{cx:x,cy:y,r:9,fill:"none",stroke:"#16A34A","stroke-width":2.5}); el("path",{d:`M${x-6} ${y-6}L${x+6} ${y+6}M${x+6} ${y-6}L${x-6} ${y+6}`,stroke:"#16A34A","stroke-width":2.5}); }
   if (tool==="rotate"){ const objs=selObjs(); if (objs.length){ const c=rotPivot||groupCenter(objs), [x,y]=toScr(c[0],c[1]);
       el("circle",{cx:x,cy:y,r:10,fill:"none",stroke:sel2,"stroke-width":2.5}); el("path",{d:`M${x-15} ${y}H${x+15}M${x} ${y-15}V${y+15}`,stroke:sel2,"stroke-width":2});
-      const RG=rotG||ROTPEND; if (RG && RG.ang){ objs.forEach(o=>{ const p=shape(o).map(q=>rotPoint(q,c,RG.ang)), closed=isClosed(o);
+      const RG=rotG||ROTPEND||ROTHOV; if (RG && RG.ang){ objs.forEach(o=>{ const p=shape(o).map(q=>rotPoint(q,c,RG.ang)), closed=isClosed(o);
           el(closed?"polygon":"polyline",{points:pts2(p),fill:closed?css("--accent-soft"):"none","fill-opacity":.6,stroke:acc,"stroke-width":2.5,"stroke-dasharray":"8 6"}); });
         const [bx,by]=toScr(RG.cur[0],RG.cur[1]); el("line",{x1:x,y1:y,x2:bx,y2:by,stroke:sel2,"stroke-width":1.5,"stroke-dasharray":"5 4"}); bubble(bx,by,"∠ "+fmt(RG.ang,RG.ang%1?1:0)+"°"); } } }
   if (offG){ const n=offsetObj(offG.o,offG.pt,offD); if (n){ const p=n.kind==="circle"?circlePts(n):n.pts, closed=n.kind==="circle"||n.closed;
@@ -2090,7 +2090,7 @@ function drawPending(){}
 // მაუსის მიტანით (დაჭერის გარეშე) — სნეპის ნიშანი და მომდევნო ხაზის მოჩვენება, როგორც AutoCAD-ში
 let hoverRaf=0;
 function hoverMove(e){ const [px,py]=loc(e); cancelAnimationFrame(hoverRaf); hoverRaf=requestAnimationFrame(()=>{
-  hover=null; lastSnap=null;
+  hover=null; lastSnap=null; ROTHOV=null;
   if (plineTool()){ const o=openPoly();
     if (o){ const last=o.pts[o.pts.length-1], prevDir=o.pts.length>=2?dirOf(o.pts[o.pts.length-2],last):null; const c=computeTo(last,prevDir,px,py,o);
       hover={kind:"pline",from:last,to:c.to,snap:c.snap,rel:c.rel,close:!!c.close}; }
@@ -2098,6 +2098,8 @@ function hoverMove(e){ const [px,py]=loc(e); cancelAnimationFrame(hoverRaf); hov
     else { snap(px,py,{}); hover={kind:"pt"}; } }
   else if (["line","rect","circle","arc","door","window"].includes(tool)){ const nx = pending.length ? snap(px,py,{from:pending[pending.length-1],noPolar:["rect","door","window"].includes(tool)}).pt : snap(px,py,{}).pt; hover={kind:"ghost",pts:[...pending,nx]}; }
   else if ((tool==="move"||tool==="copy") && sel()){ snap(px,py,{}); hover={kind:"pt"}; }
+  else if (tool==="rotate" && selObjs().length && !ROTPEND){ const sp=snap(px,py,{}); hover={kind:"pt"};
+    if (ROTREF&&ROTREF.a&&rotPivot){ const want=Math.atan2(sp.pt[1]-rotPivot[1],sp.pt[0]-rotPivot[0]), a0=Math.atan2(ROTREF.a[1]-rotPivot[1],ROTREF.a[0]-rotPivot[0]); let deg=(want-a0)*180/Math.PI; deg=((deg+540)%360)-180; ROTHOV={ang:Math.round(deg*100)/100,cur:sp.pt.slice()}; } else ROTHOV=null; }
   else if (tool==="door"||tool==="window") hover={kind:"el",px,py};
   draw(); }); }
 svg.addEventListener("pointerleave",()=>{ if (hover){ hover=null; lastSnap=null; draw(); } });
@@ -2522,7 +2524,7 @@ function btData(p,u,src){ let m=p?p.parse(u):null, guessed=false;
 async function btConnect(){
   if (BT.native||(BT.dev&&BT.dev.gatt&&BT.dev.gatt.connected)){ btPanel(); return; }
   if (btIsNative()){ try { await btNative(); } catch(err){ BT.native=null; btState(false); flash("დაკავშირება ვერ მოხერხდა: "+((err&&err.message)||err)+" — გათიშეთ მანძილმზომი სხვა მოწყობილობიდან/აპიდან (კომპიუტერი, Bosch აპი), გამორთეთ და ჩართეთ და სცადეთ ხელახლა.",9000); } return; }
-  if (!navigator.bluetooth){ flash("ბლუთუზი ვერ მოიძებნა. თუ ეს Android-ის აპია, წაშალეთ და თავიდან დააყენეთ უახლესი APK (პროექტის მენიუში ⋮ უნდა ეწეროს v279); Chrome-ში ბლუთუზი ჩართეთ; iPad-ზე — Bluefy."); return; }
+  if (!navigator.bluetooth){ flash("ბლუთუზი ვერ მოიძებნა. თუ ეს Android-ის აპია, წაშალეთ და თავიდან დააყენეთ უახლესი APK (პროექტის მენიუში ⋮ უნდა ეწეროს v280); Chrome-ში ბლუთუზი ჩართეთ; iPad-ზე — Bluefy."); return; }
   try {
     const dev = BT.dev || await navigator.bluetooth.requestDevice({acceptAllDevices:true, optionalServices:BT_PROFILES.map(p=>p.svc).concat(["generic_access","device_information","battery_service","generic_attribute","0000fe59-0000-1000-8000-00805f9b34fb","0000fff0-0000-1000-8000-00805f9b34fb","0000ae00-0000-1000-8000-00805f9b34fb","0000fee7-0000-1000-8000-00805f9b34fb","0000180d-0000-1000-8000-00805f9b34fb","00001523-1212-efde-1523-785feabcd123","8ec90001-f315-4f60-9fb8-838830daea50","49535343-fe7d-4ae5-8fa9-9fafd205e455"])});
     BT.dev=dev; BT.manual=false; btState(false,"უკავშირდება…");
@@ -2655,9 +2657,10 @@ function hint(){ const o=openPoly(); const H={
   measure: "📏 საზომი: შეეხეთ ორ წერტილს (კუთხეებს ესნეპება) — მანძილი, Δx, Δy და კუთხე. ნახაზი არ იცვლება.",
   from: "ათვლა: დაადეთ თითი კუთხეს და გაიყვანეთ სასურველი მიმართულებით — შემდეგ ჩაწერეთ მანძილი (მაგ. 0,20); ხაზვა იქიდან დაიწყება.",
   rotate: !sel() ? "შემობრუნება: ჯერ შეეხეთ ობიექტს (ან მონიშნეთ „არჩევით“)."
-    : !ROTREF ? "① საბაზო წერტილი — შეეხეთ კუთხეს, რომლის გარშემოც დატრიალდება (ან უბრალოდ ატრიალეთ თითით)."
+    : ROTPEND ? "④ დაადასტურეთ: ✓ — დასრულება, ✕ — გაუქმება (Enter / Esc). ან გადაათრიეთ კიდევ დასაზუსტებლად."
+    : !ROTREF ? "① საბაზო წერტილი — მიიტანეთ ისარი კუთხესთან (ესნეპება) და შეეხეთ — იმ კუთხის გარშემო დატრიალდება (ან უბრალოდ ატრიალეთ თითით)."
     : !ROTREF.a ? "② Reference — შეეხეთ ნახაზის მეორე კუთხეს (ეს გვერდი იქნება საწყისი მიმართულება)."
-    : "③ ახალი მიმართულება — შეეხეთ წერტილს, რომლისკენაც ეს გვერდი უნდა გასწორდეს.",
+    : "③ ახალი მიმართულება — მიიტანეთ ისარი სამიზნე კუთხესთან (ესნეპება), წინასწარი ხედი ჩანს; შეეხეთ — მერე ✓ ასრულებს.",
   offset: sel() ? "ოფსეტი "+fmt(offD)+" მ: შეეხეთ მხარეს (ან გაიყვანეთ თითი) — იქით გადაიწევს. სხვა ობიექტზე შეხება — მისი არჩევა." : "ოფსეტი: ჯერ შეეხეთ ობიექტს.",
   pline: o ? "შეეხეთ შემდეგ კუთხეს ან გაიყვანეთ თითი — ხაზი არ წყდება. დასახურად შეეხეთ საწყის წერტილს, ან „დასრულება“." : "პოლიხაზი: შეეხეთ პირველ კუთხეს (ან გაიყვანეთ თითი). ორი თითით — გადაადგილება და ზუმი.",
   line: pending.length ? "შეეხეთ ხაზის ბოლოს." : "ხაზი: შეეხეთ საწყის წერტილს, შემდეგ ბოლოს (ან გაიყვანეთ თითი).",
@@ -3590,9 +3593,9 @@ function rotRefTap(pt){ const objs=selObjs().filter(x=>!x.locked); if (!objs.len
   if (same && dist(t1,rotPivot)<0.01){ flash("სამიზნე წერტილი ცენტრს ემთხვევა — შეეხეთ სხვა წერტილს."); return true; }
   const want = same ? Math.atan2(t1[1]-rotPivot[1],t1[0]-rotPivot[0]) : Math.atan2(pt[1]-t1[1],pt[0]-t1[0]);
   const ang=want-Math.atan2(ROTREF.a[1]-rotPivot[1],ROTREF.a[0]-rotPivot[0]);
-  const c=rotPivot.slice(), cs=Math.cos(ang), sn=Math.sin(ang); let deg=ang*180/Math.PI; deg=((deg+540)%360)-180;
-  mutate(()=>objs.forEach(o=>xform(o,p=>[c[0]+(p[0]-c[0])*cs-(p[1]-c[1])*sn, c[1]+(p[0]-c[0])*sn+(p[1]-c[1])*cs])));
-  ROTREF=null; flash("↻ შემობრუნდა "+fmt(deg,1)+"° — "+(same?"ცენტრიდან მითითებული წერტილისკენ.":"სამიზნე კედლის პარალელურად.")); return true; }
+  let deg=ang*180/Math.PI; deg=((deg+540)%360)-180;
+  ROTPEND={objs, ang:Math.round(deg*100)/100, cur:t1.slice(), pivot:rotPivot.slice()}; ROTREF=null; ROTHOV=null; draw(); showRotBar();
+  flash("↻ "+fmt(deg,1)+"° — დააჭირეთ ✓ დასასრულებლად ან ✕ გასაუქმებლად"); return true; }
 function drawRotRef(){ if (tool!=="rotate" || !ROTREF || !rotPivot || !ROTREF.a) return;
   const [cx,cy]=toScr(rotPivot[0],rotPivot[1]), [ax,ay]=toScr(ROTREF.a[0],ROTREF.a[1]);
   el("line",{x1:cx,y1:cy,x2:ax,y2:ay,stroke:"#7C3AED","stroke-width":2.5,"stroke-dasharray":"7 5"});
@@ -4724,7 +4727,7 @@ function drawerHtml(){ const pr=F.pr, L=F.map?F.map.getLayers():{o:true,c:true,f
    ${legGroup("mine","📁","ჩემი ფენები",Object.entries(FIELD_LAYERS).map(([k,v])=>row(v.key,v.symbol,v.name,k)).join(""))}
    ${legGroup("base","🗺","საფუძველი რუკები",row("f","▭","რეესტრის ნაკვეთები (WFS)")+row("c","▦","საკადასტრო (WMS)")+row("o","🖼","ორთოფოტო"))}
    </div>
-   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v279</div></div>`; }
+   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v280</div></div>`; }
 function renderDrawer(force){ const d=$c("cfDrawer"); if (!d||!F) return; if (!force&&!d.classList.contains("open")) return; const a=document.activeElement; if (!force&&a&&d.contains(a)&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)) return; d.innerHTML=drawerHtml(); d.onchange=onDrawerChange; }
 function onDrawer(e){
   const draw=e.target.closest("[data-layerdraw]"); if(draw){chooseFieldLayer(draw.dataset.layerdraw);return;}
@@ -5095,7 +5098,7 @@ function panel(kind,arg){ const el=$c("cfPanel"); if (!el||!F) return; F.panel=k
       `<div class="row" style="gap:8px;margin-top:10px"><button type="button" class="btn" data-g="toggle">${GPS.id==null?"📡 ჩართვა":"📡 გამორთვა"}</button><button type="button" class="btn" data-g="follow">🎯 მიყოლა</button></div>`; }
   else if (kind==="layers"){ const L=F.map.getLayers(); h=head("🗺 ფენები")+[["o","ორთოფოტო"],["c","საკადასტრო (WMS)"],["f","ნაკვეთები (WFS)"]].map(([k,t])=>`<label class="chk cf-l"><input type="checkbox" data-l="${k}"${L[k]?" checked":""}> ${t}</label>`).join("")+
       `<div class="row" style="gap:8px;margin-top:10px"><input class="input" id="cfQ" type="search" placeholder="საკადასტრო კოდი" style="flex:1"><button type="button" class="btn primary" data-g="find">🔍</button></div>`; }
-  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v279</div>`; }
+  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div><div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v280</div>`; }
   else if (kind==="list"){ h=head("☰ ნაკვეთები")+(F.pr.parcels.length?`<div class="cf-list">${F.pr.parcels.map(p=>{ const m=metrics(p); return `<button type="button" class="cad-card" data-pid="${p.id}"><b>${esc(p.fields.CADCODE||p.fields.ADRES||"ნაკვეთი")}</b><span>${esc(p.fields.INT_PER_ID||"—")}</span><span>${p.pts.length} წერტილი · ${m.area?m.area.toFixed(1)+" მ²":"—"}</span></button>`; }).join("")}</div>`:'<p class="cad-empty">ნაკვეთები ჯერ არ არის. დააჭირეთ „+ ნაკვეთი“.</p>')+ptsList(); }
   else if (kind==="wfs"){ F.hit=arg; h=head("📍 რეესტრის ნაკვეთი")+`<div class="cf-kv"><span>კოდი</span><b>${esc(arg.code||"—")}</b></div>`+(arg.area?`<div class="cf-kv"><span>ფართობი</span><b>${Math.round(arg.area)} მ²</b></div>`:"")+`<div class="cf-btns"><button type="button" class="btn primary" data-g="addwfsg">📋 ნაკვეთად ჩაკოპირება (გეომეტრიით)</button><button type="button" class="btn" data-g="addwfs">+ მხოლოდ კოდით</button></div>`; }
   else if (kind==="ident"){ h=head("Features")+identHtml(); }
