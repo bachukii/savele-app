@@ -767,7 +767,7 @@ body.dockon .no-dock{display:none!important}
 body.dockon .dock{display:block;position:fixed;left:0;right:0;bottom:0;z-index:19;background:var(--panel);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 24px rgba(15,23,42,.10)}
 body.dockon .app{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px))!important}
 .dock-tab[disabled]{opacity:.35}
-.dock-tabs{display:grid;grid-template-columns:repeat(8,1fr);gap:2px}
+.dock-tabs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:2px}
 .dock-tab{position:relative;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 5px;font:600 10.5px var(--f-ui);color:var(--muted);border-radius:12px;cursor:pointer;min-width:0}
 .dock-tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .dock-tab .dg{font-size:22px;line-height:24px;height:24px}
@@ -1096,7 +1096,7 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
       </div>
       <button class="btn" id="homeClose" type="button">✕ ნახაზზე დაბრუნება</button>
     </div>
-    <div class="acct" id="acct" hidden><span class="acct-txt" id="acctTxt"></span><span class="acct-sync" id="acctSync"></span><span class="spacer"></span><button class="btn" id="acctCab" type="button">👤 კაბინეტი</button><button class="btn" id="acctPay" type="button">გამოწერა</button><button class="btn" id="acctOut" type="button">გასვლა</button></div>
+    <div class="acct" id="acct" hidden><span class="acct-txt" id="acctTxt"></span><span class="acct-sync" id="acctSync"></span><span class="spacer"></span><button class="btn" id="acctCab" type="button">👤 კაბინეტი</button><button class="btn" id="acctSty" type="button">🎨 ნახაზის სტილი</button><button class="btn" id="acctPay" type="button">გამოწერა</button><button class="btn" id="acctOut" type="button">გასვლა</button></div>
     <div class="home-tabs"><button type="button" id="tabMain" class="mode-btn" aria-pressed="false">მთავარი</button><button type="button" id="tabInt" class="mode-btn" aria-pressed="false">📐 შიდა აზომვა</button><button type="button" id="tabCad" class="mode-btn" aria-pressed="false">🗺 კადასტრი</button><button type="button" id="tabTopo" class="mode-btn" aria-pressed="false">⛰ ტოპოგრაფია</button><span class="mode-sep"></span><button type="button" class="sub-tab" id="tabProj" aria-pressed="false">პროექტები</button><button type="button" class="sub-tab" id="tabMap" aria-pressed="false">რუკა</button><button type="button" class="sub-tab" id="tabGuide" aria-pressed="false">📚 სახელმძღვანელო</button></div>
     <form class="home-new" id="homeNew" autocomplete="off">
       <div class="field" style="flex:2"><label for="homeName">ახალი პროექტი — დასახელება / მისამართი</label>
@@ -1158,6 +1158,8 @@ body.folded .grp:not(.fly) .gb{flex-wrap:wrap}
     <div class="pop-sec"><h2>სართული</h2>
       <div class="row"><button class="btn sm" id="floorNew" type="button">＋ სართული</button><button class="btn sm" id="floorRen" type="button">✎ გადარქმევა</button><button class="btn sm danger" id="floorDel" type="button">🗑 წაშლა</button></div>
       <div class="row"><button class="btn sm" id="floorCopy" type="button">⧉ ქვედა სართულის ასლი</button><label class="chk"><input type="checkbox" id="refChk"> ქვედა სართული ფონად</label></div></div>
+    <div class="pop-sec"><h2>შემოწმება</h2>
+      <div class="row"><button class="btn sm" id="topoChk" type="button">🔍 ტოპოლოგია: გადაფარვები და ხვრელები</button></div></div>
     <div class="pop-sec"><h2>კედლები</h2>
       <div class="row"><input type="checkbox" id="wallChk" hidden>
         <label class="chk">კედლის სისქე <input class="input num" id="wallT" type="text" inputmode="decimal" style="width:84px"> მ</label></div></div>
@@ -1299,7 +1301,7 @@ window.addEventListener("unhandledrejection",function(e){ try { var m=e.reason&&
 (function(){
 "use strict";
 const SUBS = [
-  {v:"iataki",ka:"იატაკი",fill:"#EFE9DC",used:true},{v:"aivani",ka:"აივანი",fill:"#FCE9D2",used:true},
+  {v:"iataki",ka:"იატაკი",fill:"#E6E8EB",used:true},{v:"aivani",ka:"აივანი",fill:"#FCE9D2",used:true},
   {v:"veranda",ka:"ვერანდა",fill:"#E9E6D6",used:true},{v:"antresoli",ka:"ანტრესოლი",fill:"#E9E3F4",used:true},
   {v:"kibis_ujredi",ka:"კიბის უჯრედი",fill:"#F6ECD2",used:false},{v:"liftis_saxta",ka:"ლიფტის შახტა",fill:"#E4E4E4",used:false},
   {v:"kedeli",ka:"კედელი",fill:"#A9A9A9",used:false},{v:"sayrdeni_kedeli",ka:"საყრდენი კედელი",fill:"#A4553B",used:false},
@@ -1316,7 +1318,7 @@ const SUBTILE={
   kibis_ujredi:{bg:"#F6ECD2",fn:g=>{ g.strokeStyle="#C9A74F"; g.lineWidth=1; for (let y=2;y<16;y+=4){ g.beginPath(); g.moveTo(0,y); g.lineTo(16,y); g.stroke(); } }},
   bldg:{bg:"#FFFFFF",fn:g=>_diag(g,"#333",1.4)},
   lease:{bg:null,fn:g=>{ g.fillStyle="#DC2626"; [[4,4],[12,12]].forEach(([a,b])=>{ g.beginPath(); g.arc(a,b,1.7,0,6.3); g.fill(); }); }} };
-function subTile(sub,sc=1){ const sp=SUBTILE[sub]; if (!sp) return null; const c=document.createElement("canvas"); c.width=c.height=16*sc; const g=c.getContext("2d"); g.scale(sc,sc); if (sp.bg){ g.fillStyle=sp.bg; g.fillRect(0,0,16,16); } sp.fn(g); return c; }
+function subTile(sub,sc=1,bgOv){ const sp=SUBTILE[sub]; if (!sp) return null; const c=document.createElement("canvas"); c.width=c.height=16*sc; const g=c.getContext("2d"); g.scale(sc,sc); const bg=bgOv||sp.bg; if (bg){ g.fillStyle=bg; g.fillRect(0,0,16,16); } sp.fn(g); return c; }
 const _tu={}; const tileUrl=k=>_tu[k]||(_tu[k]=subTile(k,2).toDataURL());
 const SUB = Object.fromEntries(SUBS.map(s=>[s.v,s]));
 const KIND_KA = {poly:"პოლიხაზი", line:"ხაზი", circle:"წრე", arc:"რკალი", photo:"ფოტო", note:"შენიშვნა"};
@@ -1407,6 +1409,14 @@ function plineTool(){ return tool==="pline"||tool==="wall"; }
 function nextRoomNo(){ let mx=0; S.objs.forEach(o=>{ const m=/^ოთახი ([0-9]+)/.exec(o.name||""); if (m) mx=Math.max(mx,+m[1]); }); return mx+1; }
 // ახალი პოლიხაზი: ოთახი (იატაკი) ან კედელი (სისქით)
 function newPolyBase(){ return tool==="wall" ? {name:"კედელი "+(S.objs.filter(o=>o.wall).length+1), sub:"kedeli", wall:true, t:SET.wallT} : {name:"პოლიხაზი "+(S.objs.filter(o=>/^პოლიხაზი/.test(o.name||"")).length+1), sub:"xazi"}; }
+// ფართობის წარწერა: მძიმე (ცენტრი) თუ პოლიგონის შიგნითაა და საკმარისად შორს კიდიდან; სხვა შემთხვევაში (L-ფორმა, ჩაზნექილი) — ყველაზე „ღია“ წერტილი შიგნით
+const LABELC=new Map();
+function labelPt(o){ if (!o||!o.pts||o.pts.length<3) return centroid(o.pts||[[0,0]]); const key=o.pts.map(q=>q[0].toFixed(3)+","+q[1].toFixed(3)).join(";")+"|"+(o.holes||[]).length; if (LABELC.has(key)) return LABELC.get(key).slice();
+  const p=o.pts, hs=o.holes||[], c=centroid(p), inside=q=>inPoly(q,p)&&!hs.some(h=>inPoly(q,h)), dB=q=>Math.min(distToPath(q,p,true),...hs.map(h=>distToPath(q,h,true)));
+  const xs=p.map(q=>q[0]), ys=p.map(q=>q[1]), x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys); let best=null, bd=-1; const N=36;
+  for (let i=0;i<=N;i++) for (let j=0;j<=N;j++){ const q=[x0+(x1-x0)*i/N, y0+(y1-y0)*j/N]; if (!inside(q)) continue; const d=dB(q); if (d>bd){ bd=d; best=q; } }
+  const dc=inside(c)?dB(c):-1; let res=(dc>=0&&(best==null||dc>=bd*0.7))?c:(best||c);
+  if (LABELC.size>800) LABELC.clear(); LABELC.set(key,res.slice()); return res; }
 function objArea(o){ if (o.kind==="circle") return Math.PI*o.r*o.r; return Math.abs(area(o.pts)) - (o.holes||[]).reduce((s,h)=>s+Math.abs(area(h)),0); }
 function objCenter(o){ if (o.kind==="circle") return o.c.slice(); const p=shape(o); if (o.kind==="poly"&&o.closed) return centroid(p);
   let x=0,y=0; p.forEach(q=>{x+=q[0];y+=q[1];}); return [x/p.length,y/p.length]; }
@@ -1497,6 +1507,7 @@ const IC = {
   colR:'<circle cx="12" cy="12" r="6.5" fill="currentColor" fill-opacity=".25"/>',
   colS:'<rect x="6" y="6" width="12" height="12" fill="currentColor" fill-opacity=".25"/>',
   walls:'<path d="M3 5h18v14H3z"/><path d="M6 8h12v8H6z"/>',
+  topoChk:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/><path d="M7.5 10.5l2.2 2.2 3.8-4.4"/>',
   wmsO:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/>',
   wmsC:'<path d="M3 5l6 2 6-2 6 2v12l-6-2-6 2-6-2z"/><path d="M9 7v12M15 5v12"/>',
   meter:'<rect x="3" y="8" width="18" height="8" rx="1.5"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/>',
@@ -1511,6 +1522,7 @@ const GROUPS = [
   {l:"რედაქტირება", items:[["select","არჩევა","tool"],["desel","განიშვნა","act"],["erase","წაშლა","act"],["trim","ტრიმი","tool"],["extend","გაგრძელება","tool"],["fillet","მომრგვალება","tool"],["chamfer","ჩამოჭრა","tool"],["lock","ჩაკეტვა","act"],["photo","ფოტო","tool"]]},
   {l:"შეცვლა", fly:true, items:[["move","გადატანა","tool"],["copy","კოპირება","tool"],["rotate","შემობრუნება","tool"],["mirrorV","სარკე ↔","act"],["mirrorH","სარკე ↕","act"],["offset","ოფსეტი","tool"]]},
   {l:"ისტორია", items:[["undo","უკან","act"],["redo","წინ","act"]]},
+  {l:"შემოწმება", items:[["topoChk","ჩეკი","act"]]},
   {l:"ხედი", fly:true, items:[["measure","საზომი","tool"],["calc","კალკულაცია","act"],["grid","ბადე","tog"],["wfsP","ნაკვეთები","tog"],["dims","ზომები","tog"],["wmsO","ორთოფოტო","tog"],["wmsC","საკადასტრო","tog"],["dark","მუქი ფონი","tog"],["gps","ჩემი ადგილი","act"],["meter","მანძილმზომი","act"],["dock","ქვედა პანელი","tog"]]},
   {l:"სნეპი", fly:true, items:[["osnap","სნეპი","tog"],["m_end","კუთხე / ბოლო წერტილი","tog"],["m_mid","შუა წერტილი","tog"],["m_cen","ცენტრი","tog"],["m_quad","კვადრანტი","tog"],["m_int","გადაკვეთა","tog"],["m_perp","მართობი","tog"],["m_near","უახლოესი (ხაზზე)","tog"],["m_ext","გაგრძელება","tog"],["otrack","თვალთვალი","tog"],["ortho","ორთო","tog"],["polar","პოლარი","tog"],["snapset","პარამეტრი","act"]]},
   {l:"იმპორტი", items:[["impShp","SHP შემოტანა","act"],["impDxf","DXF შემოტანა","act"]]},
@@ -1534,6 +1546,7 @@ const DOCK_CATS=[
   {id:"d_select", direct:"select", l:"არჩევა", ic:"select"},
   {id:"d_desel", direct:"desel", l:"განიშვნა", ic:"desel"},
   {id:"d_erase", direct:"erase", l:"წაშლა", ic:"erase"},
+  {id:"d_chk", direct:"topoChk", l:"ჩეკი", ic:"topoChk"},
   {id:"edit", l:"შეცვლა", ic:"offset", keys:["trim","extend","offset","fillet","chamfer","move","copy","rotate","mirrorV","mirrorH","lock"]},
   {id:"view", l:"ხედი", ic:"measure", keys:["measure","calc","impShp","impDxf","shB","shP","shN","bldgClr","grid","dims","wfsP","wmsO","wmsC","dark","gps","meter","dock"]},
   {id:"snap", l:"სნეპი", ic:"snapset", keys:["osnap","m_end","m_mid","m_cen","m_quad","m_int","m_perp","m_near","m_ext","otrack","ortho","polar","snapset"]}];
@@ -1549,7 +1562,11 @@ function openDock(id){ const c=DOCK_CATS.find(x=>x.id===id), p=$("dockPanel");
   dockOpen=id; p.innerHTML=""; c.keys.forEach(k=>{ const it=dockItem(k); if (!it) return; const [key,label,type]=it; const b=document.createElement("button"); b.type="button"; b.dataset.k=key; b.dataset.type=type; b.id="d-"+key;
     b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+(IC[key]||"")+'</svg><span class="tl">'+label+'</span>';
     b.addEventListener("click",()=>{ onTool(key,type); if (type!=="tog") closeDock(); syncTb(); }); p.appendChild(b); });
-  p.hidden=false; syncTb(); syncDockTabs(); }
+  p.hidden=false; placeDockPanel(p,id); syncTb(); syncDockTabs(); }
+// დიდ ეკრანზე (პლანშეტი) პანელი იშლება პირდაპირ დაჭერილი ჩანართის თავზე
+function placeDockPanel(p,id){ const vw=document.documentElement.clientWidth; if (vw<700){ p.style.left=p.style.right=p.style.width=p.style.transform=""; return; }
+  const t=document.querySelector('#dockTabs .dock-tab[data-c="'+id+'"]'); if (!t) return; const w=Math.min(560,vw-24), r=t.getBoundingClientRect();
+  const left=Math.max(12,Math.min(vw-12-w,r.left+r.width/2-w/2)); p.style.width=w+"px"; p.style.left=left+"px"; p.style.right="auto"; p.style.transform="none"; }
 function buildDock(){ if ($("dock")) return; const d=document.createElement("nav"); d.className="dock"; d.id="dock"; d.setAttribute("aria-label","ხელსაწყოები");
   d.innerHTML='<div class="dock-tabs" id="dockTabs"></div>'; const p=document.createElement("div"); p.className="dock-panel"; p.id="dockPanel"; p.hidden=true;
   DOCK_CATS.forEach(c=>{ const b=document.createElement("button"); b.type="button"; b.className="dock-tab"; b.dataset.c=c.id;
@@ -1584,10 +1601,17 @@ function syncTb(){ document.querySelectorAll(".tb button, #dockPanel button, #do
   if (k==="polar") b.lastChild.textContent="პოლარი "+SET.inc+"°";
   if (k==="snapset") b.setAttribute("aria-pressed", !$("snapCard").hidden?"true":"false"); });
   stage.classList.toggle("pan", tool==="pan"); stage.classList.toggle("sel", tool==="select"); try { syncDockTabs(); } catch(e){} stage.classList.toggle("draw", ["pline","wall","line","rect","circle","arc","door","window","colR","colS","move","copy","rotate","offset","measure"].includes(tool)); try { syncFoldBtn(); } catch(e){} syncFly(); }
+// ── ნახაზის სტილი (კაბინეტში იცვლება; სტანდარტი — ის, რაც იყო). ეხება მხოლოდ ეკრანს, PDF/SHP არ იცვლება ──
+const STY_KEY="sida-style-v1";
+let STY={}; try { STY=JSON.parse(localStorage.getItem(STY_KEY))||{}; } catch(e){ STY={}; }
+// ეკრანის სტანდარტული ფერები: ყველა ტიპს თავისი ფერი აქვს (PDF/ექსპორტი ძველებურია)
+const SCR_DEF={iataki:"#DDE3EA",aivani:"#F8D9C0",veranda:"#CFEBB8",antresoli:"#D9C8F2",kibis_ujredi:"#FFD166",liftis_saxta:"#A8E0E0",kedeli:"#9CA3AF",sayrdeni_kedeli:"#B8654A",kolona:"#4B5563",fanjara:"#9FD3F5",karebi:"#86D98A",Riobi:"#FFC2D9",moajiri:"#F2A0A0",xazi:"#FFFFFF"};
+const sfill=sub=>STY["f_"+sub.v]||SCR_DEF[sub.v]||sub.fill;
+function saveSty(){ try { localStorage.setItem(STY_KEY,JSON.stringify(STY)); } catch(e){} }
 function applyDark(){ const r=document.documentElement.style, D={"--paper":"#0F1623","--grid":"#1A2334","--grid-strong":"#2A3650","--wall":"#F1F5F9","--area":"#FF8A8A","--sel":"#FFA45C"};
   Object.keys(D).forEach(k=>{ if (SET.dark) r.setProperty(k,D[k]); else r.removeProperty(k); }); }
 
-function onTool(k,type){ if (k==="calc"){ openCalc(); return; }
+function onTool(k,type){ if (k==="topoChk"){ showTopoRes(); return; } if (k==="calc"){ openCalc(); return; }
   if (k==="shB"||k==="shP"||k==="shN"){ SET[k]=(SET[k]===false); saveSet(); syncTb(); draw(); return; }
   if (k==="impShp"){ pickImport("shp"); return; } if (k==="impDxf"){ pickImport("dxf"); return; }
   if (k==="bldgClr"){ clearImported(); return; }
@@ -1641,7 +1665,7 @@ function draw(){
   const G=el("g",Object.assign({opacity:(P.origin&&(SET.wmsO||SET.wmsC))?.35:1}, SET.grid===false?{display:"none"}:{}),svg),gc=css("--grid"),gs=css("--grid-strong");
   for(let x=Math.floor(x0/step)*step;x<=x1;x+=step){ const [px]=toScr(x,0); el("line",{x1:px,y1:0,x2:px,y2:h,stroke:Math.round(x)%5===0?gs:gc},G); }
   for(let y=Math.floor(y0/step)*step;y<=y1;y+=step){ const [,py]=toScr(0,y); el("line",{x1:0,y1:py,x2:w,y2:py,stroke:Math.round(y)%5===0?gs:gc},G); }
-  $("scaleNote").textContent=`ბადე ${step} მ`;
+  { const z=view.s/60; $("scaleNote").textContent="გადიდება ×"+(z>=100?Math.round(z):z>=10?z.toFixed(1):z.toFixed(2)).toString().replace(/(\.\d*?)0+$/,"$1").replace(/\.$/,""); }
   const wallC=css("--wall"),areaC=css("--area"),acc=css("--accent"),mut=css("--muted"),paper=css("--paper"),selC=css("--sel");
   // ქვედა სართული — ნაცრისფერი წყვეტილი ფონი (მიწებება მასზეც მუშაობს)
   refObjs().forEach(o=>{ const p=shape(o); if (p.length<2) return; const closed=isClosed(o);
@@ -1650,7 +1674,7 @@ function draw(){
   // კედლის დაშტრიხვა (კედლის ობიექტებისთვის)
   { const defs=el("defs",{},svg), pat=el("pattern",{id:"wallHatch",patternUnits:"userSpaceOnUse",width:7,height:7,patternTransform:"rotate(45)"},defs);
     el("rect",{width:7,height:7,fill:"#C9C9C9"},pat); el("line",{x1:0,y1:0,x2:0,y2:7,stroke:"#6B6B6B","stroke-width":1.6},pat);
-    Object.keys(SUBTILE).forEach(k=>{ const p=el("pattern",{id:"pt_"+k,patternUnits:"userSpaceOnUse",width:16,height:16},defs); el("image",{href:tileUrl(k),width:16,height:16},p); }); }
+    Object.keys(SUBTILE).forEach(k=>{ const p=el("pattern",{id:"pt_"+k,patternUnits:"userSpaceOnUse",width:16,height:16},defs); el("image",{href:(STY["f_"+k]||SCR_DEF[k])?subTile(k,2,STY["f_"+k]||SCR_DEF[k]).toDataURL():tileUrl(k),width:16,height:16},p); }); }
   S.objs.filter(o=>o.sub!=="lease").concat(S.objs.filter(o=>o.sub==="lease")).forEach(o=>{       // იჯარა — ყველაფრის თავზე, არაფერს ჭრის
     const g=el("g",{},svg), act=selIds.has(o.id), sub=SUB[o.sub]||SUBS[0], strokeC=act?selC:(o.sub==="lease"?"#DC2626":wallC), sw=act?3:(o.sub==="lease"?3:2);
     if (isPt(o)){ drawPoint(o,g,act); return; }
@@ -1660,7 +1684,7 @@ function draw(){
       if (SET.dims && act) edges(o).forEach(([i,j])=>label(g,o.pts[i],o.pts[j],fmt(dist(o.pts[i],o.pts[j])),1,wallC,false));
       return; }
     if (o.kind==="circle"){ const [cx,cy]=toScr(o.c[0],o.c[1]);
-      el("circle",{cx,cy,r:o.r*view.s,fill:sub.fill,"fill-opacity":(P.origin&&SET.wmsO?.45:.85),stroke:strokeC,"stroke-width":sw},g);
+      el("circle",{cx,cy,r:o.r*view.s,fill:sfill(sub),"fill-opacity":(P.origin&&SET.wmsO?.45:.85),stroke:strokeC,"stroke-width":sw},g);
       el("circle",{cx,cy,r:2.5,fill:strokeC},g);
       if (showDims(o) && o.r*view.s>14) tag(cx, cy-o.r*view.s-12, "R "+fmt(o.r), wallC);
       if (sub.used && o.r*view.s>30) tag(cx, cy, fmt(objArea(o))+" მ²", areaC);
@@ -1670,17 +1694,17 @@ function draw(){
       o.pts.forEach(q=>{ const [a,b]=toScr(q[0],q[1]); el("circle",{cx:a,cy:b,r:3,fill:strokeC},g); }); return; }
     const p=o.pts; if (!p.length) return;
     if (o.kind==="poly" && o.closed && p.length>=3){
-      const isA=isArea(o), noH=!(o.holes&&o.holes.length), wallish=o.sub==="kedeli"||o.sub==="sayrdeni_kedeli", sf=SUBTILE[o.sub]?"url(#pt_"+o.sub+")":sub.fill;
+      const isA=isArea(o), noH=!(o.holes&&o.holes.length), wallish=o.sub==="kedeli"||o.sub==="sayrdeni_kedeli", sf=SUBTILE[o.sub]?"url(#pt_"+o.sub+")":sfill(sub);
       el("polygon",{points:pts2(p),fill:o.rect?sf:(isA&&noH ? (o.sub==="xazi"?"#93C5FD":sf) : "none"),"fill-opacity":SUBTILE[o.sub]?.95:(o.rect?(P.origin&&SET.wmsO?.45:.85):(o.sub==="xazi"?.22:.6)),stroke:strokeC,"stroke-width":sw,"stroke-linejoin":"miter"},g);   // ოთახი — მხოლოდ ხაზები; კარი/ფანჯარა/კოლონა — შეფერილი
       if (o.holes && o.holes.length){ const ring=q=>"M"+q.map(r=>toScr(r[0],r[1]).join(" ")).join("L")+"Z";          // ხვრელებიანი პოლიგონი (მაგ. კედლის ზოლი)
         el("path",{d:ring(p)+" "+o.holes.map(ring).join(" "),fill:sf,"fill-opacity":SUBTILE[o.sub]?.95:.7,"fill-rule":"evenodd",stroke:strokeC,"stroke-width":sw},g); }
-      const side=area(p)>0?-1:1; if (showDims(o)) edges(o).forEach(([i,j])=>label(g,p[i],p[j],fmt(dist(p[i],p[j])),side,j===0?mut:wallC,j===0));
-      if (sub.used){ const c=centroid(p),[cx,cy]=toScr(c[0],c[1]);
+      const side=area(p)>0?-1:1; if (showDims(o)) dimEdges(o,p).forEach(([i,j])=>label(g,p[i],p[j],fmt(dist(p[i],p[j])),side,j===0?mut:wallC,j===0));
+      if (sub.used){ const c=labelPt(o),[cx,cy]=toScr(c[0],c[1]);
         el("text",{x:cx,y:cy,"text-anchor":"middle","dominant-baseline":"middle","font-family":css("--f-num"),"font-size":Math.max(12,Math.min(20,view.s*.28)),"font-weight":700,fill:areaC,"paint-order":"stroke",stroke:paper,"stroke-width":4},g,fmt(objArea(o))+" მ²");
         }   // ნახაზზე მხოლოდ ფართი — სახელი ჩანს პანელში
     } else {
       if (p.length>1) el("polyline",{points:pts2(p),fill:"none",stroke:act&&!o.done&&o.kind==="poly"?acc:strokeC,"stroke-width":3,"stroke-linecap":"square","stroke-linejoin":"miter"},g);
-      if (showDims(o)) edges(o).forEach(([i,j])=>label(g,p[i],p[j],fmt(dist(p[i],p[j])),1,wallC,false));
+      if (showDims(o)) dimEdges(o,p).forEach(([i,j])=>label(g,p[i],p[j],fmt(dist(p[i],p[j])),1,wallC,false));
       if (o.kind==="poly" && !o.done && act){ const [sx,sy]=toScr(p[0][0],p[0][1]); el("circle",{cx:sx,cy:sy,r:6,fill:paper,stroke:acc,"stroke-width":3},g);
         const e=p[p.length-1],[ex,ey]=toScr(e[0],e[1]); el("circle",{cx:ex,cy:ey,r:8,fill:acc,stroke:paper,"stroke-width":3},g); }
     }
@@ -1717,7 +1741,7 @@ function draw(){
   { const fb=$("finishFab"); if (fb) fb.hidden=!openPoly() || !!sheetFor; }
   drawRotOff();
   drawElPreview();
-  drawMarks();
+  drawMarks(); drawTopoIssues();
   drawMeasure(); drawRotRef();
   drawGrips();
   drawSnap();
@@ -1727,6 +1751,7 @@ function bubble(bx,by,t){ const tx=bx+16,ty=by-24; el("rect",{x:tx-8,y:ty-15,wid
   el("text",{x:tx,y:ty,"dominant-baseline":"middle","font-family":css("--f-num"),"font-size":15,"font-weight":600,fill:css("--ink")},svg,t); }
 
 // ── მიწებება (AutoCAD-ის OSNAP / OTRACK / POLAR / ORTHO) ──
+const MAXZ=200000;   // მაქს. გადიდება: 1 მმ = 200 პიქსელი (ადრე 1 მმ = 0.4 პიქსელი)
 let SNAP_PX=34; const SET_KEY="sida-eskizi-set2";
 const SNAP_MODES=[["end","ბოლო წერტილი"],["mid","შუა წერტილი"],["cen","ცენტრი"],["quad","კვადრანტი"],["int","გადაკვეთა"],["perp","მართობი"],["near","უახლოესი (ხაზზე)"],["ext","გაგრძელება"]];
 const MK={end:"ბოლო წერტილი",mid:"შუა წერტილი",cen:"ცენტრი",quad:"კვადრანტი",int:"გადაკვეთა",perp:"მართობი",near:"უახლოესი",ext:"გაგრძელება",track:"თვალთვალი",polar:"პოლარი",free:""};
@@ -1740,6 +1765,13 @@ function foot(p,a,b){ const vx=b[0]-a[0],vy=b[1]-a[1],L2=vx*vx+vy*vy||1e-12; con
 function lineX(p1,d1,p2,d2){ const den=d1[0]*d2[1]-d1[1]*d2[0]; if (Math.abs(den)<1e-9) return null; const t=((p2[0]-p1[0])*d2[1]-(p2[1]-p1[1])*d2[0])/den; return [p1[0]+t*d1[0],p1[1]+t*d1[1]]; }
 function segX(s,t){ const d1=[s[1][0]-s[0][0],s[1][1]-s[0][1]], d2=[t[1][0]-t[0][0],t[1][1]-t[0][1]]; const x=lineX(s[0],d1,t[0],d2); if (!x) return null;
   const f1=foot(x,s[0],s[1]).t, f2=foot(x,t[0],t[1]).t; return (f1>=-1e-6&&f1<=1+1e-6&&f2>=-1e-6&&f2<=1+1e-6)?x:null; }
+// გადაკვეთა წრეებთან და რკალებთან: წრე↔წრე, წრე↔ხაზი, რკალი↔ხაზი/წრე/რკალი
+function circCirc(A,B){ const d=dist(A.c,B.c); if (d<1e-9||d>A.r+B.r+1e-9||d<Math.abs(A.r-B.r)-1e-9) return []; const a=(A.r*A.r-B.r*B.r+d*d)/(2*d), h2=A.r*A.r-a*a, h=h2>0?Math.sqrt(h2):0, ux=(B.c[0]-A.c[0])/d, uy=(B.c[1]-A.c[1])/d, px=A.c[0]+a*ux, py=A.c[1]+a*uy; return h<1e-9?[[px,py]]:[[px-h*uy,py+h*ux],[px+h*uy,py-h*ux]]; }
+function segCirc(C,s){ const dx=s[1][0]-s[0][0], dy=s[1][1]-s[0][1], fx=s[0][0]-C.c[0], fy=s[0][1]-C.c[1], a=dx*dx+dy*dy, b=2*(fx*dx+fy*dy), c=fx*fx+fy*fy-C.r*C.r, disc=b*b-4*a*c; if (a<1e-12||disc<0) return []; const sq=Math.sqrt(disc), out=[]; [(-b-sq)/(2*a),(-b+sq)/(2*a)].forEach(t=>{ if (t>=-1e-6&&t<=1+1e-6) out.push([s[0][0]+t*dx, s[0][1]+t*dy]); }); return out; }
+function onArc(C,p){ if (!C.arc) return true; const T=2*Math.PI, m2=x=>((x%T)+T)%T, ang=Math.atan2(p[1]-C.c[1],p[0]-C.c[0]), d=C.ccw?m2(ang-C.a0):m2(C.a0-ang), e=C.ccw?m2(C.ae-C.a0):m2(C.a0-C.ae); return d<=e+1e-6; }
+function curvesOf(objs){ const cv=[]; objs.forEach(o=>{ if (o.kind==="circle") cv.push({c:o.c,r:o.r}); else if (o.kind==="arc"&&o.pts&&o.pts.length>=3){ const k=circ3(o.pts[0],o.pts[1],o.pts[2]); if (!k) return; const p0=o.pts[0], p1=o.pts[1], p2=o.pts[2], cr=(p1[0]-p0[0])*(p2[1]-p0[1])-(p1[1]-p0[1])*(p2[0]-p0[0]); cv.push({c:k.c,r:k.r,arc:true,ccw:cr>0,a0:Math.atan2(p0[1]-k.c[1],p0[0]-k.c[0]),ae:Math.atan2(p2[1]-k.c[1],p2[0]-k.c[0])}); } }); return cv; }
+// სიზუსტე ზუმს მიყვება: ჩვეულებრივ 1 სმ, ძალიან ახლოს — უფრო წვრილი
+function rq(v){ let st=0.01; while (st*view.s>60&&st>1e-6) st/=10; return Math.round(v/st)*st; }
 function snap(px,py,ctx={}){
   const from=ctx.from||null, prevDir=ctx.prevDir!=null?ctx.prevDir:null, ex=ctx.exclude||(()=>false);
   const w=toWld(px,py), sd=q=>{ const s=toScr(q[0],q[1]); return Math.hypot(s[0]-px,s[1]-py); };
@@ -1754,6 +1786,8 @@ function snap(px,py,ctx={}){
     });
     const near=[]; objs.forEach(o=>segsOf(o).forEach(s=>{ const f=foot(w,s[0],s[1]); const t=Math.max(0,Math.min(1,f.t)); const q=[s[0][0]+t*(s[1][0]-s[0][0]),s[0][1]+t*(s[1][1]-s[0][1])]; if (sd(q)<=SNAP_PX) near.push({s,q,d:sd(q)}); }));
     if (M.int) for(let i=0;i<near.length;i++) for(let j=i+1;j<near.length;j++){ const x=segX(near[i].s,near[j].s); if (x) put(x,"int",1); }
+    if (M.int){ const cv=curvesOf(objs); for (let i=0;i<cv.length;i++){ for (let j=i+1;j<cv.length;j++) circCirc(cv[i],cv[j]).forEach(x=>{ if (onArc(cv[i],x)&&onArc(cv[j],x)) put(x,"int",1); });
+        objs.forEach(o=>segsOf(o).forEach(sg=>{ segCirc(cv[i],sg).forEach(x=>{ if (onArc(cv[i],x)) put(x,"int",1); }); })); } }
     if (!res && M.perp && from){ near.forEach(n=>{ const f=foot(from,n.s[0],n.s[1]); if (f.t>=-1e-6&&f.t<=1+1e-6) put(f.p,"perp",4); });
       objs.filter(o=>o.kind==="circle").forEach(o=>{ const d=dist(from,o.c); if (d>1e-9){ const u=[(from[0]-o.c[0])/d,(from[1]-o.c[1])/d]; put([o.c[0]+u[0]*o.r,o.c[1]+u[1]*o.r],"perp",4); put([o.c[0]-u[0]*o.r,o.c[1]-u[1]*o.r],"perp",4); } }); }
     if (!res && M.near){ near.sort((a,b)=>a.d-b.d); if (near.length) put(near[0].q,"near",8);
@@ -1777,12 +1811,12 @@ function snap(px,py,ctx={}){
   if (ray && tl.length){ let best=null; tl.forEach(t=>{ const x=lineX(ray.p,ray.d,t.p,t.d); if (x && foot(x,ray.p,[ray.p[0]+ray.d[0],ray.p[1]+ray.d[1]]).t>0){ const d=sd(x); if (d<46&&(!best||d<best.d)) best={x,t,d}; } });
     if (best){ lastSnap={pt:best.x,kind:best.t.kind==="ext"?"ext":"track",guides:[guide(from,best.x),guide(best.t.p,best.x)],from}; return lastSnap; } }
   if (tl.length>=2 && tl[0].kind==="track" && tl[1].kind==="track"){ const x=lineX(tl[0].p,tl[0].d,tl[1].p,tl[1].d); if (x && sd(x)<24){ lastSnap={pt:x,kind:"track",guides:[guide(tl[0].p,x),guide(tl[1].p,x)],from}; return lastSnap; } }
-  if (tl.length && !ray){ const t=tl[0]; const f=foot(w,t.p,[t.p[0]+t.d[0],t.p[1]+t.d[1]]); const pt=[Math.round(f.p[0]*100)/100,Math.round(f.p[1]*100)/100];
+  if (tl.length && !ray){ const t=tl[0]; const f=foot(w,t.p,[t.p[0]+t.d[0],t.p[1]+t.d[1]]); const pt=[rq(f.p[0]),rq(f.p[1])];
     const q = t.d[0]===0 ? [t.p[0],pt[1]] : t.d[1]===0 ? [pt[0],t.p[1]] : f.p; lastSnap={pt:q,kind:t.kind,guides:[guide(t.p,q)],from}; return lastSnap; }
-  if (ray){ const L=Math.round(((w[0]-from[0])*ray.d[0]+(w[1]-from[1])*ray.d[1])*100)/100; const pt=[from[0]+ray.d[0]*L,from[1]+ray.d[1]*L];
+  if (ray){ const L=rq((w[0]-from[0])*ray.d[0]+(w[1]-from[1])*ray.d[1]); const pt=[from[0]+ray.d[0]*L,from[1]+ray.d[1]*L];
     lastSnap={pt,kind:"polar",guides:[guide(from,[from[0]+ray.d[0]*(L+1000/view.s),from[1]+ray.d[1]*(L+1000/view.s)])],from}; return lastSnap; }
-  const pt = from ? (()=>{ const L=Math.round(dist(from,w)*100)/100, a=Math.atan2(w[1]-from[1],w[0]-from[0]); return [from[0]+L*Math.cos(a),from[1]+L*Math.sin(a)]; })()
-                  : [Math.round(w[0]*100)/100, Math.round(w[1]*100)/100];
+  const pt = from ? (()=>{ const L=rq(dist(from,w)), a=Math.atan2(w[1]-from[1],w[0]-from[0]); return [from[0]+L*Math.cos(a),from[1]+L*Math.sin(a)]; })()
+                  : [rq(w[0]), rq(w[1])];
   lastSnap={pt,kind:"free",guides:[],from}; return lastSnap;
 }
 function freePt(px,py,exclude){ return snap(px,py,{exclude}).pt; }
@@ -1859,7 +1893,7 @@ svg.addEventListener("pointerdown",e=>{
 });
 svg.addEventListener("pointermove",e=>{
   if (!ptrs.has(e.pointerId)){ if (e.pointerType!=="touch" && !ptrs.size) hoverMove(e); return; } ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
-  if (ptrs.size===2&&pinch){ const [a,b]=[...ptrs.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y); view.s=Math.max(6,Math.min(400,pinch.s*d/pinch.d));
+  if (ptrs.size===2&&pinch){ const [a,b]=[...ptrs.values()]; const d=Math.hypot(a.x-b.x,a.y-b.y); view.s=Math.max(6,Math.min(MAXZ,pinch.s*d/pinch.d));
     const mx=(a.x+b.x)/2,my=(a.y+b.y)/2; view.cx=pinch.cx-(mx-pinch.mx)/view.s; view.cy=pinch.cy+(my-pinch.my)/view.s; draw(); return; }
   if (pan){ view.cx=pan.cx-(e.clientX-pan.x)/view.s; view.cy=pan.cy+(e.clientY-pan.y)/view.s; moved=true; draw(); return; }
   const [px,py]=loc(e); if (downAt && Math.hypot(px-downAt.px,py-downAt.py)>8) moved=true; if (!moved) return;
@@ -1920,6 +1954,11 @@ let selBox=null;
 function selObjs(){ return S.objs.filter(o=>selIds.has(o.id)); }
 function groupCenter(list){ const all=list.flatMap(shape); const xs=all.map(p=>p[0]), ys=all.map(p=>p[1]); return [(Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2]; }
 // ── ზომები: მხოლოდ იატაკზე, აივანზე, ვერანდაზე, ანტრესოლზე (ფანჯარა/კარი/კედელი — არა); ჩართვა-გამორთვა „ზომები“ ღილაკით ──
+// ერთ წრფეზე (180°) მეზობელი სეგმენტები ერთ ზომად ერთიანდება; ვერტექსები მაინც რჩება
+function dimEdges(o,p){ const n=p.length; if (n<2) return []; const closed=!!(o.closed&&n>=3);
+  const col=k=>{ const a=p[(k-1+n)%n], b=p[(k+1)%n], c=p[k], v1=[c[0]-a[0],c[1]-a[1]], v2=[b[0]-c[0],b[1]-c[1]], l1=Math.hypot(v1[0],v1[1]), l2=Math.hypot(v2[0],v2[1]); if (l1<1e-9||l2<1e-9) return true; return Math.abs(v1[0]*v2[1]-v1[1]*v2[0])/(l1*l2)<0.0087 && v1[0]*v2[0]+v1[1]*v2[1]>0; };
+  const out=[]; if (!closed){ let s=0; for (let k=1;k<n;k++){ if (k===n-1||!col(k)){ out.push([s,k]); s=k; } } return out; }
+  let st=0; for (let k=0;k<n;k++) if (!col(k)){ st=k; break; } let s=st; for (let m=1;m<=n;m++){ const k=(st+m)%n; if (k===st||!col(k)){ out.push([s,k]); s=k; } if (k===st) break; } return out; }
 function showDims(o){ if (!SET.dims) return false; if (o.kind==="poly" && !o.closed && !o.done && o.id===S.activeId) return true;
   return !!(SUB[o.sub]||{}).used; }
 // ── შემობრუნება ხელით: ცენტრის გარშემო თითის ტრიალით ──
@@ -2027,7 +2066,7 @@ function buildFaces(objs, withEls){
   const used=new Set(), pos=[], neg=[];
   adj.forEach((s,u)=>s.forEach(v=>{ if (used.has(u+">"+v)) return; const face=[]; let a=u, b=v, guard=0;
     while (!used.has(a+">"+b) && guard++<5000){ used.add(a+">"+b); face.push(a); const nb=order.get(b); if (!nb) break; const i=nb.indexOf(a); const c=nb[(i-1+nb.length)%nb.length]; a=b; b=c; }
-    if (face.length<3) return; const poly=cleanPoly(face.map(k=>nodes[k])); if (poly.length<3) return; const A=area(poly);
+    if (face.length<3) return; const poly=face.map(k=>nodes[k]).filter((q,i,arr)=>{ const w=arr[(i-1+arr.length)%arr.length]; return Math.hypot(q[0]-w[0],q[1]-w[1])>1e-9; }); if (poly.length<3) return; const A=area(poly);
     if (A>1e-6) pos.push({A, poly, holes:[]}); else if (A<-1e-6) neg.push({A:-A, poly}); }));
   // ხვრელები: ყოველი „გარე საზღვარი“ ჯდება უმცირეს დადებით არეში, რომელიც მას შეიცავს
   neg.forEach(h=>{ const c=h.poly[0]; let best=null;
@@ -2093,7 +2132,7 @@ function elementFit(px,py){
   S.objs.forEach(o=>{ if (o.rect || o.kind==="circle" || o.kind==="arc" || !o.pts || o.pts.length<2) return;
     edges(o).forEach(([i,j])=>{ const a=o.pts[i], b=o.pts[j], L=dist(a,b); if (L<W+0.02) return;
       const f=foot(w,a,b); if (f.t<0||f.t>1) return; const [sx,sy]=toScr(f.p[0],f.p[1]); const d=Math.hypot(sx-px,sy-py);
-      if (d<bd){ bd=d; best={o,a,b,L,t:f.t*L}; } }); });
+      if (d<bd){ bd=d; best={o,a,b,L,t:f.t*L,i,j}; } }); });
   if (!best) return null;
   const {o,a,b,L}=best, u=[(b[0]-a[0])/L,(b[1]-a[1])/L];
   let t=Math.round(Math.max(W/2, Math.min(L-W/2, best.t))*100)/100;
@@ -2104,7 +2143,7 @@ function elementFit(px,py){
   else { const side=(w[0]-m[0])*nl[0]+(w[1]-m[1])*nl[1];                        // თითის საპირისპირო მხარეს (კედლის სიღრმეში)
     if (Math.abs(side)>1e-6) n = side>0 ? [-nl[0],-nl[1]] : nl;
     else n = (o.closed && area(o.pts)>0) ? [u[1],-u[0]] : nl; }
-  return {a,b,L,u,n,D,centered,s0:t-W/2, W}; }
+  return {a,b,L,u,n,D,centered,s0:t-W/2, W, o, i:best.i, j:best.j}; }
 function elemPts(fit,W,D,s0){ const {a,u,n,centered}=fit, p0=[a[0]+u[0]*s0,a[1]+u[1]*s0], p1=[p0[0]+u[0]*W,p0[1]+u[1]*W];
   if (centered){ const h=D/2; return [[p0[0]-n[0]*h,p0[1]-n[1]*h],[p1[0]-n[0]*h,p1[1]-n[1]*h],[p1[0]+n[0]*h,p1[1]+n[1]*h],[p0[0]+n[0]*h,p0[1]+n[1]*h]]; }
   return [p0,p1,[p1[0]+n[0]*D,p1[1]+n[1]*D],[p0[0]+n[0]*D,p0[1]+n[1]*D]]; }
@@ -2136,6 +2175,79 @@ function drawMarks(){ const mk=sheetFor && sheetFor.marks; if (!mk || !mk.o) ret
   const rf=mk.ref||"A"; if (rf==="A") dimLine(a,e0,"A → "+fmt(s)+" მ"); else dimLine(e1,b,fmt(L-s-W)+" მ ← B");
   (rf==="A"?[[a,"A"]]:[[b,"B"]]).forEach(([p,t])=>{ const [x,y]=toScr(p[0],p[1]); el("circle",{cx:x,cy:y,r:13,fill:org,stroke:"#fff","stroke-width":2.5});
     el("text",{x,y:y+1,"text-anchor":"middle","dominant-baseline":"middle","font-weight":700,"font-size":14,fill:"#fff"},svg,t); }); }
+// კარი/ფანჯარა ღია პოლილაინზე: იმ მონაკვეთზე ხაზი წაიშლება, ორივე ბოლო კი ზუსტად ელემენტის კუთხეებზე (p0 / p1) მიდგება
+
+// ── ტოპოლოგიის შემოწმება (QGIS Topology Checker-ის მსგავსად): ერთი სართულის პოლიგონები ერთმანეთს არ უნდა გადაეფაროს და არ უნდა ჰქონდეს ხვრელები ──
+let TOPOCHK=null;
+function topoCheck(){ if (!P) return null; const fl=floorsWithObjs().find(q=>q.fi===P.cur); if (!fl) return {items:[],polys:0,cell:0};
+  const objs=unitObjs(fl.objs), polys=objs.map(o=>({rings:[shape(o)].concat((o.holes||[]).filter(h=>h.length>=3)), sub:o.sub, name:o.name})).filter(q=>q.rings[0]&&q.rings[0].length>=3); if (!polys.length) return {items:[],polys:0,cell:0};
+  const L=q=>((SUB[q.sub]||{}).ka||q.sub||"?")+(q.name?" «"+q.name+"»":"");
+  let x0=1e18,y0=1e18,x1=-1e18,y1=-1e18; polys.forEach(q=>q.rings[0].forEach(p=>{ x0=Math.min(x0,p[0]); y0=Math.min(y0,p[1]); x1=Math.max(x1,p[0]); y1=Math.max(y1,p[1]); }));
+  const cell=Math.min(0.02,Math.max(0.003,Math.sqrt(Math.max(1,(x1-x0)*(y1-y0))/2.5e6))); x0-=cell*2; y0-=cell*2; x1+=cell*2; y1+=cell*2; const nx=Math.ceil((x1-x0)/cell), ny=Math.ceil((y1-y0)/cell);
+  const own=new Int16Array(nx*ny).fill(-1), pair=new Int32Array(nx*ny).fill(-1);
+  polys.forEach((q,k)=>{ const E=[]; q.rings.forEach(r=>{ for (let i=0;i<r.length;i++){ const a=r[i], b=r[(i+1)%r.length]; if (a[1]!==b[1]) E.push(a[1]<b[1]?[a,b]:[b,a]); } });
+    let ya=1e18,yb=-1e18; E.forEach(e=>{ ya=Math.min(ya,e[0][1]); yb=Math.max(yb,e[1][1]); }); const j0=Math.max(0,Math.ceil((ya-y0)/cell-0.5)), j1=Math.min(ny-1,Math.floor((yb-y0)/cell-0.5));
+    for (let j=j0;j<=j1;j++){ const y=y0+(j+0.5)*cell, xs=[]; E.forEach(e=>{ if (e[0][1]<=y&&y<e[1][1]) xs.push(e[0][0]+(y-e[0][1])*(e[1][0]-e[0][0])/(e[1][1]-e[0][1])); }); xs.sort((a,b)=>a-b);
+      for (let m=0;m+1<xs.length;m+=2){ const i0=Math.max(0,Math.ceil((xs[m]-x0)/cell-0.5)), i1=Math.min(nx-1,Math.floor((xs[m+1]-x0)/cell-0.5)); for (let i=i0;i<=i1;i++){ const id=j*nx+i; if (own[id]===-1) own[id]=k; else if (own[id]!==k){ pair[id]=Math.min(own[id],k)*1000+Math.max(own[id],k); } } } } });
+  const items=[], seen=new Uint8Array(nx*ny), stack=[], area=c=>c*cell*cell;
+  const comp=(start,test)=>{ let n=0, cx=0, cy=0, ax=1e9, ay=1e9, bx=-1e9, by=-1e9; stack.length=0; stack.push(start); seen[start]=1; while (stack.length){ const id=stack.pop(), i=id%nx, j=(id-i)/nx; n++; cx+=i; cy+=j; ax=Math.min(ax,i); bx=Math.max(bx,i); ay=Math.min(ay,j); by=Math.max(by,j);
+      [[1,0],[-1,0],[0,1],[0,-1]].forEach(([di,dj])=>{ const ii=i+di, jj=j+dj; if (ii<0||jj<0||ii>=nx||jj>=ny) return; const id2=jj*nx+ii; if (!seen[id2]&&test(id2)){ seen[id2]=1; stack.push(id2); } }); }
+    return {n, x:x0+(cx/n+0.5)*cell, y:y0+(cy/n+0.5)*cell, w:(bx-ax+1)*cell, h:(by-ay+1)*cell}; };
+  for (let id=0;id<nx*ny;id++){ if (pair[id]>=0&&!seen[id]){ const pr=pair[id]; const c=comp(id,k=>pair[k]===pr); if (c.n>=2) items.push({type:"overlap",area:area(c.n),x:c.x,y:c.y,w:c.w,h:c.h,label:L(polys[Math.floor(pr/1000)])+" ↔ "+L(polys[pr%1000])}); } }
+  const out=new Uint8Array(nx*ny); stack.length=0; const push=id=>{ if (!out[id]&&own[id]===-1){ out[id]=1; stack.push(id); } };
+  for (let i=0;i<nx;i++){ push(i); push((ny-1)*nx+i); } for (let j=0;j<ny;j++){ push(j*nx); push(j*nx+nx-1); }
+  while (stack.length){ const id=stack.pop(), i=id%nx, j=(id-i)/nx; if (i>0) push(id-1); if (i<nx-1) push(id+1); if (j>0) push(id-nx); if (j<ny-1) push(id+nx); }
+  seen.fill(0); for (let id=0;id<nx*ny;id++){ if (own[id]===-1&&!out[id]&&!seen[id]){ const c=comp(id,k=>own[k]===-1&&!out[k]); if (c.n>=2) items.push({type:"gap",area:area(c.n),x:c.x,y:c.y,w:c.w,h:c.h,label:"ხვრელი"}); } }
+  // აცდენები (0.5 მმ — 2 სმ): ერთი ობიექტის წვერო მეზობლის წვეროს ან კიდეს „თითქმის“ ეხება, მაგრამ ზუსტად არ ემთხვევა → QGIS-ში ვიწრო ნაპრალი / გადაფარვა
+  const TOL=0.02, MIN=0.0005, near=new Map();
+  const segd=(p,a,b)=>{ const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy; if (L2<1e-12) return {t:0,d:Math.hypot(p[0]-a[0],p[1]-a[1])}; const t=((p[0]-a[0])*dx+(p[1]-a[1])*dy)/L2; return {t,d:Math.hypot(p[0]-(a[0]+t*dx),p[1]-(a[1]+t*dy))}; };
+  polys.forEach((A,i)=>A.rings.forEach(ring=>ring.forEach(v=>{ polys.forEach((B,j)=>{ if (j===i) return; let best=null;
+    B.rings.forEach(rb=>{ for (let k=0;k<rb.length;k++){ const a=rb[k], b=rb[(k+1)%rb.length], dv=Math.hypot(v[0]-a[0],v[1]-a[1]);
+        if (dv<=TOL&&dv>MIN&&(!best||dv<best)) best=dv;
+        const s=segd(v,a,b); if (s.t>0.0005&&s.t<0.9995&&s.d<=TOL&&s.d>MIN&&(!best||s.d<best)) best=s.d; } });
+    if (best){ const key=Math.min(i,j)+"|"+Math.max(i,j)+"|"+Math.round(v[0]*50)+"|"+Math.round(v[1]*50); const cur=near.get(key); if (!cur||best>cur.d) near.set(key,{d:best,x:v[0],y:v[1],i,j}); } }); })));
+  near.forEach(n=>items.push({type:"near",area:0,d:n.d,x:n.x,y:n.y,w:0.04,h:0.04,label:"აცდენა "+(n.d*1000).toFixed(1)+" მმ: "+L(polys[n.i])+" ↔ "+L(polys[n.j])}));
+  const rank={overlap:0,gap:1,near:2}; items.sort((a,b)=>rank[a.type]-rank[b.type]||(b.area||b.d)-(a.area||a.d)); return {items:items.slice(0,120), total:items.length, polys:polys.length, cell}; }
+function closeTopoRes(){ TOPOCHK=null; const e=document.getElementById("topoRes"); if (e) e.remove(); draw(); }
+function showTopoRes(){ const r=topoCheck(); TOPOCHK=r; let el0=document.getElementById("topoRes"); if (el0) el0.remove(); el0=document.createElement("div"); el0.id="topoRes";
+  el0.style.cssText="position:fixed;left:8px;right:8px;bottom:8px;max-width:520px;margin:0 auto;z-index:60;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-height:46vh;display:flex;flex-direction:column";
+  const ov=r&&r.items?r.items.filter(i=>i.type==="overlap"):[], gp=r&&r.items?r.items.filter(i=>i.type==="gap"):[], nr=r&&r.items?r.items.filter(i=>i.type==="near"):[], f=(n,it)=>it.type==="near"?(it.d*1000).toFixed(1)+" მმ":(n<0.0001?"<1 სმ²":(n<1?Math.round(n*10000)+" სმ²":n.toFixed(3)+" მ²"));
+  el0.innerHTML=`<div style="padding:10px 12px;display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line)"><b style="flex:1">🔍 გადაფარვა: ${ov.length} · ხვრელი: ${gp.length} · აცდენა: ${nr.length}</b><button class="btn sm" id="topoResX" type="button">✕</button></div>
+   <div style="overflow:auto;padding:6px 10px">${!r||r.err?`<p>ვერ შევამოწმე: ${r&&r.err||"ნახაზი ცარიელია"}</p>`:(!r.items.length?'<p style="color:#047857;font-weight:700">✓ გადაფარვა, ხვრელი და აცდენა არ არის ('+r.polys+' პოლიგონი)</p>':r.items.map((it,i)=>`<button type="button" class="btn sm" data-ti="${i}" style="display:flex;width:100%;margin:3px 0;text-align:left;gap:8px"><span style="color:${it.type==="overlap"?"#DC2626":it.type==="gap"?"#2563EB":"#F59E0B"}">●</span><span style="flex:1">${it.label}</span><b>${f(it.area,it)}</b></button>`).join(""))}</div>`;
+  document.body.appendChild(el0); el0.querySelector("#topoResX").onclick=closeTopoRes;
+  el0.querySelectorAll("[data-ti]").forEach(b=>b.onclick=()=>{ const it=r.items[+b.dataset.ti]; const {w,h}=size(); view.cx=it.x; view.cy=it.y; view.s=Math.max(20,Math.min(600,0.5*Math.min(w/Math.max(it.w,0.2),h/Math.max(it.h,0.2)))); draw(); });
+  draw(); }
+function drawTopoIssues(){ const r=TOPOCHK; if (!r||!r.items) return; r.items.forEach(it=>{ const [x,y]=toScr(it.x,it.y), rad=Math.max(14,Math.max(it.w,it.h)*view.s*0.5+8), col=it.type==="overlap"?"#DC2626":it.type==="gap"?"#2563EB":"#F59E0B";
+    el("circle",{cx:x,cy:y,r:rad,fill:col,"fill-opacity":.15,stroke:col,"stroke-width":2.5}); }); }
+$("topoChk").addEventListener("click",()=>{ closeMenu(); showTopoRes(); });
+function cutHostSeg(o,a,b,p0,p1){ if (!o||o.wall||o.rect||o.face||o.kind==="circle"||o.kind==="arc"||!o.pts) return;
+  if (o.closed && !(o.sub==="xazi"||!o.sub)) return;                                      // ოთახები (ფართობიანი) არ იჭრება
+  let i=-1; const n0=o.pts.length; for (let k=0;k+1<n0;k++){ if (dist(o.pts[k],a)<1e-4&&dist(o.pts[k+1],b)<1e-4){ i=k; break; } }
+  if (i<0 && o.closed && dist(o.pts[n0-1],a)<1e-4 && dist(o.pts[0],b)<1e-4) i=n0-1;
+  if (i<0) return;
+  if (o.closed){ const Lq=dist(a,b)||1, uq=[(b[0]-a[0])/Lq,(b[1]-a[1])/Lq], tq=q=>(q[0]-a[0])*uq[0]+(q[1]-a[1])*uq[1]; if (tq(p0)>tq(p1)){ const x=p0; p0=p1; p1=x; }
+    const Rq=v=>[Math.round(v[0]*1000)/1000, Math.round(v[1]*1000)/1000], seq=[Rq(p1)]; for (let m=1;m<=n0;m++) seq.push(o.pts[(i+m)%n0]); seq.push(Rq(p0));
+    o.pts=seq.filter((q,k)=>k===0||dist(q,seq[k-1])>0.002); o.closed=false; return; }
+  const L=dist(a,b)||1, u=[(b[0]-a[0])/L,(b[1]-a[1])/L], t=q=>(q[0]-a[0])*u[0]+(q[1]-a[1])*u[1]; if (t(p0)>t(p1)){ const x=p0; p0=p1; p1=x; }
+  const R=v=>[Math.round(v[0]*1000)/1000, Math.round(v[1]*1000)/1000], clean=arr=>arr.filter((q,k)=>k===0||dist(q,arr[k-1])>0.002);
+  const before=clean(o.pts.slice(0,i+1).concat([R(p0)])), after=clean([R(p1)].concat(o.pts.slice(i+1))), idx=S.objs.indexOf(o), parts=[]; if (before.length>=2) parts.push(before); if (after.length>=2) parts.push(after);
+  if (!parts.length){ if (idx>=0) S.objs.splice(idx,1); return; }
+  o.pts=parts[0]; if (parts[1]){ const c=JSON.parse(JSON.stringify(o)); c.id=newId(); c.pts=parts[1]; c.name=(o.name||"ხაზი")+" ·2"; S.objs.splice(idx+1,0,c); } }
+// კარი/ფანჯარა ჭრის ყველა დამხმარე ხაზს, რომლის კიდე მისი ორი გრძელი გვერდის გასწვრივ დევს (ორივე მხარე — მაგ. ორ მართკუთხედს შორის)
+function cutAlongDoor(d){ if (!d||!d.pts||d.pts.length<4) return; const E=[[d.pts[0],d.pts[1]],[d.pts[3],d.pts[2]]], R3=v=>[Math.round(v[0]*1000)/1000, Math.round(v[1]*1000)/1000];
+  const segd=(q,a,b)=>{ const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy; if (L2<1e-12) return {t:0,d:Math.hypot(q[0]-a[0],q[1]-a[1])}; const t=((q[0]-a[0])*dx+(q[1]-a[1])*dy)/L2; const tc=Math.max(0,Math.min(1,t)); return {t,d:Math.hypot(q[0]-(a[0]+tc*dx),q[1]-(a[1]+tc*dy))}; };
+  const canCut=o=>!(o.wall||o.face)&&(!o.closed||o.sub==="xazi"||!o.sub), cutObjs=new Set();
+  // 1) ორივე კუთხე ერთ ხაზზე დევს (6 მმ-მდე) — ხაზი იჭრება, ბოლოები კარის კუთხეებზე მიდგება (ოთახებს/კედლებს ვერტექსები ემატება)
+  E.forEach(([p0,p1])=>{ if (dist(p0,p1)<1e-6) return;
+    S.objs.slice().forEach(o=>{ if (o===d||o.rect||!o.pts||o.kind==="circle"||o.kind==="arc") return; const n=o.pts.length, m=o.closed?n:n-1;
+      for (let k=0;k<m;k++){ const a=o.pts[k], b=o.pts[(k+1)%n]; if (dist(a,b)<0.02) continue; const s0=segd(p0,a,b), s1=segd(p1,a,b); if (s0.d>0.006||s1.d>0.006) continue; if (Math.max(s0.t,s1.t)<0.001||Math.min(s0.t,s1.t)>0.999) continue; if (Math.abs(s1.t-s0.t)*dist(a,b)<0.02) continue;
+        if (canCut(o)){ cutHostSeg(o,a,b,p0,p1); cutObjs.add(o); }
+        else { const L2=dist(a,b)||1, v=[(b[0]-a[0])/L2,(b[1]-a[1])/L2], ins=[]; [p0,p1].forEach(q=>{ const tt=((q[0]-a[0])*v[0]+(q[1]-a[1])*v[1])/L2; if (tt>0.002&&tt<0.998) ins.push([tt,R3(q)]); }); ins.sort((x,y)=>x[0]-y[0]); if (ins.length) o.pts.splice(k+1,0,...ins.map(x=>x[1])); }
+        break; } }); });
+  // 2) ერთი კუთხე ეხება ხაზს (4 მმ) — იმ ადგილას ხაზზე წვერო ჩაისმება (მერე მეორე კუთხის მიმაგრებისას გაიჭრება)
+  d.pts.forEach(q=>{ S.objs.forEach(o=>{ if (o===d||o.rect||!o.pts||o.kind==="circle"||o.kind==="arc"||cutObjs.has(o)) return; const n=o.pts.length, m=o.closed?n:n-1;
+      for (let k=0;k<m;k++){ const a=o.pts[k], b=o.pts[(k+1)%n]; if (dist(a,b)<0.02) continue; const sg=segd(q,a,b); if (sg.d>0.004||sg.t<=0.002||sg.t>=0.998) continue; if (dist(q,a)<0.003||dist(q,b)<0.003) continue; o.pts.splice(k+1,0,R3(q)); break; } }); }); }
+function cutHostLine(fit){ if (!fit||!fit.o||fit.centered) return; const u=fit.u, p0=[fit.a[0]+u[0]*fit.s0, fit.a[1]+u[1]*fit.s0], p1=[p0[0]+u[0]*fit.W, p0[1]+u[1]*fit.W]; cutHostSeg(fit.o,fit.a,fit.b,p0,p1); }
 function placeElement(px,py){
   const count=nm=>S.objs.filter(o=>(o.name||"").startsWith(nm)).length+1;
   if (tool==="colR"){ const c=snap(px,py,{}).pt; let made=null;
@@ -2149,7 +2261,7 @@ function placeElement(px,py){
   if (!fit){ flash(def.nm+": მიიტანეთ ხაზთან ან ოთახის კედელთან — ელემენტი მას მიეწებება."); return; }
   const pts=elemPts(fit,fit.W,fit.D,fit.s0);
   mutate(()=>{ made={id:newId(),kind:"poly",name:def.nm+" "+count(def.nm),sub:def.sub,closed:true,done:true,rect:true,pts,
-    anchor:{a:fit.a.slice(),b:fit.b.slice(),n:fit.n.slice(),centered:fit.centered}}; S.objs.push(made); S.activeId=made.id; });
+    anchor:{a:fit.a.slice(),b:fit.b.slice(),n:fit.n.slice(),centered:fit.centered}}; S.objs.push(made); S.activeId=made.id; cutAlongDoor(made); });
   elemSheet(made); }
 // კარის/ფანჯრის წინასწარი ჩვენება (თითის გაყოლებით ან მაუსით) — ორივე კუთხიდან დაშორებით
 function drawElPreview(){ const src = elG || (hover && hover.kind==="el" ? hover : null); if (!src) return;
@@ -2165,7 +2277,7 @@ const MAX_GRIP_OBJS=8;
 function gripsOf(o){ const g=[];
   if (o.kind==="circle"){ g.push({type:"c",pt:o.c}); [[1,0],[0,1],[-1,0],[0,-1]].forEach(([a,b])=>g.push({type:"q",pt:[o.c[0]+a*o.r,o.c[1]+b*o.r]})); return g; }
   if (o.kind==="arc"){ o.pts.forEach((p,i)=>g.push({type:"v",i,pt:p})); return g; }
-  if (!o.rect) o.pts.forEach((p,i)=>g.push({type:"v",i,pt:p}));
+  o.pts.forEach((p,i)=>g.push({type:"v",i,pt:p}));
   edges(o).forEach(([i,j])=>g.push({type:"m",i,j,pt:[(o.pts[i][0]+o.pts[j][0])/2,(o.pts[i][1]+o.pts[j][1])/2]}));
   return g; }
 function gripObjs(){ return tool==="select" && selIds.size<=MAX_GRIP_OBJS ? selObjs().filter(o=>!o.locked) : []; }   // ჩაკეტილს გრიპები არ აქვს
@@ -2174,7 +2286,8 @@ function hitGrip(px,py){ const T=Math.max(16,SNAP_PX*0.8); let best=null,bd=T;
   return best; }
 function startGrip(g){
   undoStack.push(JSON.stringify(S)); if (undoStack.length>150) undoStack.shift(); redoStack.length=0;
-  gripDrag={g, o:g.o, orig:JSON.parse(JSON.stringify(g.o)), start:g.pt.slice()}; }
+  gripDrag={g, o:g.o, orig:JSON.parse(JSON.stringify(g.o)), start:g.pt.slice()};
+  if (g.o.rect&&g.o.pts){ const links={}; g.o.pts.forEach((q,ix)=>{ const arr=[]; S.objs.forEach(x=>{ if (x===g.o||!x.pts||x.kind==="circle") return; x.pts.forEach((r,k)=>{ if (dist(r,q)<0.002) arr.push({id:x.id,k}); }); }); links[ix]=arr; }); gripDrag.links=links; } }   // კარის/ფანჯრის კუთხეზე მიბმული ხაზები კუთხეს მიჰყვება
 function moveGrip(px,py){ const {g,o,orig,start}=gripDrag;
   const prevIdx = g.type==="v" && o.pts ? (g.i>0 ? g.i-1 : (o.closed ? o.pts.length-1 : (o.pts.length>1?1:null))) : null;
   const from = g.type==="v" && prevIdx!=null && o.kind!=="arc" ? orig.pts[prevIdx] : g.type==="q" ? o.c : start;
@@ -2186,9 +2299,10 @@ function moveGrip(px,py){ const {g,o,orig,start}=gripDrag;
     o.pts[g.i]=[orig.pts[g.i][0]+dx, orig.pts[g.i][1]+dy]; o.pts[g.j]=[orig.pts[g.j][0]+dx, orig.pts[g.j][1]+dy]; }
   else if (g.type==="c") o.c=p;
   else if (g.type==="q") o.r=Math.max(0.01, Math.round(dist(o.c,p)*100)/100);
+  if (gripDrag.links){ const idxs=g.type==="v"?[g.i]:g.type==="m"?[g.i,g.j]:[]; idxs.forEach(ix=>{ (gripDrag.links[ix]||[]).forEach(l=>{ const t=S.objs.find(x=>x.id===l.id); if (t&&t.pts&&t.pts[l.k]) t.pts[l.k]=[o.pts[ix][0],o.pts[ix][1]]; }); }); }
   gripDrag.moved=true; draw(); }
 function endGrip(isUp){ const gd=gripDrag; gripDrag=null; lastSnap=null;
-  if (gd.moved){ S.sample=false; save(); refresh(); return; }
+  if (gd.moved){ if (gd.o&&gd.o.rect){ try { cutAlongDoor(gd.o); } catch(e){} } S.sample=false; save(); refresh(); return; }   // კარი/ფანჯარა გადაწეულია — ახლა რომელ ხაზსაც გასწვრივ დაემთხვა, იმასაც ჭრის
   undoStack.pop();                                         // შეხება იყო და არა გადათრევა — ისტორიაში არაფერი
   if (!isUp){ draw(); return; }
   const {g,o}=gd;
@@ -2249,7 +2363,7 @@ svg.addEventListener("wheel",e=>{ e.preventDefault(); const [px,py]=loc(e); cons
   const pad = !e.ctrlKey && (e.deltaX!==0 || (e.deltaMode===0 && Math.abs(e.deltaY)<40 && !Number.isInteger(e.deltaY)));
   if (pad){ view.cx += e.deltaX/view.s; view.cy -= e.deltaY/view.s; draw(); return; }
   const k = e.ctrlKey ? Math.exp(-e.deltaY*0.01) : (e.deltaY<0?1.15:1/1.15);
-  view.s=Math.max(6,Math.min(400,view.s*k)); const [nx,ny]=toWld(px,py); view.cx+=wx-nx; view.cy+=wy-ny; draw(); drawPending(); },{passive:false});
+  view.s=Math.max(6,Math.min(MAXZ,view.s*k)); const [nx,ny]=toWld(px,py); view.cx+=wx-nx; view.cy+=wy-ny; draw(); drawPending(); },{passive:false});
 
 // კარი/ფანჯარა ორი კუთხით: პირველი — ხაზზე (მისი მიმართულება განსაზღვრავს დახრას), მეორე — მოპირდაპირე კუთხე
 function hostEdgeAt(A){ let best=null, bd=Math.max(0.02, SNAP_PX/view.s);
@@ -2277,7 +2391,7 @@ function createShape(){
     if (r.W<0.05||r.D<0.02){ flash(def.nm+": მეორე კუთხე მოაშორეთ — ოთხკუთხედი ძალიან პატარაა."); return; }
     const count=S.objs.filter(o=>(o.name||"").startsWith(def.nm)).length+1;
     mutate(()=>{ made={id:newId(),kind:"poly",name:def.nm+" "+count,sub:def.sub,closed:true,done:true,rect:true,pts:r.pts,
-      anchor: r.host ? {a:r.host.a,b:r.host.b,n:r.n,centered:false} : null}; S.objs.push(made); S.activeId=made.id; });
+      anchor: r.host ? {a:r.host.a,b:r.host.b,n:r.n,centered:false} : null}; S.objs.push(made); S.activeId=made.id; cutAlongDoor(made); });
     elemSheet(made); return; }
   mutate(()=>{ const id=newId();
     if (tool==="line"){ if (dist(P[0],P[1])<0.05) return; made={id,kind:"line",name:"ხაზი "+(S.objs.filter(o=>o.kind==="line").length+1),sub:"xazi",pts:P}; }
@@ -2860,7 +2974,7 @@ function renderList(){ const box=$("rooms"); box.innerHTML=""; let total=0;
   if (!S.objs.length) box.innerHTML='<span class="empty">ჯერ არაფერია დახაზული.</span>';
   S.objs.forEach(o=>{ const sub=SUB[o.sub]||SUBS[0]; const A=isArea(o)?objArea(o):null; if (A!=null&&sub.used) total+=A;
     const b=document.createElement("button"); b.type="button"; b.className="room"; b.setAttribute("aria-current",o.id===S.activeId?"true":"false");
-    b.innerHTML=`<span class="sw" style="background:${sub.fill}"></span><span><div class="nm"></div><div class="st">${KIND_KA[o.kind]} · ${sub.ka}</div></span><span class="ar">${A!=null?fmt(A)+" მ²":"—"}</span>`;
+    b.innerHTML=`<span class="sw" style="background:${sfill(sub)}"></span><span><div class="nm"></div><div class="st">${KIND_KA[o.kind]} · ${sub.ka}</div></span><span class="ar">${A!=null?fmt(A)+" მ²":"—"}</span>`;
     b.querySelector(".nm").textContent=(o.locked?"🔒 ":"")+o.name; b.addEventListener("click",()=>{ S.activeId=o.id; save(); refresh(); }); box.appendChild(b); });
   $("total").textContent=fmt(total)+" მ²"; }
 function refresh(){ selIds=new Set([...selIds].filter(id=>S.objs.some(o=>o.id===id))); if (S.activeId && !selIds.has(S.activeId)) selIds=new Set([S.activeId]); if (!S.activeId) selIds.clear();
@@ -3466,6 +3580,18 @@ async function openCab(){ if (!cloudOn() || !AUTH) return; closeMenu(); $("cab")
       d.textContent=fmtDay(r.created_at)+(r.is_test?" · სატესტო გამოწერა":" · "+fmt(+r.amount)+" ₾")+(r.status!=="paid"?" · "+r.status:""); box.appendChild(d); });
   } catch(e){ $("cabPays").innerHTML='<span class="empty">ვერ ჩაიტვირთა — ინტერნეტი?</span>'; } }
 $("cabClose").addEventListener("click",()=>{ $("cab").hidden=true; });
+function openSty(){ closeMenu(); let el0=document.getElementById("styView"); if (el0) el0.remove(); el0=document.createElement("div"); el0.id="styView";
+  el0.style.cssText="position:fixed;inset:0;z-index:80;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:12px";
+  el0.innerHTML=`<div style="background:var(--panel);color:var(--ink);border-radius:16px;max-width:440px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 50px rgba(0,0,0,.35)"><div style="display:flex;gap:8px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)"><b style="flex:1;font-size:16px">🎨 ნახაზის სტილი</b><button class="btn sm" id="styReset" type="button">↺ სტანდარტი</button><button class="btn sm" id="styX" type="button">✕</button></div><div id="styList" style="overflow:auto;padding:8px 14px 14px"></div></div>`;
+  document.body.appendChild(el0); const list=el0.querySelector("#styList");
+  const defOf=v=>SCR_DEF[v]||(SUBTILE[v]&&SUBTILE[v].bg)||SUB[v].fill, hex=c=>/^#[0-9a-f]{6}$/i.test(c)?c:"#FFFFFF";
+  const build=()=>{ list.innerHTML=""; SUBS.forEach(sb=>{ const cur=STY["f_"+sb.v]||defOf(sb.v), r=document.createElement("label"); r.style.cssText="display:flex;align-items:center;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)";
+      r.innerHTML=`<input type="color" value="${hex(cur)}" style="width:44px;height:32px;padding:0;border:0;background:none"><span style="flex:1">${sb.ka}</span>`;
+      r.querySelector("input").oninput=e=>{ STY["f_"+sb.v]=e.target.value; saveSty(); if (P) draw(); }; list.appendChild(r); }); };
+  build(); el0.querySelector("#styX").onclick=()=>el0.remove(); el0.onclick=e=>{ if (e.target===el0) el0.remove(); };
+  el0.querySelector("#styReset").onclick=()=>{ STY={}; saveSty(); build(); if (P) draw(); }; }
+$("acctSty").addEventListener("click",openSty);
+
 $("cabSave").addEventListener("click",async()=>{ const m=$("cabSaveMsg"); m.textContent="…";
   try { await api("/rest/v1/profiles?id=eq."+AUTH.user.id,{method:"PATCH",headers:{Prefer:"return=minimal"},body:{full_name:$("cabName").value.trim(),phone:$("cabPhone").value.trim()}}); m.textContent="შენახულია ✓"; }
   catch(e){ m.textContent=errKa(e); } });
@@ -4071,7 +4197,7 @@ loadCompanyLocal();
 
 // ══ ექსპორტი QGIS-ის „SHP / CAD ექსპორტის“ და „PDF I / II გვერდის“ მსგავსად (დადგენილება #315) ══
 const L315=v=>v==null||v===""?"":nusxJs(v);
-function u315(o, fl, fi){ const m=Object.assign({}, P.meta||{}, o.u||{}), sub=SUB[o.sub]||SUBS[0];
+function u315(o, fl, fi, fb){ const m=Object.assign({}, fb||{}, P.meta||{}); Object.keys(o.u||{}).forEach(k=>{ const v=o.u[k]; if (v!=null&&v!=="") m[k]=v; }); const sub=SUB[o.sub]||SUBS[0];
   const flo = m.FLOOR!=null&&m.FLOOR!=="" ? parseInt(m.FLOOR,10) : (fl&&fl.no!=null ? fl.no : fi+1);
   const h = o.height!=null ? o.height : num(m.HEIGHT);
   return { BULDING_ID:L315(m.BULDING_ID), FLAT:L315(m.FLAT), FLOOR:isFinite(flo)?flo:fi+1, HEIGHT:h>0?h:null, CADCODE:L315(m.CADCODE), UNIT_CODE:L315(m.UNIT_CODE),
@@ -4081,17 +4207,25 @@ const unitObjs=objs=>objs.filter(o=>isArea(o) && o.sub && o.sub!=="xazi" && o.su
 const leaseObjs=objs=>objs.filter(o=>isArea(o) && o.sub==="lease");
 function floorsWithObjs(){ return P.floors.map((fl,fi)=>({fl, fi, objs:((fl===curFloor()?S:fl.S)||{objs:[]}).objs||[]})).filter(x=>x.objs.length); }
 // რგოლები: ზედმეტი (სწორ ხაზზე მდებარე) წვეროები იშლება, გარე — საათის ისრით (QGIS forcerhr)
-function cleanRing(r){ let p=r.slice(); if (p.length>3 && dist(p[0],p[p.length-1])<1e-9) p.pop();
+// სამეზობლო ობიექტების კიდეები ერთმანეთს ზუსტად ემთხვევა: ახლო წვეროები ერთ წერტილად ერთიანდება, ახლო კიდეებში კი მეზობლის წვერო ჩაისმება (QGIS Topology Checker: overlap / gaps → 0)
+function snapGeoms(groups,TOL){ const reps=[]; const rep=p=>{ for (const q of reps) if (Math.hypot(p[0]-q[0],p[1]-q[1])<=TOL) return q; reps.push(p); return p; };
+  groups.forEach(g=>g.forEach((ring,ri)=>{ g[ri]=ring.map(rep); })); const V=reps.slice();
+  groups.forEach(g=>g.forEach((ring,ri)=>{ const n=ring.length, out=[]; for (let i=0;i<n;i++){ const a=ring[i], b=ring[(i+1)%n]; out.push(a); const ins=[]; if (a!==b){ const dx=b[0]-a[0], dy=b[1]-a[1], L2=dx*dx+dy*dy; if (L2>1e-12) for (const v of V){ if (v===a||v===b) continue; const t=((v[0]-a[0])*dx+(v[1]-a[1])*dy)/L2; if (t<=0||t>=1) continue; const d=Math.hypot(v[0]-(a[0]+t*dx),v[1]-(a[1]+t*dy)); if (d<=TOL) ins.push([t,v]); } }
+      ins.sort((p,q)=>p[0]-q[0]).forEach(x=>out.push(x[1])); } g[ri]=out.filter((p,i)=>p!==out[(i-1+out.length)%out.length]); })); }
+function cleanRing(r,tol){ const eps=tol==null?0.005:tol; let p=r.slice(); if (p.length>3 && dist(p[0],p[p.length-1])<1e-9) p.pop();
   let ch=true; while (ch && p.length>3){ ch=false; for (let i=0;i<p.length;i++){ const a=p[(i-1+p.length)%p.length], b=p[i], c=p[(i+1)%p.length], L=dist(a,c)||1;
-      if (Math.abs((c[0]-a[0])*(b[1]-a[1])-(c[1]-a[1])*(b[0]-a[0]))/L<0.005){ p.splice(i,1); ch=true; break; } } } return p; }
+      if (Math.abs((c[0]-a[0])*(b[1]-a[1])-(c[1]-a[1])*(b[0]-a[0]))/L<eps){ p.splice(i,1); ch=true; break; } } } return p; }
 function orient(r, cw){ const a=area(r); return (cw ? a>0 : a<0) ? r.slice().reverse() : r; }
 function unitGeom(pick=unitObjs, only=null){ const OX=P.origin?P.origin[0]:0, OY=P.origin?P.origin[1]:0, T=p=>[+(p[0]+OX).toFixed(3), +(p[1]+OY).toFixed(3)];
   const polys=[], lines=[]; let n=0;
-  floorsWithObjs().filter(q=>only==null||q.fi===only).forEach(({fl,fi,objs})=>pick(objs).forEach(o=>{ const a=u315(o,fl,fi);
-    const rings=[orient(cleanRing(shape(o).map(T)),true)].concat((o.holes||[]).filter(h=>h.length>=3).map(h=>orient(cleanRing(h.map(T)),false)));
-    const per=r=>r.reduce((t,p,i)=>t+dist(p,r[(i+1)%r.length]),0);
-    polys.push({rings, a:Object.assign({OBJECTID:++n, Shape_Area:+(Math.abs(area(rings[0]))-rings.slice(1).reduce((t,r)=>t+Math.abs(area(r)),0)).toFixed(2), Shape_Leng:+rings.reduce((t,r)=>t+per(r),0).toFixed(2)},a)});
-    rings.forEach(r=>{ for (let i=0;i<r.length;i++){ const p=r[i], q=r[(i+1)%r.length]; if (dist(p,q)>1e-6) lines.push({pts:[p,q], a}); } }); }));
+  floorsWithObjs().filter(q=>only==null||q.fi===only).forEach(({fl,fi,objs})=>{
+    const pk=pick(objs), fb={}; ["BULDING_ID","FLAT","ENTRANCE"].forEach(k=>{ const c={}; pk.forEach(o=>{ const v=o.u&&o.u[k]; if (v!=null&&v!=="") c[v]=(c[v]||0)+1; }); const best=Object.keys(c).sort((x,y)=>c[y]-c[x])[0]; if (best!=null) fb[k]=best; });
+    const items=pk.map(o=>({a:u315(o,fl,fi,fb), rings:[shape(o).map(T)].concat((o.holes||[]).filter(h=>h.length>=3).map(h=>h.map(T)))}));
+    snapGeoms(items.map(it=>it.rings),0.006);
+    items.forEach(it=>{ const a=it.a, rings=it.rings.map((r,i)=>orient(cleanRing(r,-1),i===0));
+      const per=r=>r.reduce((t,p,i)=>t+dist(p,r[(i+1)%r.length]),0);
+      polys.push({rings, a:Object.assign({OBJECTID:++n, Shape_Area:+(Math.abs(area(rings[0]))-rings.slice(1).reduce((t,r)=>t+Math.abs(area(r)),0)).toFixed(2), Shape_Leng:+rings.reduce((t,r)=>t+per(r),0).toFixed(2)},a)});
+      rings.forEach(r=>{ for (let i=0;i<r.length;i++){ const p=r[i], q=r[(i+1)%r.length]; if (dist(p,q)>1e-6) lines.push({pts:[p,q], a}); } }); }); });
   return {polys, lines}; }
 function name315(){ const o=floorsWithObjs().flatMap(x=>unitObjs(x.objs)).find(o=>o.u&&(o.u.FILTR||o.u.INT_PER_ID))||{}, m=Object.assign({},P.meta||{},o.u||{});
   const nm=(m.FILTR && m.FILTR!=="N/A" ? m.FILTR : "") || nusxJs(P.name||"proeqti");
@@ -4147,6 +4281,11 @@ function cellText(x, t, x0, y0, x1, y1, o={}){ t=String(t==null||t===""?"N/A":t)
     x.textAlign=o.align||"left"; const tx2 = o.align==="center" ? (x0+x1)/2 : o.align==="right" ? x1-pad : x0+pad, m=(y0+y1)/2; x.fillText(l1,tx2,m-s2*0.55); x.fillText(l2,tx2,m+s2*0.6); x.textAlign="left"; return; }
   x.textAlign=o.align||"left";
   const tx = o.align==="center" ? (x0+x1)/2 : o.align==="right" ? x1-pad : x0+pad; x.fillText(t, tx, (y0+y1)/2); x.textAlign="left"; }
+// ბინის № და ერთეულის კოდში ქართული ასო (179ა) ზედა ინდექსად — ციფრის თავზე, ხარისხის მსგავსად
+function cellSup(x,t,x0,y0,x1,y1,o={}){ t=String(t==null||t===""?"N/A":t); if (!/[ა-ჰ]/.test(t)){ cellText(x,t,x0,y0,x1,y1,o); return; }
+  const pad=mm(1.2), maxW=x1-x0-2*pad, parts=t.split(/([ა-ჰ]+)/).filter(Boolean); let sz=o.s||mm(2.9); const wd=s2=>parts.reduce((a,q)=>{ x.font=FONT(o.w||"500",/[ა-ჰ]/.test(q)?s2*0.62:s2); return a+x.measureText(q).width; },0);
+  while (sz>mm(1.6)&&wd(sz)>maxW) sz-=1; x.fillStyle=o.color||"#111"; x.textBaseline="middle"; x.textAlign="left"; const total=wd(sz); let cx=o.align==="center"?(x0+x1)/2-total/2:o.align==="right"?x1-pad-total:x0+pad; const my=(y0+y1)/2;
+  parts.forEach(q=>{ const sup=/[ა-ჰ]/.test(q); x.font=FONT(o.w||"500",sup?sz*0.62:sz); x.fillText(q,cx,sup?my-sz*0.33:my); cx+=x.measureText(q).width; }); }
 function rect(x, x0, y0, x1, y1, lw){ x.lineWidth=lw||2; x.strokeStyle="#111"; x.strokeRect(x0,y0,x1-x0,y1-y0); }
 function vline(x, xx, y0, y1){ x.beginPath(); x.moveTo(xx,y0); x.lineTo(xx,y1); x.lineWidth=2; x.strokeStyle="#111"; x.stroke(); }
 function hline(x, y, x0, x1){ x.beginPath(); x.moveTo(x0,y); x.lineTo(x1,y); x.lineWidth=2; x.strokeStyle="#111"; x.stroke(); }
@@ -4177,12 +4316,12 @@ function sheetTable(x, d, logo, sig, legendSubs){ const X0=mm(12), X1=mm(198), X
   const r1=[XL,mm(107.5),mm(115.7),mm(135),mm(142.5),mm(172.4),mm(180.5),X1]; r1.slice(1,-1).forEach(v=>vline(x,v,Y[0],Y[1]));
   cellText(x,"შენობის №",r1[0],Y[0],r1[1],Y[1],{s:mm(2.5)}); cellText(x,d.building,r1[1],Y[0],r1[2],Y[1]); cellText(x,"სადარბაზო №",r1[2],Y[0],r1[3],Y[1],{s:mm(2.5)}); cellText(x,d.entrance,r1[3],Y[0],r1[4],Y[1]);
   cellText(x,"სართული:",r1[4],Y[0],mm(160),Y[1],{s:mm(2.5)}); cellText(x,d.floor,mm(160),Y[0],r1[5],Y[1]); vline(x,mm(160),Y[0],Y[1]);
-  cellText(x,"ბინის №",r1[5],Y[0],r1[6],Y[1],{s:mm(2.5)}); cellText(x,d.flat,r1[6],Y[0],r1[7],Y[1]);
+  cellText(x,"ბინის №",r1[5],Y[0],r1[6],Y[1],{s:mm(2.5)}); cellSup(x,d.flat,r1[6],Y[0],r1[7],Y[1]);
   [mm(107),mm(128),mm(152)].forEach(v=>vline(x,v,Y[1],Y[2]));
   cellText(x,"მდგომარეობა:",XL,Y[1],mm(107),Y[2],{s:mm(2.5)}); cellText(x,d.condition,mm(107),Y[1],mm(128),Y[2]); cellText(x,"ჭერის სიმაღლე:",mm(128),Y[1],mm(152),Y[2],{s:mm(2.5)}); cellText(x,d.height,mm(152),Y[1],X1,Y[2]);
   const KV=mm(137); [2,3,4].forEach(i=>vline(x,KV,Y[i],Y[i+1]));
   cellText(x,"საკადასტრო კოდი",XL,Y[2],KV,Y[3]); cellText(x,d.cadcode,KV,Y[2],X1,Y[3]);
-  cellText(x,"ერთეულის კოდი",XL,Y[3],KV,Y[4]); cellText(x,d.unitCode,KV,Y[3],X1,Y[4]);
+  cellText(x,"ერთეულის კოდი",XL,Y[3],KV,Y[4]); cellSup(x,d.unitCode,KV,Y[3],X1,Y[4]);
   cellText(x,"შენობა-ნაგებობის ერთეულის დანიშნულება/კატეგორია",XL,Y[4],KV,Y[5],{s:mm(2.4)}); cellText(x,d.unitUse,KV,Y[4],X1,Y[5]);
   [mm(123),mm(153),mm(168)].forEach(v=>vline(x,v,Y[5],Y[6]));
   cellText(x,"ერთეულის ფართობი:",XL,Y[5],mm(123),Y[6],{s:mm(2.5)}); cellText(x,d.area,mm(123),Y[5],mm(153),Y[6],{color:"#DC2626",w:"700",align:"center"});
@@ -4208,10 +4347,12 @@ function scaleBlock(x, n){ cellText(x,"მასშტაბი  1:"+n,mm(12),mm
   x.strokeStyle="#1D4ED8"; x.lineWidth=2.5; x.beginPath(); x.moveTo(mm(157),mm(187.8)); x.lineTo(mm(157),mm(197.6)); x.moveTo(mm(154.5),mm(195.6)); x.lineTo(mm(161),mm(195.6)); x.stroke();
   cellText(x,"სახელმწიფო გეოდეზიური",mm(158),mm(187.6),mm(198),mm(191.6),{s:mm(2.6)}); cellText(x,"კოორდინატთა სისტემა",mm(158),mm(191.2),mm(198),mm(195.2),{s:mm(2.6)});
   cellText(x,"WGS_1984_UTM_Zone_38N",mm(158),mm(196),mm(198),mm(200),{s:mm(2.6)}); }
+const GEO_FROM_LAT=(()=>{ const k="აბგდევზთიკლმნოპჟრსტუფქღყშჩცძწჭხჯჰ", v="abgdevzTiklmnopJrstufqRySCcZwWxjh", m={}; [...v].forEach((c,i)=>{ m[c]=k[i]; }); return m; })();
+const geoLetters=t=>String(t==null?"":t).replace(/[A-Za-z]/g,c=>GEO_FROM_LAT[c]||c);
 function sheetData(fl, fi){ const objs=((fl===curFloor()?S:fl.S)||{objs:[]}).objs||[], us=unitObjs(objs), o=us.find(q=>q.u)||us[0]||{}, m=Object.assign({},P.meta||{},o.u||{});
   const tot=us.filter(q=>(SUB[q.sub]||{}).used).reduce((s,q)=>s+objArea(q),0), hs=us.filter(q=>(SUB[q.sub]||{}).used).map(q=>+q.height).filter(h=>h>0);   // ჭერის სიმაღლე — გამოყენებული ფართობის უმაღლესი
-  return { adres:m.ADRES, building:m.BULDING_ID, entrance:m.ENTRANCE, floor:m.FLOOR || (fl.no!=null?fl.no:fi+1), flat:m.FLAT, condition:m.CONDITION,
-    height: hs.length ? fmt(Math.max(...hs)) : (m.HEIGHT||""), cadcode:m.CADCODE, unitCode:m.UNIT_CODE, unitUse:m.UNIT_USE, area:fmt(tot)+" მ²", date:m.DATA||fmtDay(Date.now()),
+  return { adres:m.ADRES, building:geoLetters(m.BULDING_ID), entrance:geoLetters(m.ENTRANCE), floor:m.FLOOR || (fl.no!=null?fl.no:fi+1), flat:geoLetters(m.FLAT), condition:m.CONDITION,
+    height: hs.length ? fmt(Math.max(...hs)) : (m.HEIGHT||""), cadcode:m.CADCODE, unitCode:geoLetters(m.UNIT_CODE), unitUse:m.UNIT_USE, area:fmt(tot)+" მ²", date:m.DATA||fmtDay(Date.now()),
     measurer:strip(m.MEASUR_ID), interested:strip(m.INT_PER_ID), note:m.NOTE_, filtr:m.FILTR, company:COMPANY||{},
     measurerSig:((COMPANY&&COMPANY.measurers)||[]).find(q=>q&&q.name&&m.MEASUR_ID&&String(m.MEASUR_ID).startsWith(q.name)), subs:[...new Set(us.map(q=>q.sub))] }; }
 function drawPlan(x, objs, T, k, opt={}){ const areas=objs.filter(o=>isArea(o)&&!isPt(o)).sort((a,b)=>{ const w=o=>o.sub==="lease"?2:(SUB[o.sub]||{}).used?0:1; return w(a)-w(b); });
@@ -4225,11 +4366,11 @@ function drawPlan(x, objs, T, k, opt={}){ const areas=objs.filter(o=>isArea(o)&&
       const [ax,ay]=T(p), [bx,by]=T(q), [cx,cy]=T(c); let ang=Math.atan2(by-ay,bx-ax); if (ang>Math.PI/2) ang-=Math.PI; if (ang<-Math.PI/2) ang+=Math.PI;
       let nx=-(by-ay), ny=bx-ax; const nl=Math.hypot(nx,ny)||1; nx/=nl; ny/=nl; const mx=(ax+bx)/2, my=(ay+by)/2; if ((cx-mx)*nx+(cy-my)*ny<0){ nx=-nx; ny=-ny; }
       x.save(); x.translate(mx+nx*fs*0.9, my+ny*fs*0.9); x.rotate(ang); x.font=FONT("500",fs); x.textAlign="center"; x.textBaseline="middle"; x.fillStyle="#111"; x.fillText(fmt(L),0,0); x.restore(); }); });
-  areas.filter(o=>(SUB[o.sub]||{}).used).forEach(o=>{ const [cx,cy]=T(o.kind==="circle"?o.c:centroid(o.pts)); x.font=FONT("700",fs*1.25); x.textAlign="center"; x.textBaseline="middle";
+  areas.filter(o=>(SUB[o.sub]||{}).used).forEach(o=>{ const [cx,cy]=T(o.kind==="circle"?o.c:labelPt(o)); x.font=FONT("700",fs*1.25); x.textAlign="center"; x.textBaseline="middle";
     x.lineWidth=6; x.strokeStyle="rgba(255,255,255,.9)"; const t=fmt(objArea(o))+" მ²"; x.strokeText(t,cx,cy); x.fillStyle="#DC2626"; x.fillText(t,cx,cy); }); x.textAlign="left"; }
 const STD=[50,75,100,125,150,200,250,300,400,500,750,1000,1500,2000,2500,5000];
 async function pdfSheet1(fl, fi, pageNo){ const c=document.createElement("canvas"); c.width=PW; c.height=PH; const x=c.getContext("2d"), d=sheetData(fl,fi);
-  sheetFrame(x,"შენობა-ნაგებობისა და შენობა-ნაგებობის ერთეულის შიდა აზომვითი ნახაზი",d.filtr,pageNo);
+  sheetFrame(x,"შენობა-ნაგებობისა და შენობა-ნაგებობის ერთეულის შიდა აზომვითი ნახაზი",d.filtr,fi+1);
   const MX0=mm(17), MY0=mm(16), MX1=mm(193), MY1=mm(187); rect(x,MX0,MY0,MX1,MY1,2);
   const objs=((fl===curFloor()?S:fl.S)||{objs:[]}).objs||[], pts=objs.filter(o=>!isPt(o)).flatMap(o=>shape(o)||[]); let n=100;
   if (pts.length){ const xs=pts.map(q=>q[0]), ys=pts.map(q=>q[1]), bw=Math.max(Math.max(...xs)-Math.min(...xs),1), bh=Math.max(Math.max(...ys)-Math.min(...ys),1);
@@ -4245,7 +4386,7 @@ async function wmsBitmap(path, bb, W, H, fmtS, transp){ try { const u=path+"?SER
   else {const r=await fetch(u);if(!r.ok)throw new Error("WMS HTTP "+r.status);b=await r.blob();}
   if(!/^image\//.test(b.type))throw new Error("WMS: პასუხი გამოსახულება არ არის"); return await createImageBitmap(b); } catch(e){ return null; } }
 async function pdfSheet2(fl, fi, pageNo){ if (!P.origin) return null; const c=document.createElement("canvas"); c.width=PW; c.height=PH; const x=c.getContext("2d"), d=sheetData(fl,fi);
-  sheetFrame(x,"შენობა-ნაგებობის ერთეულის მდებარეობა საკადასტრო გეგმაზე",d.filtr,pageNo);
+  sheetFrame(x,"შენობა-ნაგებობის ერთეულის მდებარეობა საკადასტრო გეგმაზე",d.filtr,fi+1);
   const MX0=mm(17), MY0=mm(16), MX1=mm(193), MY1=mm(187), OX=P.origin[0], OY=P.origin[1];
   const objs=((fl===curFloor()?S:fl.S)||{objs:[]}).objs||[], pts=objs.flatMap(o=>isPt(o)?[]:(shape(o)||[])); if (!pts.length) return null;
   const xs=pts.map(q=>q[0]+OX), ys=pts.map(q=>q[1]+OY); let bx0=Math.min(...xs), bx1=Math.max(...xs), by0=Math.min(...ys), by1=Math.max(...ys);
@@ -4373,13 +4514,13 @@ function buildDxf(){
     // კედლების ზომები — ფენა ZOMEBI (მხოლოდ იატაკი/აივანი/ვერანდა/ანტრესოლი, თუ „ზომები“ ჩართულია)
     if (SET.dims && (SUB[o.sub]||{}).used && (o.kind==="poly"||o.kind==="line") && o.pts.length>=2){
       const P=o.pts, inward = o.kind==="poly" && o.closed ? (area(P)>0?1:-1) : 1;
-      edges(o).forEach(([i,j])=>{ const a=P[i], b=P[j], L=dist(a,b); if (L<0.05) return;
+      dimEdges(o,P).forEach(([i,j])=>{ const a=P[i], b=P[j], L=dist(a,b); if (L<0.05) return;
         const ux=(b[0]-a[0])/L, uy=(b[1]-a[1])/L, nx=-uy*inward*0.15, ny=ux*inward*0.15; let ang=Math.atan2(uy,ux)*180/Math.PI; if (ang>90) ang-=180; if (ang<-90) ang+=180;
         const mx=(a[0]+b[0])/2+nx, my=(a[1]+b[1])/2+ny;
         g(0,"TEXT"); g(8,"ZOMEBI"); g(10,X(mx)); g(20,Y(my)); g(30,"0.0"); g(40,"0.12"); g(1,L.toFixed(2).replace(".",",")); g(50,n(ang)); g(72,1); g(73,2); g(11,X(mx)); g(21,Y(my)); g(31,"0.0"); }); }
     // ფართობი — ტექსტი ოთახის შუაში (გამოყენებული ფართობისთვის)
     const sub=SUB[o.sub]||SUBS[0];
-    if (isArea(o) && sub.used){ const c=o.kind==="circle"?o.c:centroid(o.pts);
+    if (isArea(o) && sub.used){ const c=o.kind==="circle"?o.c:labelPt(o);
       g(0,"TEXT"); g(8,"FARTOBI"); g(10,X(c[0])); g(20,Y(c[1])); g(30,"0.0"); g(40,"0.25"); g(1,objArea(o).toFixed(2)); g(72,1); g(11,X(c[0])); g(21,Y(c[1])); g(31,"0.0"); }
   });
   g(0,"ENDSEC"); g(0,"EOF");
@@ -4461,7 +4602,7 @@ $("dlBtn").addEventListener("click", async ()=>{
 $("copyBtn").addEventListener("click",()=>{ const t=$("out").value; const done=ok=>{ $("copyMsg").textContent=ok?"დაკოპირდა.":"მონიშნულია — დააკოპირეთ ხელით (დიდხანს დაჭერა → Copy)."; };
   try { navigator.clipboard.writeText(t).then(()=>done(true),()=>{ $("out").select(); done(false); }); } catch(e){ $("out").select(); done(false); } });
 
-$("zoomIn").addEventListener("click",()=>{ view.s=Math.min(400,view.s*1.25); draw(); drawPending(); });
+$("zoomIn").addEventListener("click",()=>{ view.s=Math.min(MAXZ,view.s*1.25); draw(); drawPending(); });
 $("zoomOut").addEventListener("click",()=>{ view.s=Math.max(6,view.s/1.25); draw(); drawPending(); });
 $("fitBtn").addEventListener("click",()=>{ fit(); drawPending(); });
 new ResizeObserver(()=>{ draw(); drawPending(); }).observe(stage);
@@ -4925,7 +5066,7 @@ const prepared=pr.parcels.filter(q=>layerOf(q)==="parcel"&&q.numbered&&q.pts&&q.
    ${legGroup("mine","📁","ჩემი ფენები",Object.entries(FIELD_LAYERS).map(([k,v])=>row(v.key,v.symbol,v.name,k)).join(""))}
    ${legGroup("base","🗺","საფუძველი რუკები",row("f","▭","რეესტრის ნაკვეთები (WFS)")+row("c","▦","საკადასტრო (WMS)")+row("o","🖼","ორთოფოტო"))}
    </div>
-   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v337</div></div>`; }
+   <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button><button type="button" class="cd-fb${F.edit?" on":""}" data-d="edit" title="რედაქტირება">✏</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპკ v358</div></div>`; }
 function renderDrawer(force){ const d=$c("cfDrawer"); if (!d||!F) return; if (!force&&!d.classList.contains("open")) return; const a=document.activeElement; if (!force&&a&&d.contains(a)&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)) return; d.innerHTML=drawerHtml(); d.onchange=onDrawerChange; }
 function onDrawer(e){
   if (topoDrawerClick(e)) return;
@@ -5298,7 +5439,7 @@ function panel(kind,arg){ const el=$c("cfPanel"); if (!el||!F) return; F.panel=k
       `<div class="row" style="gap:8px;margin-top:10px"><button type="button" class="btn" data-g="toggle">${GPS.id==null?"📡 ჩართვა":"📡 გამორთვა"}</button><button type="button" class="btn" data-g="follow">🎯 მიყოლა</button></div>`; }
   else if (kind==="layers"){ const L=F.map.getLayers(); h=head("🗺 ფენები")+[["o","ორთოფოტო"],["c","საკადასტრო (WMS)"],["f","ნაკვეთები (WFS)"]].map(([k,t])=>`<label class="chk cf-l"><input type="checkbox" data-l="${k}"${L[k]?" checked":""}> ${t}</label>`).join("")+
       `<div class="row" style="gap:8px;margin-top:10px"><input class="input" id="cfQ" type="search" placeholder="საკადასტრო კოდი" style="flex:1"><button type="button" class="btn primary" data-g="find">🔍</button></div>`; }
-  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div>${isTopo(F.pr)?`<div class="cf-btns" style="flex-direction:column;align-items:stretch;margin-top:12px"><button type="button" class="btn primary" data-g="topopanel">⛰ ტოპოგრაფია: ჰორიზონტალები, პროფილი, ექსპორტი</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div>`:`<div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div>`}<div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v337</div>`; }
+  else if (kind==="menu"){ h=head("⋮ პროექტი")+`<div class="field"><label>პროექტის სახელი</label><input class="input" id="cfName" value="${esc(F.pr.name)}"></div>${isTopo(F.pr)?`<div class="cf-btns" style="flex-direction:column;align-items:stretch;margin-top:12px"><button type="button" class="btn primary" data-g="topopanel">⛰ ტოპოგრაფია: ჰორიზონტალები, პროფილი, ექსპორტი</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div>`:`<div class="cd-h2" style="margin-top:12px">მომზადება</div><div class="cf-btns" style="flex-direction:column;align-items:stretch"><button type="button" class="btn" data-g="prep1">1 · 🧩 ფენების მომზადება (მხოლოდ მომზადება)</button><button type="button" class="btn" data-g="prep2">2 · 📄 მეორე გვერდის მომზადება</button><button type="button" class="btn" data-g="prep3">3 · 🧭 მოსაზღვრეები</button><button type="button" class="btn primary" data-g="prep4">4 · 🖨 ნახაზების მომზადება და გატანა (ნახაზი + II გვერდი + SHP)</button><button type="button" class="btn" data-g="drwall">🗺 მხოლოდ ნახაზები (PDF)</button></div><div class="cf-btns"><button type="button" class="btn" data-g="pj">⬇ Shapefile ZIP</button><button type="button" class="btn" data-g="pcsv">⬇ ყველა წერტილი CSV</button><button type="button" class="btn" data-g="pdel">🗑 პროექტის წაშლა</button></div>`}<div style="text-align:center;font-size:12px;opacity:.6;margin-top:8px">საველე აპკ v358</div>`; }
   else if (kind==="list"){ h=head("☰ ნაკვეთები")+(F.pr.parcels.length?`<div class="cf-list">${F.pr.parcels.map(p=>{ const m=metrics(p); return `<button type="button" class="cad-card" data-pid="${p.id}"><b>${esc(p.fields.CADCODE||p.fields.ADRES||"ნაკვეთი")}</b><span>${esc(p.fields.INT_PER_ID||"—")}</span><span>${p.pts.length} წერტილი · ${m.area?m.area.toFixed(1)+" მ²":"—"}</span></button>`; }).join("")}</div>`:'<p class="cad-empty">ნაკვეთები ჯერ არ არის. დააჭირეთ „+ ნაკვეთი“.</p>')+ptsList(); }
   else if (kind==="wfs"){ F.hit=arg; h=head("📍 რეესტრის ნაკვეთი")+`<div class="cf-kv"><span>კოდი</span><b>${esc(arg.code||"—")}</b></div>`+(arg.area?`<div class="cf-kv"><span>ფართობი</span><b>${Math.round(arg.area)} მ²</b></div>`:"")+`<div class="cf-btns"><button type="button" class="btn primary" data-g="addwfsg">📋 ნაკვეთად ჩაკოპირება (გეომეტრიით)</button><button type="button" class="btn" data-g="addwfs">+ მხოლოდ კოდით</button></div>`; }
   else if (kind==="ident"){ h=head("Features")+identHtml(); }
@@ -6180,7 +6321,7 @@ function topoDrawerHtml(){ const pr=F.pr, t=TS(pr), hide=tHide(pr), L=F.map?F.ma
    <div class="cd-h2" style="margin-top:6px"><span style="font-size:19px">ლეგენდა</span><button type="button" class="btn sm" data-leg-all>${(F.leg&&F.leg.pts&&F.leg.lns)?"⌄ ყველას გაშლა":"⌃ ყველას აკეცვა"}</button></div>
    ${grp("pts","📡","GPS წერტილები (კოდებით)",TLIB.filter(c=>c.t==="pt").map(row).join("")+`<div class="cd-lg" style="opacity:.85"><span class="sym" style="display:inline-flex;width:34px;justify-content:center">•</span><button type="button" class="nm" data-tex="__none" style="flex:1;text-align:left">კოდის გარეშე <span class="cnt">[${nocode}]</span></button><button type="button" class="btn sm" data-tex="__none" style="padding:4px 9px">${F.topen.__none?"▴":"▾"}</button></div>${F.topen.__none?plist(pts.filter(q=>!q.code||!tLookup(q.code))):""}`)}
    ${grp("lns","〰","ხაზოვანი ობიექტები (გზა, ღობე…)",TLIB.filter(c=>c.t==="ln").map(row).join(""))}
-   ${grp("base","🗺","საფუძველი რუკა",`<div class="cd-lg${L.o===false?" off":""}"><button type="button" class="eye" data-lt="o">${L.o===false?"🚫":"👁"}</button><button type="button" class="nm" data-lt="o" style="flex:1;text-align:left"><span class="sym">🖼</span> ორთოფოტო</button></div>`)}
+   ${grp("base","🗺","საფუძველი რუკა",[["f","▭","რეესტრის ნაკვეთები (WFS)"],["c","▦","საკადასტრო (WMS)"],["o","🖼","ორთოფოტო"]].map(([k,ic,nm])=>`<div class="cd-lg${L[k]===false?" off":""}"><button type="button" class="eye" data-lt="${k}">${L[k]===false?"🚫":"👁"}</button><button type="button" class="nm" data-lt="${k}" style="flex:1;text-align:left"><span class="sym">${ic}</span> ${nm}</button></div>`).join(""))}
    ${grp("legend","📖","პირობითი აღნიშვნები",`<div style="padding:2px 6px 8px 26px"><button type="button" class="btn sm" data-tsymed>🎨 აღნიშვნების შეცვლა</button></div>`+legend)}
    </div>
    <div class="cd-foot"><div style="display:flex;align-items:center;gap:8px"><button type="button" data-d="home" style="flex:1">🏠 მთავარზე დაბრუნება</button><button type="button" class="cd-fb on" data-d="close" title="რუკა">🗺</button></div><div style="text-align:center;font-size:12px;opacity:.6;margin-top:6px">საველე აპი ტოპოგრაფია</div></div>`; }
